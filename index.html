@@ -37,31 +37,19 @@ body {
 
 /* ── CUSTOM CURSOR ── */
 #cursor {
-  width: 10px; height: 10px;
+  width: 24px; height: 24px;
   background: var(--rose);
   border-radius: 50%;
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%,-50%);
-  transition: width .2s, height .2s, background .2s;
-  mix-blend-mode: multiply;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  filter: blur(6px);
+  opacity: 0.6;
+  transition: width .2s, height .2s;
 }
 #cursor-ring {
-  width: 38px; height: 38px;
-  border: 1px solid var(--rose);
-  border-radius: 50%;
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%,-50%);
-  transition: transform .12s ease, width .2s, height .2s;
-  opacity: 0.5;
+  display: none;
 }
-body:hover #cursor { opacity: 1; }
-
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
