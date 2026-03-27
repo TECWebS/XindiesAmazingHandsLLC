@@ -34,6 +34,8 @@ body {
   overflow-x: hidden;
   cursor: none;
 }
+  <!-- in about.html, mark About as active -->
+<a href="about.html" class="active">About</a>
 
 /* ── CUSTOM CURSOR ── */
 #cursor {
@@ -1007,3 +1009,234 @@ footer {
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
+<!-- ════════════════ INQUIRY ════════════════ -->
+<section id="inquiry">
+  <svg class="inquiry-bg-flower" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(210,210)">
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(0)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(30)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(60)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(90)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(120)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(150)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(180)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(210)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(240)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(270)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(300)"/>
+      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(330)"/>
+      <circle r="28" fill="#f2dde2"/>
+    </g>
+  </svg>
+
+  <div class="inquiry-inner">
+    <div class="inquiry-left reveal-left">
+      <div class="section-kicker">Get in Touch</div>
+      <h2 class="section-heading">Have a<br/><em>Question?</em><br/>We'd Love<br/>to Hear You.</h2>
+      <p class="body-text">Not sure which service fits your needs? Curious about pricing or availability? Reach out — our team responds within one business day.</p>
+
+      <div class="contact-tiles">
+        <div class="ct">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
+            <polyline points="22,6 12,13 2,6" stroke="#7a6e72" stroke-width="1.5"/>
+          </svg>
+          <span class="ct-label">Email</span>
+          <div class="ct-value"><a href="mailto:hello@xindiesamazinghands.com">hello@xindiesamazinghands.com</a></div>
+        </div>
+        <div class="ct">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .92h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="ct-label">Phone / Text</span>
+          <div class="ct-value"><a href="tel:+15550000000">(555) 000-0000</a></div>
+        </div>
+        <div class="ct">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
+            <line x1="2" y1="12" x2="22" y2="12" stroke="#7a6e72" stroke-width="1.5"/>
+            <path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="ct-label">Service Area</span>
+          <div class="ct-value">Local &amp; Regional</div>
+        </div>
+        <div class="ct">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
+            <line x1="3" y1="9" x2="21" y2="9" stroke="#7a6e72" stroke-width="1.5"/>
+            <line x1="8" y1="2" x2="8" y2="6" stroke="#7a6e72" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="16" y1="2" x2="16" y2="6" stroke="#7a6e72" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span class="ct-label">Response Time</span>
+          <div class="ct-value">Within 24 Hours</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-up">
+      <div class="inquiry-form-card">
+        <h3>Send a Message</h3>
+        <p class="form-subtitle" style="font-size:.82rem;color:var(--muted);margin-bottom:2rem;font-weight:300;line-height:1.6;">Tell us about yourself and what you need — we'll take it from there.</p>
+
+        <!--
+          SETUP INSTRUCTIONS:
+          Replace action="YOUR_GOOGLE_INQUIRY_FORM_URL" with your Google Forms POST URL
+          Update name="entry.XXXXXXXX" attributes with your form's entry IDs
+        -->
+        <form action="YOUR_GOOGLE_INQUIRY_FORM_URL" method="POST" target="_blank" onsubmit="handleInquiry(event)">
+          <div class="frow">
+            <div class="fg">
+              <label>Your Name</label>
+              <input type="text" name="entry.INQNAME" placeholder="Jane Doe" required/>
+            </div>
+            <div class="fg">
+              <label>Email Address</label>
+              <input type="email" name="entry.INQEMAIL" placeholder="jane@email.com" required/>
+            </div>
+          </div>
+          <div class="frow full">
+            <div class="fg">
+              <label>Subject</label>
+              <input type="text" name="entry.INQSUBJECT" placeholder="How can we help you?"/>
+            </div>
+          </div>
+          <div class="frow full">
+            <div class="fg">
+              <label>Message</label>
+              <textarea name="entry.INQMESSAGE" rows="5" placeholder="Share your vision, questions, or any details that will help us assist you best." required></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit" style="background:var(--ink);">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer>
+  <svg class="footer-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(250,250)">
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(0)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(30)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(60)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(90)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(120)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(150)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(180)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(210)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(240)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(270)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(300)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(330)"/>
+      <circle r="32" fill="#1e1a1c"/>
+    </g>
+  </svg>
+
+  <div class="footer-top">
+    <div class="footer-brand">
+      <h2>Xindies Amazing Hands</h2>
+      <p>An all-in-one service provider dedicated to making every occasion, every style, and every space extraordinary. Based locally, serving with heart.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Catering</a></li>
+        <li><a href="#services">Hair Braiding</a></li>
+        <li><a href="#services">Private Sitting</a></li>
+        <li><a href="#services">Event Planning</a></li>
+        <li><a href="#services">Home Organizing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#booking">Book a Service</a></li>
+        <li><a href="#inquiry">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="mailto:hello@xindiesamazinghands.com">Email Us</a></li>
+        <li><a href="tel:+15550000000">Call / Text</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Xindies Amazing Hands LLC. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Cursor
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let rx = 0, ry = 0, cx = 0, cy = 0;
+document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; cursor.style.left = cx+'px'; cursor.style.top = cy+'px'; });
+(function animRing() {
+  rx += (cx - rx) * 0.12;
+  ry += (cy - ry) * 0.12;
+  ring.style.left = rx+'px';
+  ring.style.top  = ry+'px';
+  requestAnimationFrame(animRing);
+})();
+
+// ── Nav scroll
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── Scroll reveal
+const revEls = document.querySelectorAll('.reveal-up, .reveal-left');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 100);
+      revObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+revEls.forEach(el => revObs.observe(el));
+
+// ── Service selector (sidebar)
+function selectService(el, name) {
+  document.querySelectorAll('.bsl-item').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const sel = document.getElementById('serviceSelect');
+  if (sel) sel.value = name;
+}
+
+// ── Stripe redirect
+function redirectStripe() {
+  // Replace with your actual Stripe payment link
+  window.open('https://buy.stripe.com/YOUR_STRIPE_PAYMENT_LINK', '_blank');
+}
+
+// ── Form handlers
+function handleBooking(e) {
+  const form = document.getElementById('bookingForm');
+  if (form.action.includes('YOUR_GOOGLE_FORM')) {
+    e.preventDefault();
+    alert('Booking form is ready. Connect your Google Form URL to activate submissions.');
+  }
+}
+function handleInquiry(e) {
+  if (e.target.action.includes('YOUR_GOOGLE_INQUIRY')) {
+    e.preventDefault();
+    alert('Inquiry form is ready. Connect your Google Form URL to activate submissions.');
+  }
+}
+</script>
+</body>
+</html>
