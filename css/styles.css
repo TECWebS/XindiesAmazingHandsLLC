@@ -1,4 +1,3 @@
-<style>
 :root {
   --rose:      #c97b8a;
   --rose-deep: #a35468;
@@ -545,6 +544,12 @@ nav.scrolled {
 .svc-card:hover .svc-arrow { opacity: 1; transform: translateX(0); }
 
 /* ── GALLERY ── */
+.g-item-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* crops to fill without stretching */
+  display: block;
+}
 #gallery {
   padding: 8rem 0 0;
   background: var(--cream);
@@ -958,4 +963,3 @@ footer {
   .inquiry-inner { padding: 0 2rem; }
   footer { padding: 4rem 2rem 2rem; }
 }
-</style>
