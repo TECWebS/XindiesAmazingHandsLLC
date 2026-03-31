@@ -28,7 +28,17 @@ body {
   overflow-x: hidden;
 }
 
+body {
+  cursor: default;
+}
 
+a, button {
+  cursor: pointer;
+}
+
+input, textarea {
+  cursor: text;
+}
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
@@ -377,7 +387,7 @@ nav.scrolled {
   padding: 1rem 0;
   border-bottom: 1px solid var(--pale);
   transition: padding-left .2s;
-  cursor: default;
+
 }
 .pillar-row:hover { padding-left: 0.5rem; }
 .pillar-name {
