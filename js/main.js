@@ -127,7 +127,7 @@ function redirectStripe() {
 function handleBooking(e) {
   const form = e.target;
 
-  if (form.action.includes('YOUR_GOOGLE_FORM')) {
+  if (form.action.includes('https://docs.google.com/forms/u/0/d/e/1FAIpQLScw5AwWl5g3TEOvk_szqdT9gLwa5iM4xew7yk4OJrU_HJ1sFw/formResponse')) {
     e.preventDefault();
     alert('Booking form not connected yet.');
     return;
@@ -141,7 +141,7 @@ function handleBooking(e) {
 function handleInquiry(e) {
   const form = e.target;
 
-  if (form.action.includes('YOUR_GOOGLE_INQUIRY_FORM_URL')) {
+  if (form.action.includes('https://docs.google.com/forms/u/0/d/e/1FAIpQLScw5AwWl5g3TEOvk_szqdT9gLwa5iM4xew7yk4OJrU_HJ1sFw/formResponse')) {
     e.preventDefault();
     alert('Inquiry form not connected yet.');
   }
