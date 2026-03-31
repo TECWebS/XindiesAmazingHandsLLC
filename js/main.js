@@ -31,6 +31,182 @@ const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_PAYMENT_LINK_HERE';
 /* ─────────────────────────────────
    SCROLL REVEAL
    ───────────────────────────────── */
+<script>
+// ── LEGAL MODAL ───────────────────────────────────────────────
+(function(){
+  var overlay = document.getElementById('legalOverlay');
+  function openModal(target) {
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    document.querySelectorAll('.lm-tab').forEach(function(t){
+      var on = t.dataset.target === target;
+      t.style.background = on ? '#a35468' : 'transparent';
+      t.style.color = on ? '#fff' : '#a35468';
+    });
+    document.getElementById('panel-privacy').style.display = target === 'privacy' ? 'block' : 'none';
+    document.getElementById('panel-terms').style.display   = target === 'terms'   ? 'block' : 'none';
+  }
+  function closeModal() { overlay.style.display = 'none'; document.body.style.overflow = ''; }
+  document.querySelectorAll('[data-legal]').forEach(function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); openModal(a.dataset.legal); });
+  });
+  document.querySelectorAll('.lm-tab').forEach(function(t){
+    t.addEventListener('click', function(){ openModal(t.dataset.target); });
+  });
+  document.querySelector('.lm-close').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+})();
+
+// ── DATE SPLIT ────────────────────────────────────────────────
+function splitDate(val) {
+  if (!val) return;
+  var p = val.split('-');
+  document.getElementById('dateYear').value  = p[0];
+  document.getElementById('dateMonth').value = p[1].replace(/^0/,'');
+  document.getElementById('dateDay').value   = p[2].replace(/^0/,'');
+}
+
+// ── DEPOSIT LOGIC ─────────────────────────────────────────────
+var DEPOSIT_SERVICES = { 'Catering': true, 'Event Planning': true, 'Wedding Coordination': true };
+var HAIR_DEPOSIT_STYLES = ['Box Braids – Small ($200)','Box Braids – Medium ($175)','Box Braids – Large ($165)','Sew-In with Leave Out ($175)'];
+
+function requiresDeposit() {
+  var svc = document.getElementById('serviceSelect').value;
+  if (DEPOSIT_SERVICES[svc]) return true;
+  if (svc === 'Hair') return HAIR_DEPOSIT_STYLES.indexOf(document.getElementById('subHair').value) !== -1;
+  return false;
+}
+
+function updateDepositUI() {
+  document.getElementById('deposit-row').style.display = requiresDeposit() ? 'flex' : 'none';
+}
+
+// ── SERVICE CHANGE ────────────────────────────────────────────
+function handleServiceChange(val) {
+  ['sub-catering','sub-hair','sub-event','sub-wedding'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.classList.remove('visible');
+  });
+  var map = { 'Catering':'sub-catering','Hair':'sub-hair','Event Planning':'sub-event','Wedding Coordination':'sub-wedding' };
+  if (map[val]) document.getElementById(map[val]).classList.add('visible');
+  updateDepositUI();
+}
+
+function selectService(el, name) {
+  document.querySelectorAll('.bsl-item').forEach(function(i){ i.classList.remove('active'); });
+  el.classList.add('active');
+  var sel = document.getElementById('serviceSelect');
+  sel.value = name;
+  handleServiceChange(name);
+}
+
+function pickSub(el, hiddenId) {
+  el.closest('.sub-options').querySelectorAll('.sub-opt').forEach(function(o){ o.classList.remove('active'); });
+  el.classList.add('active');
+  document.getElementById(hiddenId).value = el.dataset.val;
+  if (hiddenId === 'subHair') updateDepositUI();
+}
+
+// ── STRIPE ────────────────────────────────────────────────────
+var DEPOSIT_AMOUNTS = {
+  'Catering – Small (10–30 guests)': 28000,
+  'Catering – Medium (30–75 guests)': 95000,
+  'Catering – Large (75–200+ guests)': 120000,
+  'Box Braids – Small ($200)': 8000,
+  'Box Braids – Medium ($175)': 7000,
+  'Box Braids – Large ($165)': 6600,
+  'Sew-In with Leave Out ($175)': 7000,
+  'Event Planning – Small (10–30 guests, $250)': 10000,
+  'Event Planning – Medium (30–75 guests, $600)': 24000,
+  'Event Planning – Large (75–150+ guests, $1,200)': 48000,
+  'Wedding – Day-Of Coordination ($800)': 32000,
+  'Wedding – Partial Planning ($1,500)': 60000,
+  'Wedding – Full Service ($3,000)': 120000
+};
+
+function getDepositAmount() {
+  var svc = document.getElementById('serviceSelect').value;
+  if (svc === 'Hair') return DEPOSIT_AMOUNTS[document.getElementById('subHair').value] || null;
+  if (svc === 'Catering') return DEPOSIT_AMOUNTS[document.getElementById('subCatering').value] || null;
+  if (svc === 'Event Planning') return DEPOSIT_AMOUNTS[document.getElementById('subEvent').value] || null;
+  if (svc === 'Wedding Coordination') return DEPOSIT_AMOUNTS[document.getElementById('subWedding').value] || null;
+  return null;
+}
+
+function redirectStripe() {
+  var amt = getDepositAmount();
+  if (!amt) { alert('Please select a service tier first so we can calculate your deposit.'); return; }
+  var svc = document.getElementById('serviceSelect').value;
+  Stripe('pk_live_51TH5dbQSNbOl19IkHcXzpHoNjyKDhuofjDr9gPBUg79E2cSDXNGMAgXitL05Og8KuoMEEEsyIQFFJAhgFbDPOIpk00OqQVtUsS').redirectToCheckout({
+    lineItems: [{ price_data: { currency: 'usd', product_data: { name: '40% Deposit — ' + svc + ' (Xindies Amazing Hands LLC)' }, unit_amount: amt }, quantity: 1 }],
+    mode: 'payment',
+    successUrl: window.location.origin + '/index.html?booked=1',
+    cancelUrl: window.location.href
+  }).then(function(r){ if(r.error) alert('Payment error: ' + r.error.message); });
+}
+
+// ── FORM SUBMIT ───────────────────────────────────────────────
+function handleBooking(e) {
+  e.preventDefault();
+  var form = e.target;
+  fetch(form.action, { method: 'POST', body: new FormData(form), mode: 'no-cors' });
+  if (requiresDeposit()) {
+    setTimeout(redirectStripe, 600);
+  } else {
+    form.innerHTML = '<div style="text-align:center;padding:2rem 0;"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#8aab96" stroke-width="2"/><path d="M14 24l8 8 12-14" stroke="#8aab96" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><h3 style="font-family:\'Bodoni Moda\',Georgia,serif;margin:1rem 0 0.5rem;">Request Received!</h3><p style="font-size:0.85rem;color:#7a6e72;line-height:1.7;">We\'ll confirm availability within 24 hours. Full payment is due at time of service.</p></div>';
+  }
+}
+
+// ── GALLERY SCROLL ────────────────────────────────────────────
+(function(){
+  var lane = document.querySelector('.gallery-lane');
+  if (!lane) return;
+  var speed = 0.5, pos = 0, paused = false;
+  lane.addEventListener('mouseenter', function(){ paused = true; });
+  lane.addEventListener('mouseleave', function(){ paused = false; });
+  function tick() {
+    if (!paused) { pos += speed; if (pos >= lane.scrollWidth / 2) pos = 0; lane.style.transform = 'translateX(-' + pos + 'px)'; }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+// ── PRICE TOGGLE ─────────────────────────────────────────────
+document.querySelectorAll('.svc-price-hint').forEach(function(btn){
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var panel = btn.nextElementSibling;
+    var open = panel.classList.toggle('open');
+    btn.textContent = open ? 'Hide Pricing' : 'View Pricing';
+  });
+});
+
+// ── NAV SCROLL ────────────────────────────────────────────────
+window.addEventListener('scroll', function(){
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── REVEAL ────────────────────────────────────────────────────
+(function(){
+  var els = document.querySelectorAll('.reveal-up,.reveal-left');
+  if (!('IntersectionObserver' in window)) { els.forEach(function(e){ e.classList.add('visible'); }); return; }
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  els.forEach(function(e){ obs.observe(e); });
+})();
+
+// ── CURSOR ────────────────────────────────────────────────────
+(function(){
+  var c = document.getElementById('cursor'), r = document.getElementById('cursor-ring');
+  if (!c || !r) return;
+  document.addEventListener('mousemove', function(e){ c.style.left=r.style.left=e.clientX+'px'; c.style.top=r.style.top=e.clientY+'px'; });
+})();
+
+// ── INIT ─────────────────────────────────────────────────────
+handleServiceChange('Catering');
+</script>
 (function initReveal() {
   const els = document.querySelectorAll('.reveal-up, .reveal-left');
   if (!els.length) return;
