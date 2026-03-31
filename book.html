@@ -8,6 +8,228 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400;1,6..96,600&family=Jost:wght@200;300;400;500&family=Tenor+Sans&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/styles.css">
+
+<style>
+/* ── PRICING TABLES ── */
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 0.5rem;
+  font-family: 'Jost', sans-serif;
+}
+.pricing-table th {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 400;
+  padding: 0 0.6rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.pricing-table td {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.85);
+  font-weight: 300;
+  padding: 0.55rem 0.6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  vertical-align: middle;
+}
+.pricing-table tr:last-child td { border-bottom: none; }
+.tier-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+.dot-green  { background: #6ed69e; }
+.dot-yellow { background: #f5c842; }
+.dot-red    { background: #e87060; }
+.tier-cell  { display: flex; align-items: center; white-space: nowrap; }
+
+/* Add-ons box */
+.addons-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 0.9rem 1rem;
+  margin-top: 0.8rem;
+}
+.addons-box .addons-title {
+  font-family: 'Tenor Sans', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.6rem;
+}
+.addons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.3rem 1rem;
+}
+.addon-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.7);
+}
+.addon-price { color: rgba(255,255,255,0.45); font-size: 0.72rem; }
+
+/* Hair price list */
+.hair-section { margin: 0.8rem 0 0.2rem; }
+.hair-section-title {
+  font-family: 'Tenor Sans', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.45rem;
+}
+.hair-price-list { list-style: none; padding: 0; margin: 0; }
+.hair-price-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.hair-price-list li:last-child { border-bottom: none; }
+.hair-price-list .hp { color: rgba(255,255,255,0.45); }
+
+/* Wedding tiers */
+.wedding-divider {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin: 0.9rem 0 0.4rem;
+}
+.wedding-divider span {
+  font-family: 'Tenor Sans', sans-serif;
+  font-size: 0.58rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  white-space: nowrap;
+}
+.wedding-divider::before, .wedding-divider::after {
+  content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
+}
+
+/* Deposit note in svc-card */
+.deposit-note {
+  margin-top: 0.8rem;
+  padding: 0.7rem 0.9rem;
+  background: rgba(255,255,255,0.04);
+  border-left: 2px solid rgba(201,123,138,0.5);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+}
+.deposit-note strong { color: rgba(255,255,255,0.75); font-weight: 400; }
+
+/* Home organizing simple layout */
+.home-org-price {
+  font-family: 'Bodoni Moda', serif;
+  font-size: 1.4rem;
+  color: white;
+  margin: 0.6rem 0 0.3rem;
+  font-style: italic;
+}
+.home-org-sub {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+}
+
+/* Booking subcategory selectors */
+.sub-picker {
+  margin-top: 0.6rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.sub-picker.visible { display: flex; }
+.sub-picker label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-muted, #7a6e72);
+  margin-bottom: 0.3rem;
+  display: block;
+}
+.sub-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.sub-opt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #d8cdd4;
+  border-radius: 2px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #5a4e54;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+  user-select: none;
+}
+.sub-opt:hover { border-color: #c97b8a; color: #a35468; }
+.sub-opt.active { background: #c97b8a; border-color: #c97b8a; color: white; }
+.sub-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.sub-dot.g { background: #6ed69e; }
+.sub-dot.y { background: #f5c842; }
+.sub-dot.r { background: #e87060; }
+
+/* Addons checkboxes in booking form */
+.addons-form-box {
+  margin-top: 0.8rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid #ede4e8;
+  background: #fdf9f8;
+}
+.addons-form-title {
+  font-family: 'Tenor Sans', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9a8e92;
+  margin-bottom: 0.7rem;
+}
+.addon-checks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+.addon-check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: #5a4e54;
+  cursor: pointer;
+}
+.addon-check-item input[type="checkbox"] { accent-color: #c97b8a; }
+
+@media (max-width: 600px) {
+  .addon-checks { grid-template-columns: 1fr; }
+  .addons-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body> 
 <nav id="mainNav">
@@ -18,8 +240,8 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
-  <!-- ════════════════ GALLERY ════════════════ -->
-<section id="gallery">
+
+<!-- ════════════════ GALLERY ════════════════ -->
 <section id="gallery">
   <div class="gallery-header reveal-up">
     <div>
@@ -36,133 +258,30 @@
 
   <div class="gallery-runway">
     <div class="gallery-lane">
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/1_cake_table.jpg" alt="Cake table">
-        </div>
-        <div class="g-item-label">Cake Table</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/2_baggage_claim.jpg" alt="Baggage claim">
-        </div>
-        <div class="g-item-label">Baggage Claim</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/3_pink_box.jpg" alt="Pink box">
-        </div>
-        <div class="g-item-label">Pink Box</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/4_boxes.jpg" alt="Boxes">
-        </div>
-        <div class="g-item-label">Boxes</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/5_chip_bags.jpg" alt="Chip bags">
-        </div>
-        <div class="g-item-label">Chip Bags</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/6_gift_table.jpg" alt="Gift table">
-        </div>
-        <div class="g-item-label">Gift Table</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/7_venue_backdrop.jpg" alt="Venue backdrop">
-        </div>
-        <div class="g-item-label">Venue Backdrop</div>
-      </div>
-
-      <!-- Duplicate all 7 for seamless loop -->
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/1_cake_table.jpg" alt="Cake table">
-        </div>
-        <div class="g-item-label">Cake Table</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/2_baggage_claim.jpg" alt="Baggage claim">
-        </div>
-        <div class="g-item-label">Baggage Claim</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/3_pink_box.jpg" alt="Pink box">
-        </div>
-        <div class="g-item-label">Pink Box</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/4_boxes.jpg" alt="Boxes">
-        </div>
-        <div class="g-item-label">Boxes</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/5_chips_bags.jpg" alt="Chips bags">
-        </div>
-        <div class="g-item-label">Chips Bags</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/6_gift_table.jpg" alt="Gift table">
-        </div>
-        <div class="g-item-label">Gift Table</div>
-      </div>
-
-      <div class="g-item">
-        <div class="g-item-inner">
-          <img src="images/7_venue_backdrop.jpg" alt="Venue backdrop">
-        </div>
-        <div class="g-item-label">Venue Backdrop</div>
-      </div>
-
-    </div><!-- end .gallery-lane -->
-  </div><!-- end .gallery-runway -->
-
+      <div class="g-item"><div class="g-item-inner"><img src="images/1_cake_table.jpg" alt="Cake table"></div><div class="g-item-label">Cake Table</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/2_baggage_claim.jpg" alt="Baggage claim"></div><div class="g-item-label">Baggage Claim</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/3_pink_box.jpg" alt="Pink box"></div><div class="g-item-label">Pink Box</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/4_boxes.jpg" alt="Boxes"></div><div class="g-item-label">Boxes</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/5_chip_bags.jpg" alt="Chip bags"></div><div class="g-item-label">Chip Bags</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/6_gift_table.jpg" alt="Gift table"></div><div class="g-item-label">Gift Table</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/7_venue_backdrop.jpg" alt="Venue backdrop"></div><div class="g-item-label">Venue Backdrop</div></div>
+      <!-- Duplicates for seamless loop -->
+      <div class="g-item"><div class="g-item-inner"><img src="images/1_cake_table.jpg" alt="Cake table"></div><div class="g-item-label">Cake Table</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/2_baggage_claim.jpg" alt="Baggage claim"></div><div class="g-item-label">Baggage Claim</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/3_pink_box.jpg" alt="Pink box"></div><div class="g-item-label">Pink Box</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/4_boxes.jpg" alt="Boxes"></div><div class="g-item-label">Boxes</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/5_chips_bags.jpg" alt="Chips bags"></div><div class="g-item-label">Chips Bags</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/6_gift_table.jpg" alt="Gift table"></div><div class="g-item-label">Gift Table</div></div>
+      <div class="g-item"><div class="g-item-inner"><img src="images/7_venue_backdrop.jpg" alt="Venue backdrop"></div><div class="g-item-label">Venue Backdrop</div></div>
+    </div>
+  </div>
 </section>
+
 <!-- ════════════════ SERVICES ════════════════ -->
 <section id="services">
-  <!-- Big background flower -->
   <svg class="services-bg-flower" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg">
     <g transform="translate(450,450)">
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(0)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(20)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(40)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(60)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(80)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(100)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(120)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(140)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(160)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(180)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(200)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(220)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(240)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(260)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(280)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(300)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(320)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(340)"/>
+      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(0)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(20)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(40)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(60)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(80)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(100)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(120)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(140)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(160)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(180)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(200)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(220)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(240)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(260)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(280)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(300)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(320)"/><ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(340)"/>
       <circle r="60" fill="#1e1a1c"/>
     </g>
   </svg>
@@ -180,31 +299,68 @@
 
       <!-- CATERING -->
       <div class="svc-card s1">
-        <!-- Fork & knife SVG -->
         <svg class="svc-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <line x1="8" y1="4" x2="8" y2="18" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M5 4 C5 4 5 12 8 14 C11 12 11 4 11 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M5 4 C5 4 5 12 8 14 C11 12 11 4 11 4" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
           <line x1="8" y1="14" x2="8" y2="40" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M31 4 L31 16 Q31 19 34 19 L34 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M31 4 L31 16 Q31 19 34 19 L34 4" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
           <line x1="34" y1="19" x2="34" y2="40" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
         <span class="svc-num">01</span>
         <div class="svc-title">Catering</div>
         <p class="svc-body">Chef-crafted menus designed around your event and your guests — from intimate dinners to large-scale celebrations.</p>
-        <ul class="svc-list">
-          <li>Custom menu development</li>
-          <li>Full-service setup &amp; breakdown</li>
-          <li>Buffets, plated &amp; family-style</li>
-          <li>Dessert &amp; sweet table spreads</li>
-        </ul>
-        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 6h18M14 1l5 5-5 5" stroke="#c97b8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Guests</th>
+              <th>Per Person</th>
+              <th>Starting At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tier-cell"><span class="tier-dot dot-green"></span>Small</span></td>
+              <td>10 – 30</td>
+              <td>$18 – $30</td>
+              <td>$700</td>
+            </tr>
+            <tr>
+              <td><span class="tier-cell"><span class="tier-dot dot-yellow"></span>Medium</span></td>
+              <td>30 – 75</td>
+              <td>$22 – $45</td>
+              <td>$2,375+</td>
+            </tr>
+            <tr>
+              <td><span class="tier-cell"><span class="tier-dot dot-red"></span>Large</span></td>
+              <td>75 – 200+</td>
+              <td>$30 – $60+</td>
+              <td>$3,000 – $12,000</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="addons-box">
+          <div class="addons-title">Available Add-Ons</div>
+          <div class="addons-grid">
+            <div class="addon-row"><span>Delivery</span><span class="addon-price">$50 – $150</span></div>
+            <div class="addon-row"><span>Setup / Cleanup</span><span class="addon-price">$100 – $300</span></div>
+            <div class="addon-row"><span>Staff</span><span class="addon-price">$25 – $40 / hr</span></div>
+            <div class="addon-row"><span>Drinks Package</span><span class="addon-price">$3 – $8 / person</span></div>
+            <div class="addon-row"><span>Premium Upgrade</span><span class="addon-price">+$10 – $25 / person</span></div>
+          </div>
+        </div>
+
+        <div class="deposit-note">
+          <strong>40% deposit</strong> required to reserve your date. 50% refundable if canceled 14+ days out. <strong>No refund</strong> within 7 days of your event.
+        </div>
+
+        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h18M14 1l5 5-5 5" stroke="#c97b8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
 
-      <!-- HAIR BRAIDING -->
+      <!-- HAIR SERVICES -->
       <div class="svc-card s2">
-        <!-- Scissors / braid SVG -->
         <svg class="svc-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M22 6 C22 6 16 12 16 20 C16 28 22 34 22 34 C22 34 28 28 28 20 C28 12 22 6 22 6Z" stroke="white" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
           <path d="M16 20 C13 18 10 16 8 18 C6 20 8 24 12 24" stroke="white" stroke-width="1.4" stroke-linecap="round" fill="none"/>
@@ -213,22 +369,44 @@
           <circle cx="22" cy="20" r="3" stroke="white" stroke-width="1.2" fill="none"/>
         </svg>
         <span class="svc-num">02</span>
-        <div class="svc-title">Hair Braiding</div>
-        <p class="svc-body">Artisan braiding that honors your beauty and protects your hair. We specialize in intricate, long-lasting styles for every occasion.</p>
-        <ul class="svc-list">
-          <li>Box braids, knotless &amp; feed-ins</li>
-          <li>Cornrows &amp; tribal styles</li>
-          <li>Bridal &amp; event styling</li>
-          <li>Children's styles welcome</li>
-        </ul>
-        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 6h18M14 1l5 5-5 5" stroke="#b89a6a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <div class="svc-title">Hair Services</div>
+        <p class="svc-body">Artisan styles that honor your beauty and protect your hair — from intricate braids to protective installs, for every occasion.</p>
+
+        <div class="hair-section">
+          <div class="hair-section-title">Box Braids</div>
+          <ul class="hair-price-list">
+            <li><span>Small</span><span class="hp">$200</span></li>
+            <li><span>Medium</span><span class="hp">$175</span></li>
+            <li><span>Large</span><span class="hp">$165</span></li>
+          </ul>
+        </div>
+
+        <div class="hair-section">
+          <div class="hair-section-title">Crochet Styles</div>
+          <ul class="hair-price-list">
+            <li><span>All crochet styles</span><span class="hp">$135</span></li>
+          </ul>
+        </div>
+
+        <div class="hair-section">
+          <div class="hair-section-title">Natural Hair</div>
+          <ul class="hair-price-list">
+            <li><span>Braid Straight Back (Wig Install)</span><span class="hp">$45</span></li>
+          </ul>
+        </div>
+
+        <div class="hair-section">
+          <div class="hair-section-title">Sew-In</div>
+          <ul class="hair-price-list">
+            <li><span>Sew-In with Leave Out</span><span class="hp">$175</span></li>
+          </ul>
+        </div>
+
+        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h18M14 1l5 5-5 5" stroke="#b89a6a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
 
       <!-- PRIVATE SITTING -->
       <div class="svc-card s3">
-        <!-- Child / care SVG -->
         <svg class="svc-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="22" cy="12" r="6" stroke="white" stroke-width="1.4" fill="none"/>
           <path d="M22 20 C15 20 10 25 10 31 L10 38 L34 38 L34 31 C34 25 29 20 22 20Z" stroke="white" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
@@ -236,21 +414,20 @@
         </svg>
         <span class="svc-num">03</span>
         <div class="svc-title">Private Sitting</div>
-        <p class="svc-body">Warm, reliable childcare you can trust. We bring structure, creativity, and genuine care to every sitting engagement.</p>
+        <p class="svc-body">Warm, reliable care for both children and elderly loved ones. We bring structure, compassion, and genuine attentiveness to every engagement.</p>
         <ul class="svc-list">
           <li>In-home &amp; event childcare</li>
           <li>Newborns through teens</li>
           <li>Activity-based engagement</li>
+          <li>Elderly care &amp; companionship</li>
+          <li>Overnight stays for elderly — ideal when families or caregivers need to travel or take a break</li>
           <li>Background-verified staff</li>
         </ul>
-        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 6h18M14 1l5 5-5 5" stroke="#8aab96" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h18M14 1l5 5-5 5" stroke="#8aab96" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
 
       <!-- EVENT PLANNING -->
       <div class="svc-card s4">
-        <!-- Calendar / planning SVG -->
         <svg class="svc-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="6" y="10" width="32" height="28" rx="2" stroke="white" stroke-width="1.4" fill="none"/>
           <line x1="6" y1="17" x2="38" y2="17" stroke="white" stroke-width="1.4"/>
@@ -265,20 +442,73 @@
         <span class="svc-num">04</span>
         <div class="svc-title">Event Planning &amp; Coordination</div>
         <p class="svc-body">From concept to the final toast — we orchestrate flawless events that exceed every expectation.</p>
-        <ul class="svc-list">
-          <li>Full event &amp; wedding planning</li>
-          <li>Vendor sourcing &amp; coordination</li>
-          <li>Day-of &amp; month-of coordination</li>
-          <li>Décor, themes &amp; staging</li>
+
+        <!-- Event planning tiers -->
+        <table class="pricing-table">
+          <thead>
+            <tr><th>Tier</th><th>Guests</th><th>Starting At</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tier-cell"><span class="tier-dot dot-green"></span>Small</span></td>
+              <td>10 – 30</td>
+              <td>$250</td>
+            </tr>
+            <tr>
+              <td><span class="tier-cell"><span class="tier-dot dot-yellow"></span>Medium</span></td>
+              <td>30 – 75</td>
+              <td>$600</td>
+            </tr>
+            <tr>
+              <td><span class="tier-cell"><span class="tier-dot dot-red"></span>Large</span></td>
+              <td>75 – 150+</td>
+              <td>$1,200</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ul class="svc-list" style="margin-top:0.9rem;">
+          <li>1. Pre-Wedding Planning (Weeks Before)</li>
+          <li>2. Vendor Coordination</li>
+          <li>3. Day-of Coordination</li>
+          <li>4. Setup &amp; Styling Oversight</li>
+          <li>5. Client Support</li>
         </ul>
-        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 6h18M14 1l5 5-5 5" stroke="#c4a0b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+
+        <!-- Wedding Coordination sub-section -->
+        <div class="wedding-divider"><span>Wedding Coordination</span></div>
+        <table class="pricing-table">
+          <thead>
+            <tr><th>Tier</th><th>What's Included</th><th>Price</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tier-cell"><span class="tier-dot dot-green"></span>Day-Of</span></td>
+              <td>Wedding day execution only</td>
+              <td>$800</td>
+            </tr>
+            <tr>
+              <td><span class="tier-cell"><span class="tier-dot dot-yellow"></span>Partial</span></td>
+              <td>Timeline + vendors + rehearsal</td>
+              <td>$1,500</td>
+            </tr>
+            <tr>
+              <td><span class="tier-cell"><span class="tier-dot dot-red"></span>Full Service</span></td>
+              <td>Full planning + coordination</td>
+              <td>$3,000</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="deposit-note">
+          <strong>40% deposit</strong> required to reserve your date. 50% refundable if canceled 14+ days out. <strong>No refund</strong> within 7 days of your event.
+        </div>
+
+        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h18M14 1l5 5-5 5" stroke="#c4a0b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
 
       <!-- HOME ORGANIZING -->
       <div class="svc-card s5">
-        <!-- House SVG -->
         <svg class="svc-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M6 20 L22 6 L38 20" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           <path d="M10 17 L10 38 L34 38 L34 17" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -290,36 +520,28 @@
         <span class="svc-num">05</span>
         <div class="svc-title">Home Organizing</div>
         <p class="svc-body">Transform your space into a calm, functional sanctuary. We declutter, design, and build systems that actually last.</p>
-        <ul class="svc-list">
+
+        <div class="home-org-price">$100 <span style="font-size:0.8rem; font-style:normal; opacity:0.6;">/ 2 hours</span></div>
+        <div class="home-org-sub">Additional time billed at $50 per hour.</div>
+
+        <ul class="svc-list" style="margin-top:0.9rem;">
           <li>Whole-home transformation</li>
           <li>Kitchen &amp; closet systems</li>
           <li>Move-in &amp; move-out prep</li>
           <li>Seasonal deep organizing</li>
         </ul>
-        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 6h18M14 1l5 5-5 5" stroke="#e8ddd4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h18M14 1l5 5-5 5" stroke="#e8ddd4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
 
     </div>
   </div>
 </section>
+
 <!-- ════════════════ BOOKING ════════════════ -->
 <section id="booking">
   <svg class="booking-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
     <g transform="translate(250,250)">
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(0)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(30)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(60)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(90)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(120)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(150)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(180)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(210)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(240)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(270)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(300)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(330)"/>
+      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(0)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(30)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(60)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(90)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(120)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(150)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(180)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(210)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(240)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(270)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(300)"/><ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(330)"/>
       <circle r="35" fill="#f5f0ea"/>
     </g>
   </svg>
@@ -328,47 +550,27 @@
     <div class="booking-left reveal-left">
       <div class="section-kicker">Reserve Your Date</div>
       <h2 class="section-heading">Book a<br/><em>Service</em></h2>
-      <p class="body-text">Select a service below, fill in your details, and submit your request. We will confirm availability within 24 hours and collect your deposit securely through Stripe.</p>
+      <p class="body-text">Select a service below, fill in your details, and submit your request. We will confirm availability within 24 hours and collect your <strong>40% deposit</strong> securely through Stripe.</p>
 
       <div class="booking-services-list">
         <div class="bsl-item active" onclick="selectService(this,'Catering')">
-          <svg width="18" height="18" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="8" y1="4" x2="8" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M5 4 C5 4 5 12 8 14 C11 12 11 4 11 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <line x1="8" y1="14" x2="8" y2="40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M31 4 L31 16 Q31 19 34 19 L34 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            <line x1="34" y1="19" x2="34" y2="40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 44 44" fill="none"><line x1="8" y1="4" x2="8" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M5 4 C5 4 5 12 8 14 C11 12 11 4 11 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/><line x1="8" y1="14" x2="8" y2="40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M31 4 L31 16 Q31 19 34 19 L34 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/><line x1="34" y1="19" x2="34" y2="40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           Catering
         </div>
-        <div class="bsl-item" onclick="selectService(this,'Hair Braiding')">
-          <svg width="18" height="18" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 6 C22 6 16 12 16 20 C16 28 22 34 22 34 C22 34 28 28 28 20 C28 12 22 6 22 6Z" stroke="currentColor" stroke-width="1.4" fill="none"/>
-            <circle cx="22" cy="20" r="3" stroke="currentColor" stroke-width="1.2" fill="none"/>
-          </svg>
-          Hair Braiding
+        <div class="bsl-item" onclick="selectService(this,'Hair')">
+          <svg width="18" height="18" viewBox="0 0 44 44" fill="none"><path d="M22 6 C22 6 16 12 16 20 C16 28 22 34 22 34 C22 34 28 28 28 20 C28 12 22 6 22 6Z" stroke="currentColor" stroke-width="1.4" fill="none"/><circle cx="22" cy="20" r="3" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+          Hair
         </div>
         <div class="bsl-item" onclick="selectService(this,'Private Sitting')">
-          <svg width="18" height="18" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="22" cy="12" r="6" stroke="currentColor" stroke-width="1.4" fill="none"/>
-            <path d="M22 20 C15 20 10 25 10 31 L10 38 L34 38 L34 31 C34 25 29 20 22 20Z" stroke="currentColor" stroke-width="1.4" fill="none"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="12" r="6" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M22 20 C15 20 10 25 10 31 L10 38 L34 38 L34 31 C34 25 29 20 22 20Z" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
           Private Sitting
         </div>
         <div class="bsl-item" onclick="selectService(this,'Event Planning')">
-          <svg width="18" height="18" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="6" y="10" width="32" height="28" rx="2" stroke="currentColor" stroke-width="1.4" fill="none"/>
-            <line x1="6" y1="17" x2="38" y2="17" stroke="currentColor" stroke-width="1.4"/>
-            <line x1="14" y1="6" x2="14" y2="14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-            <line x1="30" y1="6" x2="30" y2="14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 44 44" fill="none"><rect x="6" y="10" width="32" height="28" rx="2" stroke="currentColor" stroke-width="1.4" fill="none"/><line x1="6" y1="17" x2="38" y2="17" stroke="currentColor" stroke-width="1.4"/><line x1="14" y1="6" x2="14" y2="14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><line x1="30" y1="6" x2="30" y2="14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
           Event Planning &amp; Coordination
         </div>
         <div class="bsl-item" onclick="selectService(this,'Home Organizing')">
-          <svg width="18" height="18" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 20 L22 6 L38 20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-            <path d="M10 17 L10 38 L34 38 L34 17" stroke="currentColor" stroke-width="1.4" fill="none"/>
-          </svg>
+          <svg width="18" height="18" viewBox="0 0 44 44" fill="none"><path d="M6 20 L22 6 L38 20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M10 17 L10 38 L34 38 L34 17" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
           Home Organizing
         </div>
       </div>
@@ -377,12 +579,14 @@
     <div class="booking-form-wrap reveal-up">
       <div class="booking-form-card">
         <h3>Submit a Request</h3>
-        <p class="form-subtitle">We'll confirm availability and follow up within 24 hours.</p>
+        <p class="form-subtitle">We'll confirm availability and follow up within 24 hours. A <strong>40% deposit</strong> is required to secure your date.</p>
 
         <!--
           SETUP INSTRUCTIONS:
           1. Replace action="YOUR_GOOGLE_FORM_ACTION_URL" with your Google Form POST URL
           2. Update each name="entry.XXXXXXXX" with your actual Google Form field IDs
+          3. Replace STRIPE_PAYMENT_LINK_HERE in the redirectStripe() function below
+             with your actual Stripe Payment Link URL
         -->
         <form id="bookingForm" action="YOUR_GOOGLE_FORM_ACTION_URL" method="POST" target="_blank" onsubmit="handleBooking(event)">
           <div class="frow">
@@ -408,11 +612,12 @@
           <div class="frow">
             <div class="fg">
               <label>Service Requested</label>
-              <select name="entry.SERVICE" id="serviceSelect" required>
+              <select name="entry.SERVICE" id="serviceSelect" required onchange="handleServiceChange(this.value)">
                 <option value="Catering">Catering</option>
-                <option value="Hair Braiding">Hair Braiding</option>
+                <option value="Hair">Hair</option>
                 <option value="Private Sitting">Private Sitting</option>
                 <option value="Event Planning">Event Planning &amp; Coordination</option>
+                <option value="Wedding Coordination">Wedding Coordination</option>
                 <option value="Home Organizing">Home Organizing</option>
               </select>
             </div>
@@ -421,6 +626,83 @@
               <input type="date" name="entry.DATE" required/>
             </div>
           </div>
+
+          <!-- ── CATERING SUBCATEGORY ── -->
+          <div id="sub-catering" class="sub-picker visible">
+            <label>Catering Tier</label>
+            <div class="sub-options">
+              <div class="sub-opt active" data-val="Catering – Small (10–30 guests)" onclick="pickSub(this,'subCatering')">
+                <span class="sub-dot g"></span> Small (10–30)
+              </div>
+              <div class="sub-opt" data-val="Catering – Medium (30–75 guests)" onclick="pickSub(this,'subCatering')">
+                <span class="sub-dot y"></span> Medium (30–75)
+              </div>
+              <div class="sub-opt" data-val="Catering – Large (75–200+ guests)" onclick="pickSub(this,'subCatering')">
+                <span class="sub-dot r"></span> Large (75–200+)
+              </div>
+            </div>
+            <input type="hidden" name="entry.CATERING_TIER" id="subCatering" value="Catering – Small (10–30 guests)"/>
+
+            <div class="addons-form-box">
+              <div class="addons-form-title">Optional Add-Ons</div>
+              <div class="addon-checks">
+                <label class="addon-check-item"><input type="checkbox" name="entry.ADDON_DELIVERY" value="Delivery ($50–$150)"/> Delivery</label>
+                <label class="addon-check-item"><input type="checkbox" name="entry.ADDON_SETUP" value="Setup/Cleanup ($100–$300)"/> Setup / Cleanup</label>
+                <label class="addon-check-item"><input type="checkbox" name="entry.ADDON_STAFF" value="Staff ($25–$40/hr)"/> Staff</label>
+                <label class="addon-check-item"><input type="checkbox" name="entry.ADDON_DRINKS" value="Drinks Package ($3–$8/person)"/> Drinks Package</label>
+                <label class="addon-check-item"><input type="checkbox" name="entry.ADDON_PREMIUM" value="Premium Upgrade (+$10–$25/person)"/> Premium Upgrade</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── HAIR SUBCATEGORY ── -->
+          <div id="sub-hair" class="sub-picker">
+            <label>Hair Style</label>
+            <div class="sub-options">
+              <div class="sub-opt" data-val="Box Braids – Small ($200)" onclick="pickSub(this,'subHair')">Box Braids Small</div>
+              <div class="sub-opt" data-val="Box Braids – Medium ($175)" onclick="pickSub(this,'subHair')">Box Braids Medium</div>
+              <div class="sub-opt" data-val="Box Braids – Large ($165)" onclick="pickSub(this,'subHair')">Box Braids Large</div>
+              <div class="sub-opt" data-val="Crochet Styles ($135)" onclick="pickSub(this,'subHair')">Crochet Styles</div>
+              <div class="sub-opt" data-val="Braid Straight Back / Wig Install ($45)" onclick="pickSub(this,'subHair')">Straight Back / Wig Install</div>
+              <div class="sub-opt" data-val="Sew-In with Leave Out ($175)" onclick="pickSub(this,'subHair')">Sew-In with Leave Out</div>
+            </div>
+            <input type="hidden" name="entry.HAIR_STYLE" id="subHair" value=""/>
+          </div>
+
+          <!-- ── EVENT PLANNING SUBCATEGORY ── -->
+          <div id="sub-event" class="sub-picker">
+            <label>Event Size</label>
+            <div class="sub-options">
+              <div class="sub-opt" data-val="Event Planning – Small (10–30 guests, $250)" onclick="pickSub(this,'subEvent')">
+                <span class="sub-dot g"></span> Small (10–30)
+              </div>
+              <div class="sub-opt" data-val="Event Planning – Medium (30–75 guests, $600)" onclick="pickSub(this,'subEvent')">
+                <span class="sub-dot y"></span> Medium (30–75)
+              </div>
+              <div class="sub-opt" data-val="Event Planning – Large (75–150+ guests, $1,200)" onclick="pickSub(this,'subEvent')">
+                <span class="sub-dot r"></span> Large (75–150+)
+              </div>
+            </div>
+            <input type="hidden" name="entry.EVENT_TIER" id="subEvent" value=""/>
+          </div>
+
+          <!-- ── WEDDING COORDINATION SUBCATEGORY ── -->
+          <div id="sub-wedding" class="sub-picker">
+            <label>Wedding Package</label>
+            <div class="sub-options">
+              <div class="sub-opt" data-val="Wedding – Day-Of Coordination ($800)" onclick="pickSub(this,'subWedding')">
+                <span class="sub-dot g"></span> Day-Of ($800)
+              </div>
+              <div class="sub-opt" data-val="Wedding – Partial Planning ($1,500)" onclick="pickSub(this,'subWedding')">
+                <span class="sub-dot y"></span> Partial ($1,500)
+              </div>
+              <div class="sub-opt" data-val="Wedding – Full Service ($3,000)" onclick="pickSub(this,'subWedding')">
+                <span class="sub-dot r"></span> Full Service ($3,000)
+              </div>
+            </div>
+            <input type="hidden" name="entry.WEDDING_TIER" id="subWedding" value=""/>
+          </div>
+
           <div class="frow full">
             <div class="fg">
               <label>Details &amp; Special Requests</label>
@@ -428,10 +710,16 @@
             </div>
           </div>
 
+          <!-- Deposit policy reminder -->
+          <div style="background:#fdf6f8; border:1px solid #ede4e8; padding:0.9rem 1.1rem; margin-bottom:1rem; font-family:'Jost',sans-serif; font-size:0.78rem; font-weight:300; color:#7a6e72; line-height:1.7;">
+            <strong style="color:#a35468; font-weight:500;">Deposit Policy</strong><br/>
+            A <strong>40% deposit</strong> is required to secure your booking. The deposit is <strong>50% refundable</strong> if you cancel 14 or more days before your event. <strong>No refund</strong> is issued for cancellations within 7 days of the event.
+          </div>
+
           <div class="deposit-row">
             <div class="deposit-text">
               <strong>Secure Your Date with a Deposit</strong>
-              Processed safely through Stripe. Remaining balance is due at time of service.
+              40% of total — processed safely through Stripe. Remaining balance due 48 hrs before service.
             </div>
             <button type="button" class="stripe-btn" onclick="redirectStripe()">
               <svg width="38" height="16" viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -441,9 +729,7 @@
             </button>
           </div>
           <div class="form-note">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 12a1 1 0 110-2 1 1 0 010 2zm1-4H9V6h2v4z" fill="#7a6e72"/>
-            </svg>
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 12a1 1 0 110-2 1 1 0 010 2zm1-4H9V6h2v4z" fill="#7a6e72"/></svg>
             Your information is protected. We will never share your data with third parties.
           </div>
           <button type="submit" class="btn-submit">Submit Booking Request</button>
@@ -452,22 +738,12 @@
     </div>
   </div>
 </section>
+
 <!-- ════════════════ FOOTER ════════════════ -->
 <footer>
   <svg class="footer-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
     <g transform="translate(250,250)">
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(0)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(30)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(60)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(90)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(120)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(150)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(180)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(210)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(240)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(270)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(300)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(330)"/>
+      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(0)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(30)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(60)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(90)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(120)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(150)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(180)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(210)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(240)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(270)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(300)"/><ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(330)"/>
       <circle r="32" fill="#1e1a1c"/>
     </g>
   </svg>
@@ -481,7 +757,7 @@
       <h4>Services</h4>
       <ul>
         <li><a href="#services">Catering</a></li>
-        <li><a href="#services">Hair Styling</a></li>
+        <li><a href="#services">Hair Services</a></li>
         <li><a href="#services">Private Sitting</a></li>
         <li><a href="#services">Event Planning</a></li>
         <li><a href="#services">Home Organizing</a></li>
@@ -490,7 +766,6 @@
     <div class="footer-col">
       <h4>Company</h4>
       <ul>
-         <link rel="stylesheet" href="css/styles.css">
         <li><a href="index.html#about">About Us</a></li>
         <li><a href="book.html#gallery">Gallery</a></li>
         <li><a href="book.html#booking">Book a Service</a></li>
@@ -511,22 +786,15 @@
   <div class="footer-bottom">
     <span class="footer-copy">© 2026 Xindies Amazing Hands LLC. All rights reserved.</span>
     <div class="footer-legal">
-  <a href="#" data-legal="privacy">Privacy Policy</a>
-  <a href="#" data-legal="terms">Terms of Service</a>
-</div>
+      <a href="#" data-legal="privacy">Privacy Policy</a>
+      <a href="#" data-legal="terms">Terms of Service</a>
+    </div>
   </div>
 </footer>
-  <!-- ════════════════════════════════════════════
-     LEGAL MODALS — Privacy Policy & Terms of Service
-     Paste this block just before </body> on every page.
-     Make sure your styles.css and fonts are already linked.
-     ════════════════════════════════════════════ -->
 
-<!-- ── MODAL OVERLAY ── -->
+<!-- ════════════════ LEGAL MODALS ════════════════ -->
 <div id="legalOverlay" aria-hidden="true">
   <div id="legalModal" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle">
-
-    <!-- Header -->
     <div class="lm-header">
       <div class="lm-tabs">
         <button class="lm-tab active" data-target="privacy">Privacy Policy</button>
@@ -534,16 +802,11 @@
       </div>
       <button class="lm-close" aria-label="Close">&times;</button>
     </div>
-
-    <!-- Body -->
     <div class="lm-body">
-
-      <!-- ── PRIVACY POLICY ── -->
       <div class="lm-panel active" id="panel-privacy">
         <p class="lm-effective">Effective Date: January 1, 2025</p>
         <h2 id="legalModalTitle" class="lm-title">Privacy Policy</h2>
         <p class="lm-lead">Xindies Amazing Hands LLC ("we," "our," or "us") respects your privacy. This policy explains how we collect, use, and protect your personal information when you visit our website or use our services.</p>
-
         <h3>1. Information We Collect</h3>
         <p>We may collect the following types of information:</p>
         <ul>
@@ -552,7 +815,6 @@
           <li><strong>Payment Information</strong> — deposit and payment processing is handled securely through Stripe. We do not store your credit card or banking details on our servers.</li>
           <li><strong>Usage Data</strong> — general information about how you interact with our website, such as pages visited and time spent, collected via standard web analytics.</li>
         </ul>
-
         <h3>2. How We Use Your Information</h3>
         <p>The information we collect is used solely to:</p>
         <ul>
@@ -563,266 +825,92 @@
           <li>Comply with applicable legal obligations</li>
         </ul>
         <p>We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
-
         <h3>3. Data Security</h3>
         <p>We take reasonable technical and organizational measures to protect your information from unauthorized access, loss, or disclosure. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
-
         <h3>4. Third-Party Services</h3>
-        <p>Our website may use third-party tools including Google Fonts, Stripe for payment processing, and Google Forms for booking submissions. Each of these services operates under its own privacy policy. We encourage you to review their terms independently.</p>
-
+        <p>Our website may use third-party tools including Google Fonts, Stripe for payment processing, and Google Forms for booking submissions. Each of these services operates under its own privacy policy.</p>
         <h3>5. Cookies</h3>
-        <p>Our website may use cookies or similar technologies to enhance your browsing experience. You may disable cookies through your browser settings, though some features of the site may not function properly as a result.</p>
-
+        <p>Our website may use cookies or similar technologies to enhance your browsing experience. You may disable cookies through your browser settings.</p>
         <h3>6. Your Rights</h3>
-        <p>You have the right to request access to the personal information we hold about you, request correction or deletion of that information, and opt out of any future communications at any time. To exercise these rights, please contact us at the email below.</p>
-
+        <p>You have the right to request access to the personal information we hold about you, request correction or deletion of that information, and opt out of any future communications at any time.</p>
         <h3>7. Children's Privacy</h3>
-        <p>Our website is not directed to children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us and we will promptly delete it.</p>
-
+        <p>Our website is not directed to children under the age of 13. We do not knowingly collect personal information from children.</p>
         <h3>8. Changes to This Policy</h3>
-        <p>We may update this Privacy Policy from time to time. Changes will be reflected on this page with an updated effective date. Continued use of our website following any changes constitutes your acceptance of the revised policy.</p>
-
+        <p>We may update this Privacy Policy from time to time. Changes will be reflected on this page with an updated effective date.</p>
         <h3>9. Contact Us</h3>
-        <p>If you have questions or concerns about this Privacy Policy, please reach out to us at:<br/>
-        <a href="mailto:hello@xindiesamazinghands.com">hello@xindiesamazinghands.com</a></p>
+        <p>If you have questions or concerns, please reach out at:<br/><a href="mailto:hello@xindiesamazinghands.com">hello@xindiesamazinghands.com</a></p>
       </div>
-
-      <!-- ── TERMS OF SERVICE ── -->
       <div class="lm-panel" id="panel-terms">
         <p class="lm-effective">Effective Date: January 1, 2025</p>
         <h2 class="lm-title">Terms of Service</h2>
-        <p class="lm-lead">Please read these Terms of Service carefully before booking or using any services provided by Xindies Amazing Hands LLC. By engaging our services, you agree to be bound by the following terms.</p>
-
+        <p class="lm-lead">Please read these Terms of Service carefully before booking or using any services provided by Xindies Amazing Hands LLC.</p>
         <h3>1. Services Provided</h3>
-        <p>Xindies Amazing Hands LLC offers catering, hair braiding and styling, event coordination, wedding coordination, private sitting, childcare, and home organizing services. The specific scope of services for your engagement will be outlined in a written agreement or booking confirmation provided prior to your event date.</p>
-
-        <h3>2. Bookings & Deposits</h3>
-        <p>All bookings require a non-refundable deposit to secure your date. The deposit amount will be communicated at the time of booking and applied toward your total service fee. Your date is not confirmed until the deposit is received and a booking confirmation is issued.</p>
-
-        <h3>3. Payment</h3>
-        <p>The remaining balance is due no later than 48 hours prior to your scheduled event or service date unless otherwise agreed in writing. Accepted payment methods include Stripe, cash, and any additional methods confirmed at the time of booking. Late payments may result in cancellation of the booking without refund of the deposit.</p>
-
-        <h3>4. Cancellations & Rescheduling</h3>
+        <p>Xindies Amazing Hands LLC offers catering, hair styling and braiding, event coordination, wedding coordination, private sitting, childcare, elderly care, and home organizing services.</p>
+        <h3>2. Bookings &amp; Deposits</h3>
+        <p>All bookings require a <strong>non-refundable deposit of 40%</strong> of the total service cost to secure your date. Your date is not confirmed until the deposit is received and a booking confirmation is issued.</p>
+        <h3>3. Cancellation &amp; Refund Policy</h3>
         <ul>
-          <li><strong>Client Cancellations</strong> — Deposits are non-refundable. Cancellations made more than 14 days before the event date will not incur additional charges. Cancellations within 14 days of the event may be subject to a cancellation fee of up to 50% of the total booking value.</li>
-          <li><strong>Rescheduling</strong> — We will make every effort to accommodate rescheduling requests subject to availability. Rescheduling requests must be made at least 7 days in advance.</li>
-          <li><strong>Our Cancellations</strong> — In the unlikely event that we must cancel due to circumstances beyond our control, we will provide a full refund of all amounts paid, including the deposit.</li>
+          <li><strong>14+ days before the event</strong> — 50% of the deposit will be refunded.</li>
+          <li><strong>Within 7 days of the event</strong> — No refund will be issued.</li>
+          <li><strong>Our Cancellations</strong> — In the unlikely event that we must cancel, we will provide a full refund of all amounts paid, including the deposit.</li>
         </ul>
-
-        <h3>5. Client Responsibilities</h3>
-        <p>You agree to provide accurate and complete information at the time of booking. For event services, you are responsible for ensuring that the venue is accessible and that we are informed of any site-specific requirements or restrictions in advance. For childcare and private sitting services, you agree to provide a safe environment and accurate information regarding the children in our care.</p>
-
-        <h3>6. Limitation of Liability</h3>
-        <p>Xindies Amazing Hands LLC shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services. Our total liability for any claim related to a booking shall not exceed the amount paid for that specific service.</p>
-
-        <h3>7. Intellectual Property</h3>
-        <p>All content on this website, including text, graphics, logos, and photography, is the property of Xindies Amazing Hands LLC or its content suppliers and is protected by applicable copyright and intellectual property laws. You may not reproduce or use any content from this site without our express written permission.</p>
-
-        <h3>8. Photography & Testimonials</h3>
-        <p>We may photograph our work at events for portfolio and marketing purposes. If you do not wish for photographs to be taken or shared, please notify us in writing prior to your event. Any testimonials or reviews you submit may be used in our marketing materials.</p>
-
-        <h3>9. Governing Law</h3>
-        <p>These Terms of Service shall be governed by and construed in accordance with the laws of the State of Texas. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts located in Texas.</p>
-
-        <h3>10. Changes to These Terms</h3>
-        <p>We reserve the right to modify these Terms of Service at any time. Updated terms will be posted on this page with a revised effective date. Continued use of our services following any changes constitutes acceptance of the new terms.</p>
-
+        <h3>4. Payment</h3>
+        <p>The remaining balance (60%) is due no later than 48 hours prior to your scheduled event or service date unless otherwise agreed in writing. Late payments may result in cancellation without refund of the deposit.</p>
+        <h3>5. Rescheduling</h3>
+        <p>We will make every effort to accommodate rescheduling requests subject to availability. Rescheduling requests must be made at least 7 days in advance.</p>
+        <h3>6. Client Responsibilities</h3>
+        <p>You agree to provide accurate and complete information at the time of booking. For event services, you are responsible for ensuring that the venue is accessible. For childcare and private sitting services, you agree to provide a safe environment and accurate information.</p>
+        <h3>7. Limitation of Liability</h3>
+        <p>Xindies Amazing Hands LLC shall not be liable for any indirect, incidental, or consequential damages. Our total liability for any claim shall not exceed the amount paid for that specific service.</p>
+        <h3>8. Intellectual Property</h3>
+        <p>All content on this website is the property of Xindies Amazing Hands LLC and is protected by applicable copyright laws.</p>
+        <h3>9. Photography &amp; Testimonials</h3>
+        <p>We may photograph our work at events for portfolio and marketing purposes. If you do not wish for photographs to be taken or shared, please notify us in writing prior to your event.</p>
+        <h3>10. Governing Law</h3>
+        <p>These Terms of Service shall be governed by the laws of the State of Texas.</p>
         <h3>11. Contact Us</h3>
-        <p>For questions about these Terms of Service, please contact us at:<br/>
-        <a href="mailto:hello@xindiesamazinghands.com">hello@xindiesamazinghands.com</a></p>
+        <p>For questions, please contact us at:<br/><a href="mailto:hello@xindiesamazinghands.com">hello@xindiesamazinghands.com</a></p>
       </div>
-
-    </div><!-- end .lm-body -->
-  </div><!-- end #legalModal -->
-</div><!-- end #legalOverlay -->
-
+    </div>
+  </div>
+</div>
 
 <!-- ── LEGAL MODAL STYLES ── -->
 <style>
-  #legalOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(30, 26, 28, 0.72);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 9000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.35s ease;
-  }
-  #legalOverlay.open {
-    opacity: 1;
-    pointer-events: all;
-  }
-  #legalModal {
-    background: rgba(250, 247, 244, 0.97);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    width: 100%;
-    max-width: 760px;
-    max-height: 82vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 32px 80px rgba(30, 26, 28, 0.25), 0 0 0 1px rgba(201, 123, 138, 0.15);
-    transform: translateY(24px) scale(0.98);
-    transition: transform 0.35s ease;
-  }
-  #legalOverlay.open #legalModal {
-    transform: translateY(0) scale(1);
-  }
-
-  /* Header */
-  .lm-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.6rem 2.2rem 0;
-    border-bottom: 1px solid #ede4e8;
-    flex-shrink: 0;
-  }
-  .lm-tabs {
-    display: flex;
-    gap: 0;
-  }
-  .lm-tab {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #7a6e72;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    padding: 0 0 1.1rem;
-    margin-right: 2rem;
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .lm-tab:hover { color: #a35468; }
-  .lm-tab.active {
-    color: #a35468;
-    border-bottom-color: #a35468;
-  }
-  .lm-close {
-    font-family: 'Bodoni Moda', serif;
-    font-size: 1.6rem;
-    font-weight: 400;
-    color: #7a6e72;
-    background: none;
-    border: none;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 0 0.8rem;
-    transition: color 0.2s, transform 0.2s;
-  }
-  .lm-close:hover { color: #a35468; transform: rotate(90deg); }
-
-  /* Body */
-  .lm-body {
-    overflow-y: auto;
-    padding: 2.2rem 2.8rem 3rem;
-    flex: 1;
-  }
-  .lm-body::-webkit-scrollbar { width: 4px; }
-  .lm-body::-webkit-scrollbar-track { background: transparent; }
-  .lm-body::-webkit-scrollbar-thumb { background: #ede4e8; border-radius: 2px; }
-
-  /* Panels */
-  .lm-panel { display: none; }
-  .lm-panel.active { display: block; }
-
-  .lm-effective {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #c97b8a;
-    margin-bottom: 0.6rem;
-    font-weight: 400;
-  }
-  .lm-title {
-    font-family: 'Bodoni Moda', serif;
-    font-size: 1.9rem;
-    font-weight: 400;
-    color: #1e1a1c;
-    margin-bottom: 1.2rem;
-    line-height: 1.1;
-  }
-  .lm-lead {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.95rem;
-    line-height: 1.85;
-    color: #7a6e72;
-    font-weight: 300;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #ede4e8;
-  }
-  .lm-panel h3 {
-    font-family: 'Tenor Sans', serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #1e1a1c;
-    margin: 1.8rem 0 0.7rem;
-  }
-  .lm-panel p {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.88rem;
-    line-height: 1.85;
-    color: #7a6e72;
-    font-weight: 300;
-    margin-bottom: 0.8rem;
-  }
-  .lm-panel ul {
-    padding-left: 0;
-    list-style: none;
-    margin-bottom: 0.8rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .lm-panel ul li {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.88rem;
-    line-height: 1.75;
-    color: #7a6e72;
-    font-weight: 300;
-    padding-left: 1.2rem;
-    position: relative;
-  }
-  .lm-panel ul li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: #c97b8a;
-    font-size: 0.75rem;
-  }
-  .lm-panel a {
-    color: #a35468;
-    text-decoration: none;
-    border-bottom: 1px solid rgba(163, 84, 104, 0.3);
-    transition: border-color 0.2s;
-  }
-  .lm-panel a:hover { border-bottom-color: #a35468; }
-  .lm-panel strong { color: #1e1a1c; font-weight: 500; }
-
-  @media (max-width: 600px) {
-    #legalModal { max-height: 90vh; }
-    .lm-header { padding: 1.2rem 1.4rem 0; }
-    .lm-body { padding: 1.6rem 1.4rem 2rem; }
-    .lm-title { font-size: 1.5rem; }
-  }
+  #legalOverlay { position:fixed; inset:0; background:rgba(30,26,28,0.72); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:9000; display:flex; align-items:center; justify-content:center; padding:1.5rem; opacity:0; pointer-events:none; transition:opacity 0.35s ease; }
+  #legalOverlay.open { opacity:1; pointer-events:all; }
+  #legalModal { background:rgba(250,247,244,0.97); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); width:100%; max-width:760px; max-height:82vh; display:flex; flex-direction:column; box-shadow:0 32px 80px rgba(30,26,28,0.25),0 0 0 1px rgba(201,123,138,0.15); transform:translateY(24px) scale(0.98); transition:transform 0.35s ease; }
+  #legalOverlay.open #legalModal { transform:translateY(0) scale(1); }
+  .lm-header { display:flex; align-items:center; justify-content:space-between; padding:1.6rem 2.2rem 0; border-bottom:1px solid #ede4e8; flex-shrink:0; }
+  .lm-tabs { display:flex; gap:0; }
+  .lm-tab { font-family:'Jost',sans-serif; font-size:0.68rem; font-weight:400; letter-spacing:0.2em; text-transform:uppercase; color:#7a6e72; background:none; border:none; border-bottom:2px solid transparent; padding:0 0 1.1rem; margin-right:2rem; cursor:pointer; transition:color 0.2s,border-color 0.2s; }
+  .lm-tab:hover { color:#a35468; }
+  .lm-tab.active { color:#a35468; border-bottom-color:#a35468; }
+  .lm-close { font-family:'Bodoni Moda',serif; font-size:1.6rem; font-weight:400; color:#7a6e72; background:none; border:none; cursor:pointer; line-height:1; padding:0 0 0.8rem; transition:color 0.2s,transform 0.2s; }
+  .lm-close:hover { color:#a35468; transform:rotate(90deg); }
+  .lm-body { overflow-y:auto; padding:2.2rem 2.8rem 3rem; flex:1; }
+  .lm-body::-webkit-scrollbar { width:4px; }
+  .lm-body::-webkit-scrollbar-track { background:transparent; }
+  .lm-body::-webkit-scrollbar-thumb { background:#ede4e8; border-radius:2px; }
+  .lm-panel { display:none; }
+  .lm-panel.active { display:block; }
+  .lm-effective { font-family:'Jost',sans-serif; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:#c97b8a; margin-bottom:0.6rem; font-weight:400; }
+  .lm-title { font-family:'Bodoni Moda',serif; font-size:1.9rem; font-weight:400; color:#1e1a1c; margin-bottom:1.2rem; line-height:1.1; }
+  .lm-lead { font-family:'Jost',sans-serif; font-size:0.95rem; line-height:1.85; color:#7a6e72; font-weight:300; margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid #ede4e8; }
+  .lm-panel h3 { font-family:'Tenor Sans',serif; font-size:0.8rem; letter-spacing:0.14em; text-transform:uppercase; color:#1e1a1c; margin:1.8rem 0 0.7rem; }
+  .lm-panel p { font-family:'Jost',sans-serif; font-size:0.88rem; line-height:1.85; color:#7a6e72; font-weight:300; margin-bottom:0.8rem; }
+  .lm-panel ul { padding-left:0; list-style:none; margin-bottom:0.8rem; display:flex; flex-direction:column; gap:0.5rem; }
+  .lm-panel ul li { font-family:'Jost',sans-serif; font-size:0.88rem; line-height:1.75; color:#7a6e72; font-weight:300; padding-left:1.2rem; position:relative; }
+  .lm-panel ul li::before { content:'—'; position:absolute; left:0; color:#c97b8a; font-size:0.75rem; }
+  .lm-panel a { color:#a35468; text-decoration:none; border-bottom:1px solid rgba(163,84,104,0.3); transition:border-color 0.2s; }
+  .lm-panel a:hover { border-bottom-color:#a35468; }
+  .lm-panel strong { color:#1e1a1c; font-weight:500; }
+  @media (max-width:600px) { #legalModal { max-height:90vh; } .lm-header { padding:1.2rem 1.4rem 0; } .lm-body { padding:1.6rem 1.4rem 2rem; } .lm-title { font-size:1.5rem; } }
 </style>
 
-
-<!-- ── LEGAL MODAL SCRIPT ── -->
+<!-- ── SCRIPTS ── -->
 <script>
+  // ── Legal Modal ──
   (function () {
     const overlay = document.getElementById('legalOverlay');
     const tabs    = document.querySelectorAll('.lm-tab');
@@ -830,46 +918,65 @@
     const closeBtn = document.querySelector('.lm-close');
 
     function openModal(panelId) {
-      // Activate correct tab and panel
       tabs.forEach(t => t.classList.toggle('active', t.dataset.target === panelId));
       panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + panelId));
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
       overlay.classList.remove('open');
       overlay.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
-
-    // Tab switching
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => openModal(tab.dataset.target));
-    });
-
-    // Close button
+    tabs.forEach(tab => tab.addEventListener('click', () => openModal(tab.dataset.target)));
     closeBtn.addEventListener('click', closeModal);
-
-    // Click outside modal
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeModal();
-    });
-
-    // Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
-    });
-
-    // Hook up footer links
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
     document.querySelectorAll('[data-legal]').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal(link.dataset.legal);
-      });
+      link.addEventListener('click', (e) => { e.preventDefault(); openModal(link.dataset.legal); });
     });
   })();
+
+  // ── Subcategory pickers ──
+  function handleServiceChange(val) {
+    // Hide all sub-pickers
+    document.querySelectorAll('.sub-picker').forEach(el => el.classList.remove('visible'));
+
+    if (val === 'Catering')             document.getElementById('sub-catering').classList.add('visible');
+    if (val === 'Hair')                 document.getElementById('sub-hair').classList.add('visible');
+    if (val === 'Event Planning')       document.getElementById('sub-event').classList.add('visible');
+    if (val === 'Wedding Coordination') document.getElementById('sub-wedding').classList.add('visible');
+  }
+
+  function pickSub(el, hiddenId) {
+    // Deactivate siblings in same group
+    el.closest('.sub-options').querySelectorAll('.sub-opt').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById(hiddenId).value = el.dataset.val;
+  }
+
+  // ── Service sidebar sync ──
+  function selectService(el, name) {
+    document.querySelectorAll('.bsl-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    const sel = document.getElementById('serviceSelect');
+    for (let i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === name) { sel.selectedIndex = i; break; }
+    }
+    handleServiceChange(name);
+  }
+
+  // ── Stripe redirect ──
+  // ⬇⬇⬇ REPLACE THIS URL with your actual Stripe Payment Link
+  function redirectStripe() {
+    window.open('https://buy.stripe.com/REPLACE_WITH_YOUR_STRIPE_LINK', '_blank');
+  }
+
+  // ── Form submit handler ──
+  function handleBooking(e) {
+    // Form submits to Google Form via action URL — add any pre-submit logic here
+  }
 </script>
 <script src="js/main.js"></script>
 </body>
