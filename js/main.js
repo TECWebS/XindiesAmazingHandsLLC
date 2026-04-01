@@ -2,7 +2,7 @@
    XINDIES AMAZING HANDS LLC — CLEAN JS
    ══════════════════════════════════════════════ */
 
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_PAYMENT_LINK_HERE';
+const STRIPE_PAYMENT_LINK = 'https://book.stripe.com/bJefZj0Cu3CBbPE8Rm2Fa00';
 
 /* ── LEGAL MODAL ───────────────────────────── */
 (function initLegalModal() {
@@ -116,7 +116,7 @@ function pickSub(el, hiddenId) {
 
 /* ── STRIPE ───────────────────────────── */
 function redirectStripe() {
-  if (STRIPE_PAYMENT_LINK.includes('YOUR_PAYMENT_LINK_HERE')) {
+  if (STRIPE_PAYMENT_LINK.includes('https://book.stripe.com/bJefZj0Cu3CBbPE8Rm2Fa00')) {
     alert('Stripe not set up yet.');
     return;
   }
