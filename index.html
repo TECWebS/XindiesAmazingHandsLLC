@@ -390,7 +390,7 @@
       <div class="booking-form-card">
         <h3>Submit a Request</h3>
         <p class="form-subtitle">We'll confirm availability within 24 hours. A <strong>40% deposit</strong> is required for Catering, Hair over $150, and Event Planning.</p>
-        <form id="bookingForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSccrRPLXdMYP_3lw4T7tfx7yXBEu5IOwLvHe29rvFew_cEw4A/formResponse" method="POST" target="_blank" onsubmit="handleBooking(event)">
+        <form id="bookingForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSccrRPLXdMYP_3lw4T7tfx7yXBEu5IOwLvHe29rvFew_cEw4A/formResponse" method="POST" onsubmit="handleBooking(event)">
           <div class="frow">
             <div class="fg"><label>First Name</label><input type="text" name="entry.2132996580" placeholder="Jane" required/></div>
             <div class="fg"><label>Last Name</label><input type="text" name="entry.360198021" placeholder="Doe" required/></div>
@@ -475,17 +475,28 @@
             <strong style="color:#a35468;font-weight:500;">Deposit Policy</strong><br/>
             A <strong>40% deposit</strong> is required for Catering, Hair Styling over $150, and Event Planning &amp; Coordination. The deposit is <strong>50% refundable</strong> if you cancel 14+ days before your event. <strong>No refund</strong> within 7 days.
           </div>
-
-          <div id="deposit-row" class="deposit-row" style="display:none;">
+           <div id="deposit-row" class="deposit-row" style="display:none;">
             <div class="deposit-text">
-              <strong>Secure Your Date with a Deposit</strong>
-              40% of your service total — processed safely through Stripe. Remaining balance due 48 hrs before service.
+              <strong>Secure Your Date</strong>
+              Processed safely through Stripe. Remaining balance due 48 hrs before service.
             </div>
-            <button type="button" class="stripe-btn" id="stripeDepositBtn" onclick="redirectStripe()">
+            <button type="button" class="stripe-btn" id="stripeDepositBtn" onclick="redirectStripe(selectedPaymentType)">
               <svg width="38" height="16" viewBox="0 0 60 25" fill="none"><path d="M6.7 10.1c0-.6.5-1 1.3-1 1.2 0 2.6.4 3.7 1l.7-4.1C11.1 5.4 9.5 5 7.9 5 4 5 1.3 7 1.3 10.4c0 5.2 7 4.4 7 6.6 0 .7-.6 1.1-1.5 1.1-1.3 0-3-.5-4.3-1.3L2 21c1.4.7 3.2 1.1 4.8 1.1C11 22.1 14 20.2 14 16.6c0-5.5-7.3-4.6-7.3-6.5zm17.1-4.8L20.7 22h4.3l3.1-16.7h-4.3zm-5.6 0L15 22h4.3l3.1-16.7h-4.1zm25.3 0c-1.6 0-2.9.8-3.5 2l-.3-1.7H36l-2.8 16.4h4.3l1.1-6.4c.4 2.1 2 3.5 4 3.5 4 0 6.5-4 6.5-8.6 0-3.5-1.8-5.2-4.3-5.2zm-.8 10.7c-1.3 0-2.1-1.1-1.8-2.5l.4-2.3c.3-1.4 1.3-2.4 2.5-2.4 1.2 0 1.8.9 1.8 2.2 0 2.8-1.2 5-2.9 5z" fill="white"/></svg>
-              Pay Deposit
+              Proceed to Payment
             </button>
           </div>
+      <!-- Payment choice toggle -->
+<div id="payment-choice" style="display:none; margin-bottom:1rem;">
+<label style="font-family:'Jost',sans-serif; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:#7a6e72; display:block; margin-bottom:0.6rem;">How would you like to pay?</label>
+<div class="sub-options" style="flex-wrap:wrap; gap:0.5rem;">
+<div class="sub-opt pay-type-opt active" data-val="deposit" onclick="pickPaymentType(this)">
+Pay Deposit Only (40%)
+</div>
+<div class="sub-opt pay-type-opt" data-val="full" onclick="pickPaymentType(this)">
+Pay in Full
+</div>
+</div>
+</div>
           <div class="form-note">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 12a1 1 0 110-2 1 1 0 010 2zm1-4H9V6h2v4z" fill="#7a6e72"/></svg>
             Your information is protected. We will never share your data with third parties.
@@ -564,7 +575,7 @@
       <div class="inquiry-form-card">
         <h3>Send a Message</h3>
         <p class="form-subtitle" style="font-size:.82rem;color:var(--muted);margin-bottom:2rem;font-weight:300;line-height:1.6;">Tell us about yourself and what you need — we'll take it from there.</p>
- <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScw5AwWl5g3TEOvk_szqdT9gLwa5iM4xew7yk4OJrU_HJ1sFw/formResponse" method="POST" target="_blank" onsubmit="handleInquiry(event)">
+ <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScw5AwWl5g3TEOvk_szqdT9gLwa5iM4xew7yk4OJrU_HJ1sFw/formResponse" method="POST" onsubmit="handleInquiry(event)">
           <div class="frow">
             <div class="fg">
               <label>Your Name</label>
