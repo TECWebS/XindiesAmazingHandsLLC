@@ -1,209 +1,117 @@
 /* ══════════════════════════════════════════════
-   XINDIES AMAZING HANDS LLC — CLEAN JS
+   XINDIES AMAZING HANDS LLC — CLEAN JS (FIXED)
    ══════════════════════════════════════════════ */
 
 const STRIPE_PAYMENT_LINK = 'https://book.stripe.com/bJefZj0Cu3CBbPE8Rm2Fa00';
 
-/* ── LEGAL MODAL ───────────────────────────── */
-(function initLegalModal() {
-  const overlay = document.getElementById('legalOverlay');
-  if (!overlay) return;
+document.addEventListener('DOMContentLoaded', function () {
 
-  const tabs = document.querySelectorAll('.lm-tab');
-  const panels = document.querySelectorAll('.lm-panel');
-  const closeBtn = document.querySelector('.lm-close');
+  /* ── LEGAL MODAL ───────────────────────────── */
+  const overlay = document.getElementById('legalOverlay');
 
   function openModal(panelId) {
-    tabs.forEach(t => t.classList.toggle('active', t.dataset.target === panelId));
-    panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + panelId));
-    overlay.classList.add('open');
+    if (!overlay) return;
+    document.querySelectorAll('.lm-tab').forEach(t =>
+      t.classList.toggle('active', t.dataset.target === panelId)
+    );
+    document.querySelectorAll('.lm-panel').forEach(p =>
+      p.classList.toggle('active', p.id === 'panel-' + panelId)
+    );
+    overlay.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
 
   function closeModal() {
-    overlay.classList.remove('open');
+    if (!overlay) return;
+    overlay.style.display = 'none';
     document.body.style.overflow = '';
   }
 
-  tabs.forEach(tab => tab.addEventListener('click', () => openModal(tab.dataset.target)));
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (overlay) {
+    /* Tab switching inside modal */
+    overlay.querySelectorAll('.lm-tab, [data-target]').forEach(tab => {
+      tab.addEventListener('click', () => openModal(tab.dataset.target));
+    });
 
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    /* Close button */
+    const closeBtn = overlay.querySelector('.lm-close');
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
 
+    /* Click outside modal box */
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal();
+    });
+
+    /* Escape key */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+  }
+
+  /* Footer / any [data-legal] trigger links */
   document.querySelectorAll('[data-legal]').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
+      e.stopPropagation();
       openModal(link.dataset.legal);
     });
   });
-})();
 
-/* ── DATE SPLIT ───────────────────────────── */
-function splitDate(val) {
-  if (!val) return;
-  const p = val.split('-');
-  document.getElementById('dateYear').value = p[0];
-  document.getElementById('dateMonth').value = p[1].replace(/^0/, '');
-  document.getElementById('dateDay').value = p[2].replace(/^0/, '');
-}
+  /* ── REVEAL ANIMATION ───────────────────────── */
+  const revealEls = document.querySelectorAll('.reveal-up, .reveal-left');
 
-/* ── DEPOSIT LOGIC ───────────────────────── */
-const DEPOSIT_SERVICES = {
-  'Catering': true,
-  'Event Planning': true,
-  'Wedding Coordination': true
-};
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
 
-const HAIR_DEPOSIT_STYLES = [
-  'Box Braids – Small ($200)',
-  'Box Braids – Medium ($175)',
-  'Box Braids – Large ($165)',
-  'Sew-In with Leave Out ($175)'
-];
-
-function requiresDeposit() {
-  const svc = document.getElementById('serviceSelect')?.value;
-  if (DEPOSIT_SERVICES[svc]) return true;
-  if (svc === 'Hair') {
-    return HAIR_DEPOSIT_STYLES.includes(document.getElementById('subHair')?.value);
-  }
-  return false;
-}
-
-function updateDepositUI() {
-  const row = document.getElementById('deposit-row');
-  if (row) row.style.display = requiresDeposit() ? 'flex' : 'none';
-}
-
-/* ── SERVICE SELECTION ───────────────────── */
-function handleServiceChange(val) {
-  document.querySelectorAll('.sub-picker').forEach(el => el.classList.remove('visible'));
-
-  const map = {
-    'Catering': 'sub-catering',
-    'Hair': 'sub-hair',
-    'Event Planning': 'sub-event',
-    'Wedding Coordination': 'sub-wedding'
-  };
-
-  if (map[val]) document.getElementById(map[val])?.classList.add('visible');
-
-  updateDepositUI();
-}
-
-function selectService(el, name) {
-  document.querySelectorAll('.bsl-item').forEach(i => i.classList.remove('active'));
-  el.classList.add('active');
-
-  const sel = document.getElementById('serviceSelect');
-  if (sel) {
-    sel.value = name;
-    handleServiceChange(name);
-  }
-}
-
-function pickSub(el, hiddenId) {
-  el.closest('.sub-options')
-    .querySelectorAll('.sub-opt')
-    .forEach(s => s.classList.remove('active'));
-
-  el.classList.add('active');
-  document.getElementById(hiddenId).value = el.dataset.val;
-
-  updateDepositUI();
-}
-
-/* ── STRIPE ───────────────────────────── */
-function redirectStripe() {
-  if (STRIPE_PAYMENT_LINK.includes('https://book.stripe.com/bJefZj0Cu3CBbPE8Rm2Fa00')) {
-    alert('Stripe not set up yet.');
-    return;
-  }
-  window.open(STRIPE_PAYMENT_LINK, '_blank');
-}
-
-/* ── FORM HANDLERS ───────────────────── */
-function handleBooking(e) {
-  const form = e.target;
-
-  if (form.action.includes('https://docs.google.com/forms/u/0/d/e/1FAIpQLScw5AwWl5g3TEOvk_szqdT9gLwa5iM4xew7yk4OJrU_HJ1sFw/formResponse')) {
-    e.preventDefault();
-    alert('Booking form not connected yet.');
-    return;
+    revealEls.forEach(el => obs.observe(el));
+  } else {
+    /* Fallback for old browsers */
+    revealEls.forEach(el => el.classList.add('visible'));
   }
 
-  if (requiresDeposit()) {
-    setTimeout(redirectStripe, 500);
-  }
-}
-
-function handleInquiry(e) {
-  const form = e.target;
-
-  if (form.action.includes('https://docs.google.com/forms/u/0/d/e/1FAIpQLScw5AwWl5g3TEOvk_szqdT9gLwa5iM4xew7yk4OJrU_HJ1sFw/formResponse')) {
-    e.preventDefault();
-    alert('Inquiry form not connected yet.');
-  }
-}
-
-/* ── GALLERY SCROLL ───────────────────── */
-(function () {
-  const lane = document.querySelector('.gallery-lane');
-  if (!lane) return;
-
-  let pos = 0;
-  let paused = false;
-
-  lane.addEventListener('mouseenter', () => paused = true);
-  lane.addEventListener('mouseleave', () => paused = false);
-
-  function tick() {
-    if (!paused) {
-      pos += 0.5;
-      if (pos >= lane.scrollWidth / 2) pos = 0;
-      lane.style.transform = `translateX(-${pos}px)`;
-    }
-    requestAnimationFrame(tick);
-  }
-
-  tick();
-})();
-
-/* ── NAV SCROLL ───────────────────────── */
-window.addEventListener('scroll', () => {
-  document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 40);
-});
-
-/* ── REVEAL ANIMATION ───────────────── */
-(function () {
-  const els = document.querySelectorAll('.reveal-up, .reveal-left');
-  if (!('IntersectionObserver' in window)) {
-    els.forEach(e => e.classList.add('visible'));
-    return;
-  }
-
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('visible');
-    });
+  /* ── NAV SCROLL ───────────────────────── */
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('mainNav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  els.forEach(el => obs.observe(el));
-})();
+  /* ── GALLERY SCROLL ───────────────────── */
+  const lane = document.querySelector('.gallery-lane');
+  if (lane) {
+    let pos = 0;
+    let paused = false;
 
-/* ── PRICE PANELS ───────────────────── */
-(function () {
+    lane.addEventListener('mouseenter', () => paused = true);
+    lane.addEventListener('mouseleave', () => paused = false);
+
+    function tick() {
+      if (!paused) {
+        pos += 0.5;
+        if (pos >= lane.scrollWidth / 2) pos = 0;
+        lane.style.transform = `translateX(-${pos}px)`;
+      }
+      requestAnimationFrame(tick);
+    }
+    tick();
+  }
+
+  /* ── PRICE PANELS ───────────────────── */
   document.querySelectorAll('.svc-price-hint').forEach(btn => {
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
-
       const panel = this.nextElementSibling;
       const isOpen = panel.classList.contains('visible');
 
       document.querySelectorAll('.svc-price-panel.visible').forEach(p => {
         p.classList.remove('visible');
-        p.previousElementSibling.textContent = 'View Pricing';
+        if (p.previousElementSibling) p.previousElementSibling.textContent = 'View Pricing';
       });
 
       if (!isOpen) {
@@ -216,10 +124,87 @@ window.addEventListener('scroll', () => {
   document.addEventListener('click', () => {
     document.querySelectorAll('.svc-price-panel.visible').forEach(p => {
       p.classList.remove('visible');
-      p.previousElementSibling.textContent = 'View Pricing';
+      if (p.previousElementSibling) p.previousElementSibling.textContent = 'View Pricing';
     });
   });
-})();
 
-/* ── INIT ───────────────────────────── */
-handleServiceChange('Catering');
+  /* ── INIT DEFAULT SERVICE ───────────────────────── */
+  handleServiceChange('Catering');
+
+}); /* end DOMContentLoaded */
+
+/* ── DATE SPLIT ───────────────────────────── */
+function splitDate(val) {
+  if (!val) return;
+  const p = val.split('-');
+  const y = document.getElementById('dateYear');
+  const m = document.getElementById('dateMonth');
+  const d = document.getElementById('dateDay');
+  if (y) y.value = p[0];
+  if (m) m.value = p[1].replace(/^0/, '');
+  if (d) d.value = p[2].replace(/^0/, '');
+}
+
+/* ── DEPOSIT LOGIC ───────────────────── */
+const DEPOSIT_SERVICES = { 'Catering': true, 'Event Planning': true, 'Wedding Coordination': true };
+const HAIR_DEPOSIT_STYLES = [
+  'Box Braids – Small ($200)',
+  'Box Braids – Medium ($175)',
+  'Box Braids – Large ($165)',
+  'Sew-In with Leave Out ($175)'
+];
+
+function requiresDeposit() {
+  const svc = document.getElementById('serviceSelect')?.value;
+  if (DEPOSIT_SERVICES[svc]) return true;
+  if (svc === 'Hair') return HAIR_DEPOSIT_STYLES.includes(document.getElementById('subHair')?.value);
+  return false;
+}
+
+function updateDepositUI() {
+  const row = document.getElementById('deposit-row');
+  if (row) row.style.display = requiresDeposit() ? 'flex' : 'none';
+}
+
+/* ── SERVICE SELECTION ───────────────────── */
+function handleServiceChange(val) {
+  document.querySelectorAll('.sub-picker').forEach(el => el.classList.remove('visible'));
+  const map = {
+    'Catering': 'sub-catering',
+    'Hair': 'sub-hair',
+    'Event Planning': 'sub-event',
+    'Wedding Coordination': 'sub-wedding'
+  };
+  if (map[val]) {
+    const el = document.getElementById(map[val]);
+    if (el) el.classList.add('visible');
+  }
+  updateDepositUI();
+}
+
+function selectService(el, name) {
+  document.querySelectorAll('.bsl-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  const sel = document.getElementById('serviceSelect');
+  if (sel) { sel.value = name; handleServiceChange(name); }
+}
+
+function pickSub(el, hiddenId) {
+  el.closest('.sub-options').querySelectorAll('.sub-opt').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  const hidden = document.getElementById(hiddenId);
+  if (hidden) hidden.value = el.dataset.val;
+  updateDepositUI();
+}
+
+/* ── STRIPE ───────────────────────────── */
+function redirectStripe() {
+  window.open(STRIPE_PAYMENT_LINK, '_blank');
+}
+
+/* ── FORM HANDLERS ───────────────────── */
+function handleBooking(e) {
+  if (requiresDeposit()) setTimeout(redirectStripe, 500);
+}
+
+function handleInquiry(e) { /* form submits normally to Google Forms */ }
