@@ -1096,13 +1096,13 @@ footer {
   transform: translateY(36px);
   transition: opacity .8s ease, transform .8s ease;
 }
-.reveal-up.in { opacity: 1; transform: translateY(0); }
+.reveal-up.visible { opacity: 1; transform: translateY(0); }
 .reveal-left {
   opacity: 0;
   transform: translateX(-30px);
   transition: opacity .8s ease, transform .8s ease;
 }
-.reveal-left.in { opacity: 1; transform: translateX(0); }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
 
 /* ── LEGAL MODAL ── */
 #legalOverlay {
