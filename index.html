@@ -562,14 +562,6 @@ nav.scrolled {
   font-size: 0.65rem;
   margin-top: 0.1em;
 }
-.svc-arrow {
-  position: absolute;
-  bottom: 2rem; right: 2rem;
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity .3s, transform .3s;
-}
-.svc-card:hover .svc-arrow { opacity: 1; transform: translateX(0); }
 
 /* ── GALLERY ── */
 #gallery {
@@ -1071,6 +1063,97 @@ footer {
   .gallery-header { padding: 0 2rem; }
   .inquiry-inner { padding: 0 2rem; }
   footer { padding: 4rem 2rem 2rem; }
+}
+  .svc-list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+.svc-card.open .svc-list {
+  max-height: 200px;
+  opacity: 1;
+}
+.svc-arrow {
+  transition: opacity .3s, transform .3s;
+  cursor: pointer;
+}
+.svc-card.open .svc-arrow {
+  opacity: 1;
+  transform: translateX(0) rotate(90deg);
+}
+  .modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(14,12,16,0.55);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-box {
+  background: var(--cream);
+  width: min(680px, 92vw);
+  max-height: 80vh;
+  display: flex; flex-direction: column;
+  border-radius: 2px; overflow: hidden;
+  transform: translateY(20px);
+  transition: transform .35s ease;
+}
+.modal-overlay.open .modal-box { transform: translateY(0); }
+.modal-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 1.6rem 2rem 0; flex-shrink: 0;
+}
+.modal-header h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem; font-weight: 400; color: var(--dark);
+}
+.modal-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); font-size: 1.3rem;
+  line-height: 1; padding: 4px; transition: color .2s;
+}
+.modal-close:hover { color: var(--dark); }
+.modal-tabs {
+  display: flex; padding: 1rem 2rem 0; flex-shrink: 0;
+  border-bottom: 1px solid var(--pale);
+}
+.modal-tab {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted); background: none; border: none;
+  padding: 0.5rem 1rem 0.75rem; cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: color .2s, border-color .2s;
+}
+.modal-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+.modal-body { overflow-y: auto; padding: 2rem; flex: 1; }
+.modal-body h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.05rem; font-weight: 400;
+  color: var(--dark); margin: 1.5rem 0 0.5rem;
+}
+.modal-body h3:first-child { margin-top: 0; }
+.modal-body p {
+  font-size: 0.85rem; line-height: 1.85;
+  color: var(--muted); font-weight: 300; margin-bottom: 0.75rem;
+}
+.modal-body p strong { font-weight: 500; color: var(--dark); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+  .ct.clickable:hover { background: #f0e8e0; }
+.reviews-text {
+  margin-top: 1.2rem;
+  font-size: 0.75rem;
+}
+
+.reviews-link {
+  color: var(--blue);
+  text-decoration: none;
+  letter-spacing: 0.1em;
 }
 </style>
 </head>
@@ -1691,13 +1774,15 @@ footer {
           <span class="ct-label">Email</span>
           <div class="ct-value"><a href="/cdn-cgi/l/email-protection#b2dad7dededdf2cadbdcd6dbd7c1d3dfd3c8dbdcd5dad3dcd6c19cd1dddf"><span class="__cf_email__" data-cfemail="c6aea3aaaaa986beafa8a2afa3b5a7aba7bcafa8a1aea7a8a2b5e8a5a9ab">[email&#160;protected]</span></a></div>
         </div>
-        <div class="ct">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .92h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
-          </svg>
-          <span class="ct-label">Phone / Text</span>
-          <div class="ct-value"><a href="tel:+15550000000">(555) 000-0000</a></div>
-        </div>
+       <div class="ct clickable" onclick="openReviewForm()" style="cursor:pointer; transition:background .2s;">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
+  </svg>
+  <span class="ct-label">Reviews</span>
+  <div class="ct-value" id="tile-rating">Leave Us a Review</div>
+  <div class="stars-display" id="tile-stars" style="display:none; display:flex; gap:3px; margin-top:0.3rem;"></div>
+  <div id="tile-count" style="font-size:0.72rem; color:var(--muted); margin-top:0.3rem;"></div>
+</div>
         <div class="ct">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="12" r="10" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
@@ -1792,6 +1877,11 @@ footer {
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#booking">Book a Service</a></li>
         <li><a href="#inquiry">Contact</a></li>
+        <li>
+  <a href="#" onclick="openReviewsModal(); return false;" class="footer-reviews-link">
+    &#9733; See all client reviews
+  </a>
+</li>
       </ul>
     </div>
   </div>
@@ -1799,8 +1889,8 @@ footer {
   <div class="footer-bottom">
     <span class="footer-copy">© 2026-2027 Xindies Amazing Hands LLC. All rights reserved.</span>
     <div class="footer-legal">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
+      <a href="#" onclick="openModal('privacy');return false;">Privacy Policy</a>
+<a href="#" onclick="openModal('tos');return false;">Terms of Service</a>
     </div>
   </div>
 </footer>
@@ -1823,6 +1913,14 @@ const revObs = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.08 });
 revEls.forEach(el => revObs.observe(el));
+  // ── Service card toggle
+document.querySelectorAll('.svc-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  });
+});
 
 // ── Services that require FULL PAYMENT only (no deposit)
 const FULL_ONLY_SERVICES = ['Home Organizing', 'Private Sitting'];
@@ -2047,6 +2145,75 @@ function handleInquiry(e) {
     form.reset();
   }, 4000);
 }
+  // ── Legal modal
+function openModal(tab) {
+  document.getElementById('legalModal').classList.add('open');
+  switchTab(tab);
+}
+function closeModal() {
+  document.getElementById('legalModal').classList.remove('open');
+}
+function switchTab(tab) {
+  document.querySelectorAll('.modal-tab').forEach((t, i) => {
+    t.classList.toggle('active', (tab==='privacy'&&i===0)||(tab==='tos'&&i===1));
+  });
+  document.getElementById('tab-privacy').classList.toggle('active', tab==='privacy');
+  document.getElementById('tab-tos').classList.toggle('active', tab==='tos');
+}
+document.getElementById('legalModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
 </script>
+  <!-- LEGAL MODAL -->
+<div class="modal-overlay" id="legalModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Legal</h2>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchTab('privacy')">Privacy Policy</button>
+      <button class="modal-tab" onclick="switchTab('tos')">Terms of Service</button>
+    </div>
+    <div class="modal-body">
+      <div class="tab-panel active" id="tab-privacy">
+        <h3>Overview</h3>
+        <p>Xindies Amazing Hands LLC ("we," "us," or "our") is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard the data you share with us when booking services or contacting us through this website.</p>
+        <h3>Information We Collect</h3>
+        <p>We collect information you provide directly — including your name, email address, phone number, event date, and service preferences when you submit a booking request or inquiry form.</p>
+        <p>We may also collect non-identifying technical data (such as browser type and referring pages) to help us improve the website experience.</p>
+        <h3>How We Use Your Information</h3>
+        <p>Your information is used solely to confirm and fulfill your service booking, follow up on inquiries, and communicate important updates related to your engagement with us. <strong>We do not sell, rent, or share your personal data with third parties</strong> for marketing purposes.</p>
+        <h3>Payment Processing</h3>
+        <p>All payments are processed securely through Stripe. We do not store your credit card or payment details on our servers. Please review Stripe's privacy policy for information on how they handle payment data.</p>
+        <h3>Data Retention</h3>
+        <p>We retain your information for as long as necessary to fulfill the purposes described above or as required by applicable law. You may request deletion of your data at any time by contacting us directly.</p>
+        <h3>Contact</h3>
+        <p>If you have questions about this Privacy Policy, please reach out to us through the Contact section of this website.</p>
+        <p><strong>Last updated:</strong> January 2026</p>
+      </div>
+      <div class="tab-panel" id="tab-tos">
+        <h3>Acceptance of Terms</h3>
+        <p>By accessing this website and submitting a booking or inquiry, you agree to be bound by these Terms of Service. If you do not agree, please refrain from using our services.</p>
+        <h3>Services</h3>
+        <p>Xindies Amazing Hands LLC provides catering, hair braiding, private sitting, event planning &amp; coordination, and home organizing services. All services are subject to availability, and final pricing may vary based on scope and custom requirements discussed during consultation.</p>
+        <h3>Bookings &amp; Deposits</h3>
+        <p>A deposit is required to secure your booking date. Deposits are non-refundable unless the cancellation is initiated by Xindies Amazing Hands LLC. The remaining balance is due at the time of service unless otherwise agreed in writing.</p>
+        <h3>Cancellations &amp; Rescheduling</h3>
+        <p>Clients may request to reschedule with at least <strong>72 hours' notice</strong> prior to the scheduled service date, subject to availability. Cancellations made with less than 72 hours' notice may result in forfeiture of the deposit.</p>
+        <h3>Limitation of Liability</h3>
+        <p>Xindies Amazing Hands LLC shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services beyond the amount paid for the specific service in question.</p>
+        <h3>Changes to Terms</h3>
+        <p>We reserve the right to update these Terms of Service at any time. Continued use of our services following any changes constitutes acceptance of the revised terms.</p>
+        <h3>Contact</h3>
+        <p>For questions regarding these Terms, please contact us through the Contact section of this website.</p>
+        <p><strong>Last updated:</strong> January 2026</p>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
