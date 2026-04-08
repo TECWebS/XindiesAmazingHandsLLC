@@ -2166,6 +2166,97 @@ document.getElementById('legalModal').addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModal();
 });
+  // ── Review system
+let reviewRating = 0;
+let siteReviews = JSON.parse(localStorage.getItem('xindies_reviews') || '[]');
+
+function updateReviewTile() {
+  if (!siteReviews.length) return;
+  const avg = siteReviews.reduce((s,r) => s + r.rating, 0) / siteReviews.length;
+  document.getElementById('tile-rating').textContent = avg.toFixed(1) + ' / 5';
+  const sc = document.getElementById('tile-stars');
+  sc.style.display = 'flex';
+  sc.innerHTML = [1,2,3,4,5].map(i =>
+    `<svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="${i<=Math.round(avg)?'#d4af37':'#ecddd8'}"/></svg>`
+  ).join('');
+  document.getElementById('tile-count').textContent = siteReviews.length + ' review' + (siteReviews.length !== 1 ? 's' : '');
+}
+
+function setRating(val) {
+  reviewRating = val;
+  document.querySelectorAll('.star-btn').forEach(b => {
+    b.classList.toggle('lit', parseInt(b.dataset.val) <= val);
+  });
+}
+
+function updateCharCount() {
+  const ta = document.getElementById('r-text');
+  document.getElementById('charLeft').textContent = 280 - ta.value.length;
+}
+
+function openReviewForm() {
+  reviewRating = 0;
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('lit'));
+  document.getElementById('r-name').value = '';
+  document.getElementById('r-service').value = '';
+  document.getElementById('r-text').value = '';
+  document.getElementById('charLeft').textContent = '280';
+  document.getElementById('reviewFormOverlay').classList.add('open');
+}
+
+function openReviewsModal() {
+  const list = document.getElementById('reviewsList');
+  if (!siteReviews.length) {
+    list.innerHTML = '<div style="padding:2.5rem 1.8rem;text-align:center;color:var(--muted);font-size:0.85rem;">No reviews yet — be the first to share your experience!</div>';
+  } else {
+    list.innerHTML = [...siteReviews].reverse().map(r => `
+      <div style="padding:1.4rem 1.8rem;border-bottom:1px solid var(--pale);">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.5rem;gap:1rem;">
+          <div>
+            <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;color:var(--dark);">${r.name}</div>
+            <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:2px;">${r.service}</div>
+          </div>
+          <div style="display:flex;gap:2px;flex-shrink:0;">${[1,2,3,4,5].map(i=>`<svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="${i<=r.rating?'#d4af37':'#ecddd8'}"/></svg>`).join('')}</div>
+        </div>
+        <div style="font-size:0.82rem;line-height:1.75;color:var(--muted);font-weight:300;">${r.text}</div>
+      </div>`).join('');
+  }
+  document.getElementById('reviewsViewOverlay').classList.add('open');
+}
+
+function closeReviewModals() {
+  document.getElementById('reviewFormOverlay').classList.remove('open');
+  document.getElementById('reviewsViewOverlay').classList.remove('open');
+}
+
+function submitReview() {
+  const name = document.getElementById('r-name').value.trim();
+  const service = document.getElementById('r-service').value;
+  const text = document.getElementById('r-text').value.trim();
+  if (!name || !service || !reviewRating || !text) {
+    alert('Please fill in all fields and select a star rating.');
+    return;
+  }
+  siteReviews.push({ name, service, rating: reviewRating, text, date: new Date().toISOString() });
+  localStorage.setItem('xindies_reviews', JSON.stringify(siteReviews));
+  updateReviewTile();
+  document.getElementById('reviewFormBody').innerHTML = `
+    <div style="text-align:center;padding:2.5rem 1rem;">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style="margin:0 auto 1rem;display:block;">
+        <circle cx="12" cy="12" r="10" stroke="#4a9e7a" stroke-width="1.5"/>
+        <path d="M8 12l3 3 5-5" stroke="#4a9e7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h4 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--dark);margin-bottom:0.5rem;">Thank You!</h4>
+      <p style="font-size:0.82rem;color:var(--muted);">Your review has been submitted. We truly appreciate your feedback.</p>
+    </div>`;
+  setTimeout(closeReviewModals, 2500);
+}
+
+document.querySelectorAll('.overlay').forEach(o => {
+  o.addEventListener('click', function(e) { if (e.target === this) closeReviewModals(); });
+});
+
+updateReviewTile();
 </script>
   <!-- LEGAL MODAL -->
 <div class="modal-overlay" id="legalModal">
