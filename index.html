@@ -757,24 +757,29 @@ nav.scrolled {
   font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 400;
+  color: var(--rose);
+  font-weight: 500;
+  margin-bottom: 0.3rem;
 }
 .fg input, .fg select, .fg textarea {
-  border: none;
-  border-bottom: 1.5px solid var(--pale);
-  background: transparent;
-  padding: 0.65rem 0;
+  border: 1.5px solid var(--pale);
+  border-radius: 2px;
+  background: white;
+  padding: 0.75rem 1rem;
   font-size: 0.92rem;
   font-family: 'Jost', sans-serif;
   font-weight: 300;
   color: var(--dark);
   outline: none;
-  transition: border-color .2s;
+  transition: border-color .2s, box-shadow .2s;
   width: 100%;
 }
+.fg input::placeholder, .fg textarea::placeholder {
+  color: rgba(107,93,90,0.4);
+}
 .fg input:focus, .fg select:focus, .fg textarea:focus {
-  border-bottom-color: var(--blue);
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(42,111,196,0.1);
 }
 .fg textarea { resize: none; min-height: 90px; }
 .deposit-row {
@@ -827,17 +832,18 @@ nav.scrolled {
 .payment-option {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   cursor: pointer;
-  padding: 0.55rem 1.1rem;
+  padding: 0.9rem 1.2rem;
   border: 1.5px solid var(--pale);
-  background: var(--cream);
+  background: white;
   transition: border-color .2s, background .2s;
   font-size: 0.8rem;
   color: var(--muted);
   font-family: 'Jost', sans-serif;
   font-weight: 300;
-  position: relative;
+  flex: 1;
+  min-width: 160px;
 }
 .payment-option input[type="radio"] {
   appearance: none;
@@ -1430,7 +1436,7 @@ footer {
       <svg width="28" height="8" viewBox="0 0 28 8" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M1 4h26M22 1l5 3-5 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      Auto-scrolling · Hover to pause
+
     </div>
   </div>
 
@@ -1487,9 +1493,7 @@ footer {
   </div>
 
   <div style="padding: 2.5rem 3.5rem; max-width:1280px; margin: 0 auto;">
-    <p style="font-size:0.78rem;color:var(--muted);font-style:italic;font-family:'Jost',sans-serif;font-weight:300;">
-      To add real photos: replace the colored &lt;div&gt; blocks with &lt;img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover"&gt; tags inside each .g-item-inner element.
-    </p>
+  
   </div>
 </section>
 
@@ -1627,14 +1631,12 @@ footer {
                 <label>Hair Service</label>
                 <select name="entry.1878703687">
                   <option value="">— Select a style —</option>
-                  <option value="Knotless Braids – Small ($250)">Knotless Braids – Small ($250)</option>
-                  <option value="Knotless Braids – Medium ($200)">Knotless Braids – Medium ($200)</option>
+                  <option value="Box Braids – Small ($200)">Box Braids – Small ($200)</option>
                   <option value="Box Braids – Medium ($175)">Box Braids – Medium ($175)</option>
-                  <option value="Box Braids – Large ($150)">Box Braids – Large ($150)</option>
-                  <option value="Goddess Braids ($100+)">Goddess Braids ($100+)</option>
-                  <option value="Locs – Starter ($200+)">Locs – Starter ($200+)</option>
-                  <option value="Wash &amp; Style ($65+)">Wash &amp; Style ($65+)</option>
-                  <option value="Other / Consultation">Other / Consultation</option>
+                  <option value="Box Braids – Large ($165)">Box Braids – Large ($165)</option>
+                  <option value="Natural Hair Braiding ($45)">Natural Hair Braiding ($45)</option>
+                  <option value="Crochet Styles ($135)">Crochet Styles ($135)</option>
+                  <option value="Sew-In w/ Leave Out ($175)">Sew-In w/ Leave Out ($175)</option>
                 </select>
               </div>
             </div>
@@ -1657,12 +1659,25 @@ footer {
           <div id="svc-planning" class="svc-options" style="display:none;">
             <div class="frow full">
               <div class="fg">
-                <label>Wedding / Event Planning Tier</label>
+                <label>Planning / Wedding Tier</label>
                 <select name="entry.136010715">
                   <option value="">— Select a tier —</option>
                   <option value="Day-Of Coordination — $800">Day-Of Coordination — $800</option>
                   <option value="Partial Planning — $1,500">Partial Planning — $1,500</option>
-                  <option value="Full Planning — $3,000+">Full Planning — $3,000+</option>
+                  <option value="Full Service Wedding — $3,000">Full Service Wedding — $3,000</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="svc-sitting" class="svc-options" style="display:none;">
+            <div class="frow full">
+              <div class="fg">
+                <label>Private Sitting Type</label>
+                <select name="entry.1878703687">
+                  <option value="">— Select type —</option>
+                  <option value="Childcare ($40/hr)">Childcare ($40/hr)</option>
+                  <option value="Elderly Care ($40/hr)">Elderly Care ($40/hr)</option>
                 </select>
               </div>
             </div>
@@ -1676,53 +1691,19 @@ footer {
             </div>
           </div>
 
-          <!-- Deposit policy -->
-          <div class="deposit-row">
-            <div class="deposit-text">
-              <strong>Deposit Policy</strong>
-              A deposit is required to secure your date. Remaining balance is due at time of service.
+          <!-- Payment section — shown/updated dynamically by JS -->
+          <div id="payment-section" style="display:none;">
+            <div class="deposit-row" id="deposit-policy-row">
+              <div class="deposit-text">
+                <strong id="deposit-policy-title">Deposit Policy</strong>
+                <span id="deposit-policy-text">A deposit secures your date. Pay now and the remainder at time of service — or pay in full today.</span>
+              </div>
             </div>
-          </div>
-
-          <!-- Payment method -->
-          <div class="payment-group">
-            <span class="payment-group-label">How would you like to pay?</span>
-            <div class="payment-options">
-              <label class="payment-option">
-                <input type="radio" name="entry.PAYMETHOD" value="Stripe (Card Online)" checked/>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                  <line x1="2" y1="10" x2="22" y2="10" stroke="currentColor" stroke-width="1.5"/>
-                  <rect x="5" y="13" width="4" height="2" rx="0.5" fill="currentColor" opacity="0.5"/>
-                </svg>
-                Card Online (Stripe)
-              </label>
-              <label class="payment-option">
-                <input type="radio" name="entry.PAYMETHOD" value="Cash"/>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                  <circle cx="12" cy="13.5" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                  <path d="M6 7V5a2 2 0 012-2h8a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                </svg>
-                Cash
-              </label>
-              <label class="payment-option">
-                <input type="radio" name="entry.PAYMETHOD" value="Zelle"/>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="5" y="2" width="14" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                  <path d="M9 7l6 5-6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <circle cx="12" cy="18.5" r="0.75" fill="currentColor"/>
-                </svg>
-                Zelle
-              </label>
-              <label class="payment-option">
-                <input type="radio" name="entry.PAYMETHOD" value="CashApp"/>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                  <path d="M12 6v12M9 8.5h4.5a1.5 1.5 0 010 3h-3a1.5 1.5 0 000 3H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-                Cash App
-              </label>
+            <div class="payment-group">
+              <span class="payment-group-label">How would you like to pay?</span>
+              <div class="payment-options" id="payment-options-container">
+                <!-- populated by JS based on service selection -->
+              </div>
             </div>
           </div>
 
@@ -1733,7 +1714,7 @@ footer {
             Your information is protected. We will never share your data with third parties.
           </div>
           <button type="submit" class="btn-submit">
-            Submit Request &amp; Pay Deposit
+            Submit &amp; Proceed to Payment
             <span class="stripe-badge"><svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1L1 7h4l-1 4 5-6H5l1-4z" fill="currentColor"/></svg> Stripe</span>
           </button>
         </form>
@@ -1904,6 +1885,245 @@ const revObs = new IntersectionObserver(entries => {
 }, { threshold: 0.08 });
 revEls.forEach(el => revObs.observe(el));
 
+// ── Services that require FULL PAYMENT only (no deposit)
+const FULL_ONLY_SERVICES = ['Home Organizing', 'Private Sitting'];
+const FULL_ONLY_HAIR = ['Natural Hair Braiding ($45)', 'Crochet Styles ($135)'];
+
+// ── Stripe link lookup table
+const STRIPE = {
+  // Catering
+  'Catering|Small (1–30 guests) — Starting at $500|deposit':       'https://book.stripe.com/5kQ8wR2KC1utbPEaZu2Fa06',
+  'Catering|Small (1–30 guests) — Starting at $500|full':          'https://book.stripe.com/5kQeVf5WOfljbPEaZu2Fa0b',
+  'Catering|Medium (31–74 guests) — Starting at $1,500|deposit':   'https://book.stripe.com/14A5kFclc7SRg5U6Je2Fa07',
+  'Catering|Medium (31–74 guests) — Starting at $1,500|full':      'https://book.stripe.com/eVqcN7gBs4GF3j82sY2Fa0a',
+  'Catering|Large (75–200+ guests) — Starting at $3,000+|deposit': 'https://book.stripe.com/8x24gB2KCflj4nc4B62Fa08',
+  'Catering|Large (75–200+ guests) — Starting at $3,000+|full':    'https://book.stripe.com/bJe4gBgBsc97aLAffK2Fa09',
+
+  // Hair — deposit + full
+  'Hair Braiding|Box Braids – Small ($200)|deposit':   'https://book.stripe.com/aFabJ384W7SRg5U1oU2Fa05',
+  'Hair Braiding|Box Braids – Small ($200)|full':      'https://buy.stripe.com/eVq6oJ5WO6ON06WebG2Fa03',
+  'Hair Braiding|Box Braids – Medium ($175)|deposit':  'https://book.stripe.com/eVq7sNfxogpn9HwebG2Fa04',
+  'Hair Braiding|Box Braids – Medium ($175)|full':     'https://buy.stripe.com/5kQ28t0Cu2yxf1Qc3y2Fa02',
+  'Hair Braiding|Box Braids – Large ($165)|deposit':   'https://book.stripe.com/bJefZj0Cu3CBbPE8Rm2Fa00',
+  'Hair Braiding|Box Braids – Large ($165)|full':      'https://buy.stripe.com/7sYcN7etk0qp3j8aZu2Fa01',
+  'Hair Braiding|Sew-In w/ Leave Out ($175)|deposit':  'https://book.stripe.com/14A7sN3OG1ut3j89Vq2Fa0c',
+  'Hair Braiding|Sew-In w/ Leave Out ($175)|full':     'https://book.stripe.com/8x2eVf84W5KJdXM5Fa2Fa0d',
+
+  // Hair — full payment only (flat price)
+  'Hair Braiding|Natural Hair Braiding ($45)|full':    'https://book.stripe.com/14A8wR84W2yx9HwebG2Fa0r',
+  'Hair Braiding|Crochet Styles ($135)|full':          'https://book.stripe.com/8x25kFclc6ONaLA4B62Fa0q',
+
+  // Private Sitting — full payment only
+  'Private Sitting|Childcare ($40/hr)|full':   'https://book.stripe.com/3cI9AV5WO3CBg5Uc3y2Fa0t',
+  'Private Sitting|Elderly Care ($40/hr)|full': 'https://book.stripe.com/aFacN74SKddb06W7Ni2Fa0s',
+
+  // Home Organizing — full payment only
+  'Home Organizing||full': 'https://book.stripe.com/8x26oJ5WO0qpcTI5Fa2Fa0u',
+
+  // Event Planning (size)
+  'Event Planning|Intimate Event (1–29 guests) — $300|deposit':    'https://book.stripe.com/eVqcN7gBs4GFf1Q1oU2Fa0j',
+  'Event Planning|Intimate Event (1–29 guests) — $300|full':       'https://book.stripe.com/aFa5kF5WO0qp9Hw5Fa2Fa0e',
+  'Event Planning|Medium Event (30–75 guests) — $600|deposit':     'https://book.stripe.com/7sYcN79906ON6vk7Ni2Fa0i',
+  'Event Planning|Medium Event (30–75 guests) — $600|full':        'https://book.stripe.com/9B600l70S8WV2f46Je2Fa0f',
+  'Event Planning|Large Event (76–200+ guests) — $1,200+|deposit': 'https://book.stripe.com/eVqdRb1Gya0Z06W0kQ2Fa0h',
+  'Event Planning|Large Event (76–200+ guests) — $1,200+|full':    'https://book.stripe.com/6oUbJ3bh86ONaLA2sY2Fa0g',
+
+  // Wedding / Planning tier
+  'Event Planning|Day-Of Coordination — $800|deposit':     'https://book.stripe.com/cNi8wR2KC5KJdXM3x22Fa0k',
+  'Event Planning|Day-Of Coordination — $800|full':        'https://book.stripe.com/14A3cx0Cu8WVf1QgjO2Fa0n',
+  'Event Planning|Partial Planning — $1,500|deposit':      'https://book.stripe.com/00wfZj70S3CB4nc1oU2Fa0l',
+  'Event Planning|Partial Planning — $1,500|full':         'https://book.stripe.com/3cIdRb5WO2yx2f49Vq2Fa0o',
+  'Event Planning|Full Service Wedding — $3,000|deposit':  'https://book.stripe.com/14AeVf0Cu5KJg5UaZu2Fa0m',
+  'Event Planning|Full Service Wedding — $3,000|full':     'https://book.stripe.com/bJe4gB3OG3CB1b07Ni2Fa0p',
+};
+
+function getStripeLink(service, subOption, payType) {
+  return STRIPE[`${service}|${subOption}|${payType}`]
+      || STRIPE[`${service}||${payType}`]
+      || null;
+}
+
+// SVG icons for payment options
+const iconCard = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="2" y1="10" x2="22" y2="10" stroke="currentColor" stroke-width="1.5"/><rect x="5" y="13" width="4" height="2" rx="0.5" fill="currentColor" opacity="0.5"/></svg>`;
+const iconStar = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
+const iconCash = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="13.5" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M6 7V5a2 2 0 012-2h8a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
+
+function buildPaymentOption(value, icon, title, subtitle, checked) {
+  return `<label class="payment-option pay-choice">
+    <input type="radio" name="entry.PAYMETHOD" value="${value}"${checked ? ' checked' : ''}/>
+    ${icon}
+    <span>
+      <strong style="display:block;font-size:0.82rem;">${title}</strong>
+      <span style="font-size:0.72rem;opacity:0.7;">${subtitle}</span>
+    </span>
+  </label>`;
+}
+
+// ── Update payment options based on selected service + sub-option
+function updatePaymentOptions(service, subOption) {
+  const section = document.getElementById('payment-section');
+  const container = document.getElementById('payment-options-container');
+  const policyTitle = document.getElementById('deposit-policy-title');
+  const policyText = document.getElementById('deposit-policy-text');
+
+  if (!service) { section.style.display = 'none'; return; }
+
+  const isFullOnly = FULL_ONLY_SERVICES.includes(service)
+    || (service === 'Hair Braiding' && FULL_ONLY_HAIR.includes(subOption));
+
+  section.style.display = '';
+
+  if (isFullOnly) {
+    policyTitle.textContent = 'Payment Required to Book';
+    policyText.textContent = 'This service is priced at a flat rate. Pay online now to confirm your booking, or pay in person at time of service.';
+    container.innerHTML =
+      buildPaymentOption('Full Payment', iconStar, 'Pay Online Now', 'Confirm instantly via Stripe', true) +
+      buildPaymentOption('Cash (In Person)', iconCash, 'Pay in Person', 'Cash at time of service', false);
+  } else {
+    policyTitle.textContent = 'Deposit Policy';
+    policyText.textContent = 'A deposit secures your date. Pay now and the remainder at time of service — or pay in full today.';
+    container.innerHTML =
+      buildPaymentOption('Deposit', iconCard, 'Pay Deposit', 'Secure your date · pay rest at service', true) +
+      buildPaymentOption('Full Payment', iconStar, 'Pay in Full', 'One payment · completely covered', false) +
+      buildPaymentOption('Cash (Deposit via Card)', iconCash, 'Pay Cash at Service', 'Deposit via card now · rest in cash', false);
+  }
+}
+
+// ── Service selector (sidebar) — syncs with form dropdown
+function selectService(el, name) {
+  document.querySelectorAll('.bsl-item').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const sel = document.getElementById('serviceSelect');
+  if (sel) {
+    sel.value = name;
+    showServiceOptions(name);
+  }
+}
+
+// ── Show/hide service-specific fields and update payment options
+function showServiceOptions(value) {
+  document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
+  if (value === 'Catering') document.getElementById('svc-catering').style.display = '';
+  if (value === 'Hair Braiding') document.getElementById('svc-hair').style.display = '';
+  if (value === 'Private Sitting') document.getElementById('svc-sitting').style.display = '';
+  if (value === 'Event Planning') {
+    document.getElementById('svc-event').style.display = '';
+    document.getElementById('svc-planning').style.display = '';
+  }
+  // Show payment section for services with no sub-option needed
+  if (['Home Organizing', 'Private Sitting'].includes(value)) {
+    updatePaymentOptions(value, '');
+  } else if (value === 'Catering' || value === 'Event Planning') {
+    // Wait for sub-option selection
+    document.getElementById('payment-section').style.display = 'none';
+  } else if (value === 'Hair Braiding') {
+    document.getElementById('payment-section').style.display = 'none';
+  } else {
+    document.getElementById('payment-section').style.display = 'none';
+  }
+}
+
+// ── Listen for sub-option changes to reveal payment section
+document.addEventListener('change', function(e) {
+  const name = e.target.name;
+  const subSelects = ['entry.2111116416', 'entry.1878703687', 'entry.1696621745', 'entry.136010715'];
+  if (subSelects.includes(name) && e.target.value) {
+    const service = (document.getElementById('serviceSelect') || {}).value || '';
+    updatePaymentOptions(service, e.target.value);
+  }
+  // Also update when Private Sitting type changes
+  if (name === 'entry.1878703687' && document.getElementById('serviceSelect').value === 'Private Sitting') {
+    updatePaymentOptions('Private Sitting', e.target.value);
+  }
+});
+
+// ── Combined booking handler
+function handleBooking(e) {
+  e.preventDefault();
+  const form = document.getElementById('bookingForm');
+
+  const service     = (form.querySelector('[name="entry.1578334907"]') || {}).value || '';
+  const hairOpt     = (form.querySelector('[name="entry.1878703687"]') || {}).value || '';
+  const cateringOpt = (form.querySelector('[name="entry.2111116416"]') || {}).value || '';
+  const eventOpt    = (form.querySelector('[name="entry.1696621745"]') || {}).value || '';
+  const planOpt     = (form.querySelector('[name="entry.136010715"]') || {}).value || '';
+  const payMethod   = (form.querySelector('input[name="entry.PAYMETHOD"]:checked') || {}).value || '';
+
+  let subOption = '';
+  if (service === 'Hair Braiding') subOption = hairOpt;
+  else if (service === 'Catering') subOption = cateringOpt;
+  else if (service === 'Event Planning') subOption = eventOpt || planOpt;
+  else if (service === 'Private Sitting') subOption = hairOpt; // reuses same field
+
+  const payType = payMethod === 'Full Payment' ? 'full'
+                : payMethod === 'Deposit'      ? 'deposit'
+                : 'deposit'; // Cash = deposit via card
+
+  // Submit to Google Form in background
+  const data = new FormData(form);
+  fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
+
+  // Open correct Stripe link (not for in-person cash)
+  if (payMethod !== 'Cash (In Person)') {
+    const stripeUrl = getStripeLink(service, subOption, payType);
+    if (stripeUrl) window.open(stripeUrl, '_blank');
+  }
+
+  // Show confirmation
+  const btn = form.querySelector('.btn-submit');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '✓ Request Submitted!';
+  btn.style.background = 'var(--sage)';
+  btn.style.color = 'white';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = originalHTML;
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.disabled = false;
+    form.reset();
+    document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
+    document.getElementById('payment-section').style.display = 'none';
+  }, 4000);
+}
+
+// ── Inquiry form handler
+function handleInquiry(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+  fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
+
+  const btn = form.querySelector('.btn-submit');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '✓ Message Sent!';
+  btn.style.background = 'var(--sage)';
+  btn.style.color = 'white';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = originalHTML;
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.disabled = false;
+    form.reset();
+  }, 4000);
+}
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── Scroll reveal
+const revEls = document.querySelectorAll('.reveal-up, .reveal-left');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 100);
+      revObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+revEls.forEach(el => revObs.observe(el));
+
 // ── Service selector (sidebar) — syncs with form dropdown
 function selectService(el, name) {
   document.querySelectorAll('.bsl-item').forEach(b => b.classList.remove('active'));
@@ -1926,38 +2146,77 @@ function showServiceOptions(value) {
   }
 }
 
-// ── Combined booking handler: submits Google Form + opens Stripe if card selected
+// ── Stripe link lookup table
+// Keys: "ServiceName|SubOption|deposit" or "ServiceName|SubOption|full"
+const STRIPE = {
+  // Catering
+  'Catering|Small (1–30 guests) — Starting at $500|deposit':  'https://book.stripe.com/5kQ8wR2KC1utbPEaZu2Fa06',
+  'Catering|Small (1–30 guests) — Starting at $500|full':     'https://book.stripe.com/5kQeVf5WOfljbPEaZu2Fa0b',
+  'Catering|Medium (31–74 guests) — Starting at $1,500|deposit': 'https://book.stripe.com/14A5kFclc7SRg5U6Je2Fa07',
+  'Catering|Medium (31–74 guests) — Starting at $1,500|full':    'https://book.stripe.com/eVqcN7gBs4GF3j82sY2Fa0a',
+  'Catering|Large (75–200+ guests) — Starting at $3,000+|deposit': 'https://book.stripe.com/8x24gB2KCflj4nc4B62Fa08',
+  'Catering|Large (75–200+ guests) — Starting at $3,000+|full':    'https://book.stripe.com/bJe4gBgBsc97aLAffK2Fa09',
+
+  // Hair Braiding
+  'Hair Braiding|Box Braids – Small ($200)|deposit':          'https://book.stripe.com/aFabJ384W7SRg5U1oU2Fa05',
+  'Hair Braiding|Box Braids – Small ($200)|full':             'https://buy.stripe.com/eVq6oJ5WO6ON06WebG2Fa03',
+  'Hair Braiding|Box Braids – Medium ($175)|deposit':         'https://book.stripe.com/eVq7sNfxogpn9HwebG2Fa04',
+  'Hair Braiding|Box Braids – Medium ($175)|full':            'https://buy.stripe.com/5kQ28t0Cu2yxf1Qc3y2Fa02',
+  'Hair Braiding|Box Braids – Large ($165)|deposit':          'https://book.stripe.com/bJefZj0Cu3CBbPE8Rm2Fa00',
+  'Hair Braiding|Box Braids – Large ($165)|full':             'https://buy.stripe.com/7sYcN7etk0qp3j8aZu2Fa01',
+  'Hair Braiding|Natural Hair Braiding ($45 deposit)|deposit':'https://book.stripe.com/14A8wR84W2yx9HwebG2Fa0r',
+  'Hair Braiding|Crochet Styles ($135 deposit)|deposit':      'https://book.stripe.com/8x25kFclc6ONaLA4B62Fa0q',
+  'Hair Braiding|Sew-In w/ Leave Out ($175)|deposit':         'https://book.stripe.com/14A7sN3OG1ut3j89Vq2Fa0c',
+  'Hair Braiding|Sew-In w/ Leave Out ($175)|full':            'https://book.stripe.com/8x2eVf84W5KJdXM5Fa2Fa0d',
+
+
+
+// ── Combined booking handler
 function handleBooking(e) {
   e.preventDefault();
   const form = document.getElementById('bookingForm');
 
-  // Check selected payment method
-  const payMethod = form.querySelector('input[name="entry.PAYMETHOD"]:checked');
-  const isCard = payMethod && payMethod.value === 'Stripe (Card Online)';
+  // Get values
+  const service   = (form.querySelector('[name="entry.1578334907"]') || {}).value || '';
+  const hairOpt   = (form.querySelector('[name="entry.1878703687"]') || {}).value || '';
+  const cateringOpt = (form.querySelector('[name="entry.2111116416"]') || {}).value || '';
+  const eventOpt  = (form.querySelector('[name="entry.1696621745"]') || {}).value || '';
+  const planOpt   = (form.querySelector('[name="entry.136010715"]') || {}).value || '';
+  const payMethod = (form.querySelector('input[name="entry.PAYMETHOD"]:checked') || {}).value || '';
 
-  // Submit to Google Form in background via fetch
+  // Determine sub-option based on service
+  let subOption = '';
+  if (service === 'Hair Braiding') subOption = hairOpt;
+  else if (service === 'Catering') subOption = cateringOpt;
+  else if (service === 'Event Planning') subOption = eventOpt || planOpt;
+
+  // Determine pay type
+  const payType = payMethod === 'Full Payment' ? 'full' : 'deposit';
+
+  // Submit to Google Form in background
   const data = new FormData(form);
   fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
 
-  // Open Stripe only if card payment selected
-  if (isCard) {
-    // Replace with your actual Stripe payment link
-    window.open('https://buy.stripe.com/YOUR_STRIPE_PAYMENT_LINK', '_blank');
+  // Look up and open correct Stripe link
+  const stripeUrl = getStripeLink(service, subOption, payType);
+  if (stripeUrl) {
+    window.open(stripeUrl, '_blank');
   }
 
-  // Show confirmation to user
+  // Show confirmation
   const btn = form.querySelector('.btn-submit');
-  const originalText = btn.innerHTML;
+  const originalHTML = btn.innerHTML;
   btn.innerHTML = '✓ Request Submitted!';
   btn.style.background = 'var(--sage)';
   btn.style.color = 'white';
   btn.disabled = true;
   setTimeout(() => {
-    btn.innerHTML = originalText;
+    btn.innerHTML = originalHTML;
     btn.style.background = '';
     btn.style.color = '';
     btn.disabled = false;
     form.reset();
+    document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
   }, 4000);
 }
 
@@ -1965,20 +2224,19 @@ function handleBooking(e) {
 function handleInquiry(e) {
   e.preventDefault();
   const form = e.target;
-
-  if (!form.action.includes('YOUR_GOOGLE_INQUIRY')) {
-    const data = new FormData(form);
-    fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
-  }
+  const data = new FormData(form);
+  fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
 
   const btn = form.querySelector('.btn-submit');
-  const originalText = btn.innerHTML;
+  const originalHTML = btn.innerHTML;
   btn.innerHTML = '✓ Message Sent!';
   btn.style.background = 'var(--sage)';
+  btn.style.color = 'white';
   btn.disabled = true;
   setTimeout(() => {
-    btn.innerHTML = originalText;
+    btn.innerHTML = originalHTML;
     btn.style.background = '';
+    btn.style.color = '';
     btn.disabled = false;
     form.reset();
   }, 4000);
