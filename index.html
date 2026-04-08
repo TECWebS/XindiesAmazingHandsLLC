@@ -60,7 +60,6 @@ nav {
 nav.scrolled {
   background: rgba(245,222,222,0.97);
   backdrop-filter: blur(16px);
-}
   padding: 1rem 3.5rem;
   border-bottom: 1px solid rgba(0,0,0,0.08);
 }
@@ -346,6 +345,10 @@ nav.scrolled {
   aspect-ratio: 4/5;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(135deg, #f5dede 0%, #e8d0d8 40%, #d4a8b8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .about-main-block img.about-photo {
   width: 100%;
@@ -358,10 +361,40 @@ nav.scrolled {
 .about-main-block:hover img.about-photo {
   transform: scale(1.03);
 }
-.about-main-block svg.center-flower {
-  width: 65%;
-  height: 65%;
-  opacity: 0.5;
+
+/* ── SVG PLACEHOLDER for missing AI photo ── */
+.about-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #f5dede 0%, #e8cdd5 50%, #d4b0c0 100%);
+  position: relative;
+  overflow: hidden;
+}
+.about-photo-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(212,65,90,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(42,111,196,0.08) 0%, transparent 50%);
+}
+.about-photo-placeholder svg {
+  position: relative;
+  z-index: 1;
+}
+.about-photo-placeholder .placeholder-label {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(107,93,90,0.6);
+  font-family: 'Poppins', sans-serif;
 }
 
 .about-text-col {
@@ -546,6 +579,14 @@ nav.scrolled {
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+.svc-card.open .svc-list {
+  max-height: 200px;
+  opacity: 1;
 }
 .svc-list li {
   font-size: 0.73rem;
@@ -561,6 +602,14 @@ nav.scrolled {
   flex-shrink: 0;
   font-size: 0.65rem;
   margin-top: 0.1em;
+}
+.svc-arrow {
+  transition: opacity .3s, transform .3s;
+  cursor: pointer;
+}
+.svc-card.open .svc-arrow {
+  opacity: 1;
+  transform: translateX(0) rotate(90deg);
 }
 
 /* ── GALLERY ── */
@@ -635,14 +684,6 @@ nav.scrolled {
   transition: opacity .3s;
 }
 .g-item:hover .g-item-label { opacity: 1; }
-.g-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.g-placeholder svg { width: 48px; height: 48px; opacity: 0.25; }
 
 /* ── BOOKING ── */
 #booking {
@@ -732,7 +773,6 @@ nav.scrolled {
   border-radius: 2px;
   background: white;
   padding: 0.75rem 1rem;
-  font-size: 0.92rem;
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 17px;
@@ -757,23 +797,6 @@ nav.scrolled {
 }
 .deposit-text { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.5; }
 .deposit-text strong { display: block; font-weight: 500; color: var(--dark); font-size: 0.85rem; margin-bottom: 0.2rem; }
-.stripe-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: #635BFF;
-  color: white;
-  border: none;
-  padding: 0.7rem 1.4rem;
-  font-size: 0.75rem;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background .2s;
-}
-.stripe-btn:hover { background: #4f47e0; }
 
 /* Payment method radio group */
 .payment-group {
@@ -930,6 +953,8 @@ nav.scrolled {
 }
 .ct-value a { color: var(--blue); text-decoration: none; }
 .ct svg { margin-bottom: 0.75rem; opacity: 0.45; display: block; }
+.ct.clickable { cursor: pointer; transition: background .2s; }
+.ct.clickable:hover { background: #f0e8e0; }
 
 .inquiry-form-card {
   background: var(--cream);
@@ -1043,46 +1068,8 @@ footer {
 }
 .reveal-left.in { opacity: 1; transform: translateX(0); }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 1024px) {
-  #hero { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
-  .hero-left { padding: 9rem 2.5rem 5rem; min-height: 100vh; }
-  .about-layout { grid-template-columns: 1fr; padding: 0 2rem; }
-  .about-side-label { display: none; }
-  .services-grid { grid-template-columns: 1fr 1fr; }
-  .svc-card { border-bottom: 1px solid rgba(255,255,255,0.07); }
-  .booking-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .booking-left { position: static; }
-  .inquiry-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-  nav { padding: 1.2rem 1.8rem; }
-  .nav-links { display: none; }
-  .services-inner { padding: 0 2rem; }
-  .booking-inner { padding: 0 2rem; }
-  .gallery-header { padding: 0 2rem; }
-  .inquiry-inner { padding: 0 2rem; }
-  footer { padding: 4rem 2rem 2rem; }
-}
-  .svc-list {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-  opacity: 0;
-}
-.svc-card.open .svc-list {
-  max-height: 200px;
-  opacity: 1;
-}
-.svc-arrow {
-  transition: opacity .3s, transform .3s;
-  cursor: pointer;
-}
-.svc-card.open .svc-arrow {
-  opacity: 1;
-  transform: translateX(0) rotate(90deg);
-}
-  .modal-overlay {
+/* ── MODAL (Legal) ── */
+.modal-overlay {
   position: fixed; inset: 0;
   background: rgba(14,12,16,0.55);
   display: flex; align-items: center; justify-content: center;
@@ -1144,16 +1131,149 @@ footer {
 .modal-body p strong { font-weight: 500; color: var(--dark); }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
-  .ct.clickable:hover { background: #f0e8e0; }
-.reviews-text {
-  margin-top: 1.2rem;
-  font-size: 0.75rem;
+
+/* ── REVIEW OVERLAYS ── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(14,12,16,0.55);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9998;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.overlay.open { opacity: 1; pointer-events: all; }
+.overlay-box {
+  background: var(--cream);
+  width: min(580px, 92vw);
+  max-height: 85vh;
+  display: flex; flex-direction: column;
+  border-radius: 2px; overflow: hidden;
+  transform: translateY(24px);
+  transition: transform .35s ease;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.18);
+}
+.overlay.open .overlay-box { transform: translateY(0); }
+.overlay-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 1.6rem 2rem;
+  border-bottom: 1px solid var(--pale);
+  flex-shrink: 0;
+}
+.overlay-header h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.25rem; font-weight: 400; color: var(--dark);
+}
+.overlay-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); font-size: 1.3rem;
+  line-height: 1; padding: 4px; transition: color .2s;
+}
+.overlay-close:hover { color: var(--dark); }
+.overlay-body { overflow-y: auto; padding: 2rem; flex: 1; }
+
+/* Star rating buttons */
+.star-row {
+  display: flex; gap: 0.4rem; margin-bottom: 1.5rem;
+}
+.star-btn {
+  background: none; border: none; cursor: pointer;
+  padding: 2px; transition: transform .15s;
+  color: var(--pale);
+}
+.star-btn:hover, .star-btn.lit { color: var(--gold); }
+.star-btn:hover { transform: scale(1.2); }
+.star-btn svg { display: block; }
+
+/* Review form fields */
+.review-fg {
+  display: flex; flex-direction: column; gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+.review-fg label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose);
+  font-weight: 500;
+}
+.review-fg input,
+.review-fg select,
+.review-fg textarea {
+  border: 1.5px solid var(--pale);
+  border-radius: 2px;
+  background: white;
+  padding: 0.75rem 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  color: var(--dark);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  width: 100%;
+}
+.review-fg input:focus,
+.review-fg select:focus,
+.review-fg textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(42,111,196,0.1);
+}
+.review-fg textarea { resize: none; min-height: 100px; }
+.char-count {
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 0.3rem;
 }
 
-.reviews-link {
-  color: var(--blue);
-  text-decoration: none;
-  letter-spacing: 0.1em;
+/* Reviews list */
+.review-card {
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--pale);
+}
+.review-card:last-child { border-bottom: none; }
+.review-card-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 1rem; margin-bottom: 0.6rem;
+}
+.review-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.95rem; color: var(--dark);
+}
+.review-service {
+  font-size: 0.65rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--muted);
+  margin-top: 2px;
+}
+.review-stars { display: flex; gap: 2px; flex-shrink: 0; }
+.review-text {
+  font-size: 0.85rem; line-height: 1.75;
+  color: var(--muted); font-weight: 300;
+}
+.no-reviews {
+  text-align: center; padding: 3rem 1rem;
+  color: var(--muted); font-size: 0.85rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  #hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 9rem 2.5rem 5rem; min-height: 100vh; }
+  .about-layout { grid-template-columns: 1fr; padding: 0 2rem; }
+  .about-side-label { display: none; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .svc-card { border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .booking-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .booking-left { position: static; }
+  .inquiry-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  nav { padding: 1.2rem 1.8rem; }
+  .nav-links { display: none; }
+  .services-inner { padding: 0 2rem; }
+  .booking-inner { padding: 0 2rem; }
+  .gallery-header { padding: 0 2rem; }
+  .inquiry-inner { padding: 0 2rem; }
+  footer { padding: 4rem 2rem 2rem; }
 }
 </style>
 </head>
@@ -1175,36 +1295,28 @@ footer {
 <!-- ════════════════ HERO ════════════════ -->
 <section id="hero">
   <div class="hero-left">
-    <!-- Large background peony SVG -->
     <svg class="hero-left-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-      <!-- Balloon cluster: hero left background -->
       <g opacity="1">
-        <!-- balloon 1: red -->
         <ellipse cx="120" cy="160" rx="38" ry="50" fill="#d63c3c"/>
         <path d="M120 210 Q118 230 115 245" stroke="#d63c3c" stroke-width="2" fill="none" opacity="0.7"/>
         <line x1="115" y1="245" x2="125" y2="245" stroke="#d63c3c" stroke-width="1.5" opacity="0.7"/>
         <ellipse cx="118" cy="148" rx="8" ry="5" fill="rgba(255,255,255,0.25)" transform="rotate(-30,118,148)"/>
-        <!-- balloon 2: gold -->
         <ellipse cx="200" cy="120" rx="42" ry="55" fill="#d4af37"/>
         <path d="M200 175 Q198 198 195 215" stroke="#d4af37" stroke-width="2" fill="none" opacity="0.7"/>
         <line x1="195" y1="215" x2="205" y2="215" stroke="#d4af37" stroke-width="1.5" opacity="0.7"/>
         <ellipse cx="198" cy="106" rx="9" ry="6" fill="rgba(255,255,255,0.25)" transform="rotate(-30,198,106)"/>
-        <!-- balloon 3: blue -->
         <ellipse cx="300" cy="150" rx="40" ry="52" fill="#2a6fc4"/>
         <path d="M300 202 Q298 222 295 238" stroke="#2a6fc4" stroke-width="2" fill="none" opacity="0.7"/>
         <line x1="295" y1="238" x2="305" y2="238" stroke="#2a6fc4" stroke-width="1.5" opacity="0.7"/>
         <ellipse cx="298" cy="137" rx="9" ry="6" fill="rgba(255,255,255,0.25)" transform="rotate(-30,298,137)"/>
-        <!-- balloon 4: green -->
         <ellipse cx="380" cy="100" rx="36" ry="48" fill="#3a9e5a"/>
         <path d="M380 148 Q378 168 375 184" stroke="#3a9e5a" stroke-width="2" fill="none" opacity="0.7"/>
         <line x1="375" y1="184" x2="385" y2="184" stroke="#3a9e5a" stroke-width="1.5" opacity="0.7"/>
         <ellipse cx="378" cy="88" rx="8" ry="5" fill="rgba(255,255,255,0.25)" transform="rotate(-30,378,88)"/>
-        <!-- balloon 5: purple -->
         <ellipse cx="160" cy="60" rx="34" ry="45" fill="#7a40b8"/>
         <path d="M160 105 Q158 125 155 140" stroke="#7a40b8" stroke-width="2" fill="none" opacity="0.7"/>
         <line x1="155" y1="140" x2="165" y2="140" stroke="#7a40b8" stroke-width="1.5" opacity="0.7"/>
         <ellipse cx="158" cy="49" rx="7" ry="5" fill="rgba(255,255,255,0.25)" transform="rotate(-30,158,49)"/>
-        <!-- balloon 6: orange -->
         <ellipse cx="270" cy="55" rx="32" ry="43" fill="#e07830"/>
         <path d="M270 98 Q268 118 265 133" stroke="#e07830" stroke-width="2" fill="none" opacity="0.7"/>
         <line x1="265" y1="133" x2="275" y2="133" stroke="#e07830" stroke-width="1.5" opacity="0.7"/>
@@ -1261,21 +1373,11 @@ footer {
 <!-- SERVICES BANNER -->
 <div class="services-banner">
   <div class="services-banner-inner">
-    <a href="#services" class="banner-item">
-      <span class="bi-dot" style="background:var(--balloon-red);"></span>Catering
-    </a>
-    <a href="#services" class="banner-item">
-      <span class="bi-dot" style="background:var(--blue);"></span>Hair Styling
-    </a>
-    <a href="#services" class="banner-item">
-      <span class="bi-dot" style="background:var(--balloon-green);"></span>Wedding Planning
-    </a>
-    <a href="#services" class="banner-item">
-      <span class="bi-dot" style="background:var(--balloon-blue);"></span>Event Planning
-    </a>
-    <a href="#services" class="banner-item">
-      <span class="bi-dot" style="background:var(--balloon-purple);"></span>Home Organizing
-    </a>
+    <a href="#services" class="banner-item"><span class="bi-dot" style="background:var(--balloon-red);"></span>Catering</a>
+    <a href="#services" class="banner-item"><span class="bi-dot" style="background:var(--blue);"></span>Hair Styling</a>
+    <a href="#services" class="banner-item"><span class="bi-dot" style="background:var(--balloon-green);"></span>Wedding Planning</a>
+    <a href="#services" class="banner-item"><span class="bi-dot" style="background:var(--balloon-blue);"></span>Event Planning</a>
+    <a href="#services" class="banner-item"><span class="bi-dot" style="background:var(--balloon-purple);"></span>Home Organizing</a>
   </div>
 </div>
 
@@ -1286,8 +1388,46 @@ footer {
 
     <div class="about-visual-col reveal-left">
       <div class="about-main-block">
-        <img class="about-photo" src="images/Xindies_Amazing_Hands_AI.png" alt="Xindies Amazing Hands"/>
+        <!-- 
+          FIX 1: The original <img src="images/Xindies_Amazing_Hands_AI.png"> was broken
+          because the image file was missing. Replaced with a branded SVG placeholder.
+          When you have the actual photo, simply swap this div out for:
+          <img class="about-photo" src="images/Xindies_Amazing_Hands_AI.png" alt="Xindies Amazing Hands"/>
+        -->
+        <div class="about-photo-placeholder">
+          <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Balloon cluster, brand-matching -->
+            <ellipse cx="60" cy="80" rx="22" ry="29" fill="#d63c3c" opacity="0.85"/>
+            <path d="M60 109 Q59 122 57 132" stroke="#d63c3c" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <ellipse cx="59" cy="71" rx="5" ry="3" fill="rgba(255,255,255,0.3)" transform="rotate(-30,59,71)"/>
 
+            <ellipse cx="100" cy="60" rx="25" ry="33" fill="#d4af37" opacity="0.9"/>
+            <path d="M100 93 Q99 108 97 119" stroke="#d4af37" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <ellipse cx="99" cy="50" rx="6" ry="4" fill="rgba(255,255,255,0.3)" transform="rotate(-30,99,50)"/>
+
+            <ellipse cx="143" cy="75" rx="23" ry="30" fill="#2a6fc4" opacity="0.85"/>
+            <path d="M143 105 Q142 118 140 128" stroke="#2a6fc4" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <ellipse cx="142" cy="66" rx="5" ry="3" fill="rgba(255,255,255,0.3)" transform="rotate(-30,142,66)"/>
+
+            <ellipse cx="78" cy="35" rx="18" ry="24" fill="#7a40b8" opacity="0.8"/>
+            <path d="M78 59 Q77 70 75 79" stroke="#7a40b8" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+            <ellipse cx="125" cy="40" rx="16" ry="21" fill="#3a9e5a" opacity="0.8"/>
+            <path d="M125 61 Q124 72 122 80" stroke="#3a9e5a" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+            <!-- Strings gathered at a point -->
+            <path d="M57 132 Q80 145 100 148 Q120 145 140 128" stroke="#8a7a70" stroke-width="1" fill="none" opacity="0.4"/>
+
+            <!-- Sparkles -->
+            <circle cx="170" cy="30" r="2" fill="#d4af37" opacity="0.7"/>
+            <circle cx="30" cy="120" r="1.5" fill="#d4af37" opacity="0.5"/>
+            <circle cx="155" cy="130" r="1.5" fill="#d63c3c" opacity="0.5"/>
+
+            <!-- Brand initials at bottom -->
+            <text x="100" y="175" font-family="Georgia, serif" font-size="13" fill="rgba(107,93,90,0.55)" text-anchor="middle" font-style="italic">Xindies Amazing Hands</text>
+          </svg>
+          <span class="placeholder-label">Photo Coming Soon</span>
+        </div>
       </div>
     </div>
 
@@ -1320,24 +1460,13 @@ footer {
 
 <!-- ════════════════ SERVICES ════════════════ -->
 <section id="services">
-  <!-- Big background flower -->
   <svg class="services-bg-flower" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg">
     <g opacity="0.12">
       <ellipse cx="150" cy="200" rx="70" ry="90" fill="white"/>
-      <path d="M150 290 Q148 320 144 345" stroke="white" stroke-width="3" fill="none"/>
-      <ellipse cx="145" cy="183" rx="15" ry="10" fill="rgba(255,255,255,0.4)" transform="rotate(-30,145,183)"/>
       <ellipse cx="380" cy="120" rx="65" ry="85" fill="white"/>
-      <path d="M380 205 Q378 235 374 258" stroke="white" stroke-width="3" fill="none"/>
-      <ellipse cx="375" cy="104" rx="14" ry="9" fill="rgba(255,255,255,0.4)" transform="rotate(-30,375,104)"/>
       <ellipse cx="620" cy="180" rx="72" ry="94" fill="white"/>
-      <path d="M620 274 Q618 304 614 328" stroke="white" stroke-width="3" fill="none"/>
-      <ellipse cx="615" cy="162" rx="16" ry="10" fill="rgba(255,255,255,0.4)" transform="rotate(-30,615,162)"/>
       <ellipse cx="800" cy="100" rx="60" ry="78" fill="white"/>
-      <path d="M800 178 Q798 208 794 230" stroke="white" stroke-width="3" fill="none"/>
-      <ellipse cx="795" cy="85" rx="13" ry="9" fill="rgba(255,255,255,0.4)" transform="rotate(-30,795,85)"/>
       <ellipse cx="500" cy="700" rx="68" ry="88" fill="white"/>
-      <path d="M500 788 Q498 818 494 840" stroke="white" stroke-width="3" fill="none"/>
-      <ellipse cx="495" cy="683" rx="15" ry="10" fill="rgba(255,255,255,0.4)" transform="rotate(-30,495,683)"/>
       <ellipse cx="250" cy="650" rx="55" ry="72" fill="white"/>
       <ellipse cx="750" cy="680" rx="58" ry="76" fill="white"/>
     </g>
@@ -1353,10 +1482,8 @@ footer {
     </div>
 
     <div class="services-grid reveal-up">
-
       <!-- CATERING -->
       <div class="svc-card s1">
-        <!-- Fork & knife SVG -->
         <svg class="svc-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <line x1="8" y1="4" x2="8" y2="18" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
           <path d="M5 4 C5 4 5 12 8 14 C11 12 11 4 11 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -1373,14 +1500,11 @@ footer {
           <li>Buffets, plated &amp; family-style</li>
           <li>Dessert &amp; sweet table spreads</li>
         </ul>
-        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 6h18M14 1l5 5-5 5" stroke="#c97b8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h18M14 1l5 5-5 5" stroke="#c97b8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
 
       <!-- HAIR BRAIDING -->
       <div class="svc-card s2">
-        <!-- Scissors / braid SVG -->
         <svg class="svc-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M22 6 C22 6 16 12 16 20 C16 28 22 34 22 34 C22 34 28 28 28 20 C28 12 22 6 22 6Z" stroke="white" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
           <path d="M16 20 C13 18 10 16 8 18 C6 20 8 24 12 24" stroke="white" stroke-width="1.4" stroke-linecap="round" fill="none"/>
@@ -1397,14 +1521,11 @@ footer {
           <li>Bridal &amp; event styling</li>
           <li>Children's styles welcome</li>
         </ul>
-        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 6h18M14 1l5 5-5 5" stroke="#b89a6a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h18M14 1l5 5-5 5" stroke="#b89a6a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
 
       <!-- PRIVATE SITTING -->
       <div class="svc-card s3">
-        <!-- Child / care SVG -->
         <svg class="svc-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="22" cy="12" r="6" stroke="white" stroke-width="1.4" fill="none"/>
           <path d="M22 20 C15 20 10 25 10 31 L10 38 L34 38 L34 31 C34 25 29 20 22 20Z" stroke="white" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
@@ -1419,14 +1540,11 @@ footer {
           <li>Activity-based engagement</li>
           <li>Background-verified staff</li>
         </ul>
-        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 6h18M14 1l5 5-5 5" stroke="#8aab96" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h18M14 1l5 5-5 5" stroke="#8aab96" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
 
       <!-- EVENT PLANNING -->
       <div class="svc-card s4">
-        <!-- Calendar / planning SVG -->
         <svg class="svc-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="6" y="10" width="32" height="28" rx="2" stroke="white" stroke-width="1.4" fill="none"/>
           <line x1="6" y1="17" x2="38" y2="17" stroke="white" stroke-width="1.4"/>
@@ -1447,14 +1565,11 @@ footer {
           <li>Day-of &amp; month-of coordination</li>
           <li>Décor, themes &amp; staging</li>
         </ul>
-        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 6h18M14 1l5 5-5 5" stroke="#c4a0b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h18M14 1l5 5-5 5" stroke="#c4a0b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
 
       <!-- HOME ORGANIZING -->
       <div class="svc-card s5">
-        <!-- House SVG -->
         <svg class="svc-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M6 20 L22 6 L38 20" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           <path d="M10 17 L10 38 L34 38 L34 17" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -1472,11 +1587,8 @@ footer {
           <li>Move-in &amp; move-out prep</li>
           <li>Seasonal deep organizing</li>
         </ul>
-        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 6h18M14 1l5 5-5 5" stroke="#e8ddd4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg class="svc-arrow" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1 6h18M14 1l5 5-5 5" stroke="#e8ddd4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-
     </div>
   </div>
 </section>
@@ -1489,9 +1601,7 @@ footer {
       <h2 class="section-heading">A Glimpse of<br/>the <em>Magic</em></h2>
     </div>
     <div class="gallery-scroll-hint">
-      <svg width="28" height="8" viewBox="0 0 28 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1 4h26M22 1l5 3-5 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <svg width="28" height="8" viewBox="0 0 28 8" fill="none"><path d="M1 4h26M22 1l5 3-5 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Hover to pause
     </div>
   </div>
@@ -1515,8 +1625,6 @@ footer {
       <div class="g-item"><div class="g-item-inner"><img src="images/7_venue_backdrop.jpg" style="width:100%;height:100%;object-fit:cover;" alt="Venue Backdrop"/><div class="g-item-label">Venue &amp; Backdrop</div></div></div>
     </div>
   </div>
-
-
 </section>
 
 <!-- ════════════════ BOOKING ════════════════ -->
@@ -1524,13 +1632,8 @@ footer {
   <svg class="booking-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
     <g opacity="0.1">
       <ellipse cx="350" cy="120" rx="60" ry="78" fill="white"/>
-      <path d="M350 198 Q348 220 344 240" stroke="white" stroke-width="2.5" fill="none"/>
-      <ellipse cx="345" cy="105" rx="13" ry="8" fill="rgba(255,255,255,0.35)" transform="rotate(-30,345,105)"/>
       <ellipse cx="430" cy="220" rx="50" ry="65" fill="white"/>
-      <path d="M430 285 Q428 305 424 322" stroke="white" stroke-width="2" fill="none"/>
-      <ellipse cx="425" cy="207" rx="11" ry="7" fill="rgba(255,255,255,0.35)" transform="rotate(-30,425,207)"/>
       <ellipse cx="460" cy="80" rx="40" ry="52" fill="white"/>
-      <path d="M460 132 Q458 152 454 168" stroke="white" stroke-width="2" fill="none"/>
     </g>
   </svg>
 
@@ -1542,7 +1645,7 @@ footer {
 
       <div class="booking-services-list">
         <div class="bsl-item active" onclick="selectService(this,'Catering')">
-          <svg width="18" height="18" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="18" height="18" viewBox="0 0 44 44" fill="none">
             <line x1="8" y1="4" x2="8" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             <path d="M5 4 C5 4 5 12 8 14 C11 12 11 4 11 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
             <line x1="8" y1="14" x2="8" y2="40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -1552,21 +1655,21 @@ footer {
           Catering
         </div>
         <div class="bsl-item" onclick="selectService(this,'Hair Braiding')">
-          <svg width="18" height="18" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="18" height="18" viewBox="0 0 44 44" fill="none">
             <path d="M22 6 C22 6 16 12 16 20 C16 28 22 34 22 34 C22 34 28 28 28 20 C28 12 22 6 22 6Z" stroke="currentColor" stroke-width="1.4" fill="none"/>
             <circle cx="22" cy="20" r="3" stroke="currentColor" stroke-width="1.2" fill="none"/>
           </svg>
           Hair Braiding
         </div>
         <div class="bsl-item" onclick="selectService(this,'Private Sitting')">
-          <svg width="18" height="18" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="18" height="18" viewBox="0 0 44 44" fill="none">
             <circle cx="22" cy="12" r="6" stroke="currentColor" stroke-width="1.4" fill="none"/>
             <path d="M22 20 C15 20 10 25 10 31 L10 38 L34 38 L34 31 C34 25 29 20 22 20Z" stroke="currentColor" stroke-width="1.4" fill="none"/>
           </svg>
           Private Sitting
         </div>
         <div class="bsl-item" onclick="selectService(this,'Event Planning')">
-          <svg width="18" height="18" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="18" height="18" viewBox="0 0 44 44" fill="none">
             <rect x="6" y="10" width="32" height="28" rx="2" stroke="currentColor" stroke-width="1.4" fill="none"/>
             <line x1="6" y1="17" x2="38" y2="17" stroke="currentColor" stroke-width="1.4"/>
             <line x1="14" y1="6" x2="14" y2="14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
@@ -1575,7 +1678,7 @@ footer {
           Event Planning &amp; Coordination
         </div>
         <div class="bsl-item" onclick="selectService(this,'Home Organizing')">
-          <svg width="18" height="18" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="18" height="18" viewBox="0 0 44 44" fill="none">
             <path d="M6 20 L22 6 L38 20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/>
             <path d="M10 17 L10 38 L34 38 L34 17" stroke="currentColor" stroke-width="1.4" fill="none"/>
           </svg>
@@ -1590,30 +1693,14 @@ footer {
         <p class="form-subtitle">We'll confirm availability and follow up within 24 hours.</p>
 
         <form id="bookingForm" action="https://docs.google.com/forms/d/e/1FAIpQLSccrRPLXdMYP_3lw4T7tfx7yXBEu5IOwLvHe29rvFew_cEw4A/formResponse" method="POST" target="_blank" onsubmit="handleBooking(event)">
-
-          <!-- Name + Contact -->
           <div class="frow">
-            <div class="fg">
-              <label>First Name</label>
-              <input type="text" name="entry.2132996580" placeholder="Jane" required/>
-            </div>
-            <div class="fg">
-              <label>Last Name</label>
-              <input type="text" name="entry.360198021" placeholder="Doe" required/>
-            </div>
+            <div class="fg"><label>First Name</label><input type="text" name="entry.2132996580" placeholder="Jane" required/></div>
+            <div class="fg"><label>Last Name</label><input type="text" name="entry.360198021" placeholder="Doe" required/></div>
           </div>
           <div class="frow">
-            <div class="fg">
-              <label>Email Address</label>
-              <input type="email" name="entry.425656258" placeholder="jane@email.com" required/>
-            </div>
-            <div class="fg">
-              <label>Phone Number</label>
-              <input type="tel" name="entry.487425429" placeholder="(555) 000-0000"/>
-            </div>
+            <div class="fg"><label>Email Address</label><input type="email" name="entry.425656258" placeholder="jane@email.com" required/></div>
+            <div class="fg"><label>Phone Number</label><input type="tel" name="entry.487425429" placeholder="(555) 000-0000"/></div>
           </div>
-
-          <!-- Service + Date -->
           <div class="frow">
             <div class="fg">
               <label>Service Requested</label>
@@ -1626,94 +1713,72 @@ footer {
                 <option value="Home Organizing">Home Organizing</option>
               </select>
             </div>
-            <div class="fg">
-              <label>Preferred Date</label>
-              <input type="date" name="entry.1686805789" required/>
-            </div>
+            <div class="fg"><label>Preferred Date</label><input type="date" name="entry.1686805789" required/></div>
           </div>
 
-          <!-- Dynamic service-specific pricing options -->
           <div id="svc-catering" class="svc-options" style="display:none;">
-            <div class="frow full">
-              <div class="fg">
-                <label>Catering Package</label>
-                <select name="entry.2111116416">
-                  <option value="">— Select a package —</option>
-                  <option value="Small (1–30 guests) — Starting at $500">Small (1–30 guests) — Starting at $500</option>
-                  <option value="Medium (31–74 guests) — Starting at $1,500">Medium (31–74 guests) — Starting at $1,500</option>
-                  <option value="Large (75–200+ guests) — Starting at $3,000+">Large (75–200+ guests) — Starting at $3,000+</option>
-                </select>
-              </div>
-            </div>
+            <div class="frow full"><div class="fg"><label>Catering Package</label>
+              <select name="entry.2111116416">
+                <option value="">— Select a package —</option>
+                <option value="Small (1–30 guests) — Starting at $500">Small (1–30 guests) — Starting at $500</option>
+                <option value="Medium (31–74 guests) — Starting at $1,500">Medium (31–74 guests) — Starting at $1,500</option>
+                <option value="Large (75–200+ guests) — Starting at $3,000+">Large (75–200+ guests) — Starting at $3,000+</option>
+              </select>
+            </div></div>
           </div>
 
           <div id="svc-hair" class="svc-options" style="display:none;">
-            <div class="frow full">
-              <div class="fg">
-                <label>Hair Service</label>
-                <select name="entry.1878703687">
-                  <option value="">— Select a style —</option>
-                  <option value="Box Braids – Small ($200)">Box Braids – Small ($200)</option>
-                  <option value="Box Braids – Medium ($175)">Box Braids – Medium ($175)</option>
-                  <option value="Box Braids – Large ($165)">Box Braids – Large ($165)</option>
-                  <option value="Natural Hair Braiding ($45)">Natural Hair Braiding ($45)</option>
-                  <option value="Crochet Styles ($135)">Crochet Styles ($135)</option>
-                  <option value="Sew-In w/ Leave Out ($175)">Sew-In w/ Leave Out ($175)</option>
-                </select>
-              </div>
-            </div>
+            <div class="frow full"><div class="fg"><label>Hair Service</label>
+              <select name="entry.1878703687">
+                <option value="">— Select a style —</option>
+                <option value="Box Braids – Small ($200)">Box Braids – Small ($200)</option>
+                <option value="Box Braids – Medium ($175)">Box Braids – Medium ($175)</option>
+                <option value="Box Braids – Large ($165)">Box Braids – Large ($165)</option>
+                <option value="Natural Hair Braiding ($45)">Natural Hair Braiding ($45)</option>
+                <option value="Crochet Styles ($135)">Crochet Styles ($135)</option>
+                <option value="Sew-In w/ Leave Out ($175)">Sew-In w/ Leave Out ($175)</option>
+              </select>
+            </div></div>
           </div>
 
           <div id="svc-event" class="svc-options" style="display:none;">
-            <div class="frow full">
-              <div class="fg">
-                <label>Event Size</label>
-                <select name="entry.1696621745">
-                  <option value="">— Select event size —</option>
-                  <option value="Intimate Event (1–29 guests) — $300">Intimate Event (1–29 guests) — $300</option>
-                  <option value="Medium Event (30–75 guests) — $600">Medium Event (30–75 guests) — $600</option>
-                  <option value="Large Event (76–200+ guests) — $1,200+">Large Event (76–200+ guests) — $1,200+</option>
-                </select>
-              </div>
-            </div>
+            <div class="frow full"><div class="fg"><label>Event Size</label>
+              <select name="entry.1696621745">
+                <option value="">— Select event size —</option>
+                <option value="Intimate Event (1–29 guests) — $300">Intimate Event (1–29 guests) — $300</option>
+                <option value="Medium Event (30–75 guests) — $600">Medium Event (30–75 guests) — $600</option>
+                <option value="Large Event (76–200+ guests) — $1,200+">Large Event (76–200+ guests) — $1,200+</option>
+              </select>
+            </div></div>
           </div>
 
           <div id="svc-planning" class="svc-options" style="display:none;">
-            <div class="frow full">
-              <div class="fg">
-                <label>Planning / Wedding Tier</label>
-                <select name="entry.136010715">
-                  <option value="">— Select a tier —</option>
-                  <option value="Day-Of Coordination — $800">Day-Of Coordination — $800</option>
-                  <option value="Partial Planning — $1,500">Partial Planning — $1,500</option>
-                  <option value="Full Service Wedding — $3,000">Full Service Wedding — $3,000</option>
-                </select>
-              </div>
-            </div>
+            <div class="frow full"><div class="fg"><label>Planning / Wedding Tier</label>
+              <select name="entry.136010715">
+                <option value="">— Select a tier —</option>
+                <option value="Day-Of Coordination — $800">Day-Of Coordination — $800</option>
+                <option value="Partial Planning — $1,500">Partial Planning — $1,500</option>
+                <option value="Full Service Wedding — $3,000">Full Service Wedding — $3,000</option>
+              </select>
+            </div></div>
           </div>
 
           <div id="svc-sitting" class="svc-options" style="display:none;">
-            <div class="frow full">
-              <div class="fg">
-                <label>Private Sitting Type</label>
-                <select name="entry.1878703687">
-                  <option value="">— Select type —</option>
-                  <option value="Childcare ($40/hr)">Childcare ($40/hr)</option>
-                  <option value="Elderly Care ($40/hr)">Elderly Care ($40/hr)</option>
-                </select>
-              </div>
-            </div>
+            <div class="frow full"><div class="fg"><label>Private Sitting Type</label>
+              <select name="entry.1878703687">
+                <option value="">— Select type —</option>
+                <option value="Childcare ($40/hr)">Childcare ($40/hr)</option>
+                <option value="Elderly Care ($40/hr)">Elderly Care ($40/hr)</option>
+              </select>
+            </div></div>
           </div>
 
-          <!-- Special notes -->
           <div class="frow full">
-            <div class="fg">
-              <label>Details &amp; Special Requests</label>
+            <div class="fg"><label>Details &amp; Special Requests</label>
               <textarea name="entry.2472791" placeholder="Tell us about your vision, number of guests, or any specific needs…"></textarea>
             </div>
           </div>
 
-          <!-- Payment section — shown/updated dynamically by JS -->
           <div id="payment-section" style="display:none;">
             <div class="deposit-row" id="deposit-policy-row">
               <div class="deposit-text">
@@ -1723,21 +1788,17 @@ footer {
             </div>
             <div class="payment-group">
               <span class="payment-group-label">How would you like to pay?</span>
-              <div class="payment-options" id="payment-options-container">
-                <!-- populated by JS based on service selection -->
-              </div>
+              <div class="payment-options" id="payment-options-container"></div>
             </div>
           </div>
 
           <div class="form-note">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 12a1 1 0 110-2 1 1 0 010 2zm1-4H9V6h2v4z" fill="#6b5d5a"/>
-            </svg>
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 12a1 1 0 110-2 1 1 0 010 2zm1-4H9V6h2v4z" fill="#6b5d5a"/></svg>
             Your information is protected. We will never share your data with third parties.
           </div>
           <button type="submit" class="btn-submit">
             Submit &amp; Proceed to Payment
-            <span class="stripe-badge"><svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1L1 7h4l-1 4 5-6H5l1-4z" fill="currentColor"/></svg> Stripe</span>
+            <span class="stripe-badge"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M6 1L1 7h4l-1 4 5-6H5l1-4z" fill="currentColor"/></svg> Stripe</span>
           </button>
         </form>
       </div>
@@ -1750,12 +1811,8 @@ footer {
   <svg class="inquiry-bg-flower" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
     <g opacity="0.12">
       <ellipse cx="80" cy="300" rx="52" ry="68" fill="white"/>
-      <path d="M80 368 Q78 390 74 408" stroke="white" stroke-width="2.5" fill="none"/>
-      <ellipse cx="75" cy="286" rx="11" ry="7" fill="rgba(255,255,255,0.35)" transform="rotate(-30,75,286)"/>
       <ellipse cx="180" cy="350" rx="45" ry="58" fill="white"/>
-      <path d="M180 408 Q178 418 175 420" stroke="white" stroke-width="2" fill="none"/>
       <ellipse cx="40" cy="180" rx="38" ry="50" fill="white"/>
-      <path d="M40 230 Q38 250 34 265" stroke="white" stroke-width="2" fill="none"/>
     </g>
   </svg>
 
@@ -1767,24 +1824,27 @@ footer {
 
       <div class="contact-tiles">
         <div class="ct">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
             <polyline points="22,6 12,13 2,6" stroke="#7a6e72" stroke-width="1.5"/>
           </svg>
           <span class="ct-label">Email</span>
-          <div class="ct-value"><a href="/cdn-cgi/l/email-protection#b2dad7dededdf2cadbdcd6dbd7c1d3dfd3c8dbdcd5dad3dcd6c19cd1dddf"><span class="__cf_email__" data-cfemail="c6aea3aaaaa986beafa8a2afa3b5a7aba7bcafa8a1aea7a8a2b5e8a5a9ab">[email&#160;protected]</span></a></div>
+          <div class="ct-value"><a href="mailto:xindiesamazinghands@gmail.com">xindiesamazinghands@gmail.com</a></div>
         </div>
-       <div class="ct clickable" onclick="openReviewForm()" style="cursor:pointer; transition:background .2s;">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
-  </svg>
-  <span class="ct-label">Reviews</span>
-  <div class="ct-value" id="tile-rating">Leave Us a Review</div>
-  <div class="stars-display" id="tile-stars" style="display:none; display:flex; gap:3px; margin-top:0.3rem;"></div>
-  <div id="tile-count" style="font-size:0.72rem; color:var(--muted); margin-top:0.3rem;"></div>
-</div>
+
+        <!-- FIX 2: Review tile now calls openReviewForm() which opens the review modal that was previously missing from the HTML -->
+        <div class="ct clickable" onclick="openReviewForm()" style="cursor:pointer;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="ct-label">Reviews</span>
+          <div class="ct-value" id="tile-rating">Leave Us a Review</div>
+          <div class="stars-display" id="tile-stars" style="display:flex; gap:3px; margin-top:0.3rem;"></div>
+          <div id="tile-count" style="font-size:0.72rem; color:var(--muted); margin-top:0.3rem;"></div>
+        </div>
+
         <div class="ct">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="10" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
             <line x1="2" y1="12" x2="22" y2="12" stroke="#7a6e72" stroke-width="1.5"/>
             <path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
@@ -1792,8 +1852,9 @@ footer {
           <span class="ct-label">Service Area</span>
           <div class="ct-value">Local &amp; Regional</div>
         </div>
+
         <div class="ct">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <rect x="3" y="4" width="18" height="18" rx="2" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
             <line x1="3" y1="9" x2="21" y2="9" stroke="#7a6e72" stroke-width="1.5"/>
             <line x1="8" y1="2" x2="8" y2="6" stroke="#7a6e72" stroke-width="1.5" stroke-linecap="round"/>
@@ -1809,29 +1870,16 @@ footer {
       <div class="inquiry-form-card">
         <h3>Send a Message</h3>
         <p class="form-subtitle" style="font-size:.82rem;color:var(--muted);margin-bottom:2rem;font-weight:300;line-height:1.6;">Tell us about yourself and what you need — we'll take it from there.</p>
-
         <form action="https://docs.google.com/forms/d/e/1FAIpQLScw5AwWl5g3TEOvk_szqdT9gLwa5iM4xew7yk4OJrU_HJ1sFw/formResponse" method="POST" target="_blank" onsubmit="handleInquiry(event)">
           <div class="frow">
-            <div class="fg">
-              <label>Your Name</label>
-              <input type="text" name="entry.177308334" placeholder="Jane Doe" required/>
-            </div>
-            <div class="fg">
-              <label>Email Address</label>
-              <input type="email" name="entry.897189091" placeholder="jane@email.com" required/>
-            </div>
+            <div class="fg"><label>Your Name</label><input type="text" name="entry.177308334" placeholder="Jane Doe" required/></div>
+            <div class="fg"><label>Email Address</label><input type="email" name="entry.897189091" placeholder="jane@email.com" required/></div>
           </div>
           <div class="frow full">
-            <div class="fg">
-              <label>Subject</label>
-              <input type="text" name="entry.1092033928" placeholder="How can we help you?"/>
-            </div>
+            <div class="fg"><label>Subject</label><input type="text" name="entry.1092033928" placeholder="How can we help you?"/></div>
           </div>
           <div class="frow full">
-            <div class="fg">
-              <label>Message</label>
-              <textarea name="entry.820538370" rows="5" placeholder="Share your vision, questions, or any details that will help us assist you best." required></textarea>
-            </div>
+            <div class="fg"><label>Message</label><textarea name="entry.820538370" rows="5" placeholder="Share your vision, questions, or any details that will help us assist you best." required></textarea></div>
           </div>
           <button type="submit" class="btn-submit" style="background:var(--blue);color:white;">Send Message</button>
         </form>
@@ -1845,13 +1893,8 @@ footer {
   <svg class="footer-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
     <g opacity="0.06">
       <ellipse cx="380" cy="250" rx="70" ry="90" fill="white"/>
-      <path d="M380 340 Q378 365 374 385" stroke="white" stroke-width="3" fill="none"/>
-      <ellipse cx="375" cy="233" rx="15" ry="10" fill="rgba(255,255,255,0.4)" transform="rotate(-30,375,233)"/>
       <ellipse cx="460" cy="140" rx="55" ry="72" fill="white"/>
-      <path d="M460 212 Q458 232 454 250" stroke="white" stroke-width="2.5" fill="none"/>
-      <ellipse cx="455" cy="125" rx="12" ry="8" fill="rgba(255,255,255,0.4)" transform="rotate(-30,455,125)"/>
       <ellipse cx="440" cy="360" rx="48" ry="62" fill="white"/>
-      <path d="M440 422 Q438 442 434 460" stroke="white" stroke-width="2" fill="none"/>
     </g>
   </svg>
 
@@ -1877,11 +1920,7 @@ footer {
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#booking">Book a Service</a></li>
         <li><a href="#inquiry">Contact</a></li>
-        <li>
-  <a href="#" onclick="openReviewsModal(); return false;" class="footer-reviews-link">
-    &#9733; See all client reviews
-  </a>
-</li>
+        <li><a href="#" onclick="openReviewsModal(); return false;">&#9733; See all client reviews</a></li>
       </ul>
     </div>
   </div>
@@ -1890,375 +1929,12 @@ footer {
     <span class="footer-copy">© 2026-2027 Xindies Amazing Hands LLC. All rights reserved.</span>
     <div class="footer-legal">
       <a href="#" onclick="openModal('privacy');return false;">Privacy Policy</a>
-<a href="#" onclick="openModal('tos');return false;">Terms of Service</a>
+      <a href="#" onclick="openModal('tos');return false;">Terms of Service</a>
     </div>
   </div>
 </footer>
 
-<script>
-// ── Nav scroll
-const nav = document.getElementById('mainNav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-});
-
-// ── Scroll reveal
-const revEls = document.querySelectorAll('.reveal-up, .reveal-left');
-const revObs = new IntersectionObserver(entries => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('in'), i * 100);
-      revObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.08 });
-revEls.forEach(el => revObs.observe(el));
-  // ── Service card toggle
-document.querySelectorAll('.svc-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const isOpen = card.classList.contains('open');
-    document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('open'));
-    if (!isOpen) card.classList.add('open');
-  });
-});
-
-// ── Services that require FULL PAYMENT only (no deposit)
-const FULL_ONLY_SERVICES = ['Home Organizing', 'Private Sitting'];
-const FULL_ONLY_HAIR = ['Natural Hair Braiding ($45)', 'Crochet Styles ($135)'];
-
-// ── Stripe link lookup table
-const STRIPE = {
-  // Catering
-  'Catering|Small (1–30 guests) — Starting at $500|deposit':       'https://book.stripe.com/5kQ8wR2KC1utbPEaZu2Fa06',
-  'Catering|Small (1–30 guests) — Starting at $500|full':          'https://book.stripe.com/5kQeVf5WOfljbPEaZu2Fa0b',
-  'Catering|Medium (31–74 guests) — Starting at $1,500|deposit':   'https://book.stripe.com/14A5kFclc7SRg5U6Je2Fa07',
-  'Catering|Medium (31–74 guests) — Starting at $1,500|full':      'https://book.stripe.com/eVqcN7gBs4GF3j82sY2Fa0a',
-  'Catering|Large (75–200+ guests) — Starting at $3,000+|deposit': 'https://book.stripe.com/8x24gB2KCflj4nc4B62Fa08',
-  'Catering|Large (75–200+ guests) — Starting at $3,000+|full':    'https://book.stripe.com/bJe4gBgBsc97aLAffK2Fa09',
-
-  // Hair — deposit + full
-  'Hair Braiding|Box Braids – Small ($200)|deposit':   'https://book.stripe.com/aFabJ384W7SRg5U1oU2Fa05',
-  'Hair Braiding|Box Braids – Small ($200)|full':      'https://buy.stripe.com/eVq6oJ5WO6ON06WebG2Fa03',
-  'Hair Braiding|Box Braids – Medium ($175)|deposit':  'https://book.stripe.com/eVq7sNfxogpn9HwebG2Fa04',
-  'Hair Braiding|Box Braids – Medium ($175)|full':     'https://buy.stripe.com/5kQ28t0Cu2yxf1Qc3y2Fa02',
-  'Hair Braiding|Box Braids – Large ($165)|deposit':   'https://book.stripe.com/bJefZj0Cu3CBbPE8Rm2Fa00',
-  'Hair Braiding|Box Braids – Large ($165)|full':      'https://buy.stripe.com/7sYcN7etk0qp3j8aZu2Fa01',
-  'Hair Braiding|Sew-In w/ Leave Out ($175)|deposit':  'https://book.stripe.com/14A7sN3OG1ut3j89Vq2Fa0c',
-  'Hair Braiding|Sew-In w/ Leave Out ($175)|full':     'https://book.stripe.com/8x2eVf84W5KJdXM5Fa2Fa0d',
-
-  // Hair — full payment only (flat price)
-  'Hair Braiding|Natural Hair Braiding ($45)|full':    'https://book.stripe.com/14A8wR84W2yx9HwebG2Fa0r',
-  'Hair Braiding|Crochet Styles ($135)|full':          'https://book.stripe.com/8x25kFclc6ONaLA4B62Fa0q',
-
-  // Private Sitting — full payment only
-  'Private Sitting|Childcare ($40/hr)|full':   'https://book.stripe.com/3cI9AV5WO3CBg5Uc3y2Fa0t',
-  'Private Sitting|Elderly Care ($40/hr)|full': 'https://book.stripe.com/aFacN74SKddb06W7Ni2Fa0s',
-
-  // Home Organizing — full payment only
-  'Home Organizing||full': 'https://book.stripe.com/8x26oJ5WO0qpcTI5Fa2Fa0u',
-
-  // Event Planning (size)
-  'Event Planning|Intimate Event (1–29 guests) — $300|deposit':    'https://book.stripe.com/eVqcN7gBs4GFf1Q1oU2Fa0j',
-  'Event Planning|Intimate Event (1–29 guests) — $300|full':       'https://book.stripe.com/aFa5kF5WO0qp9Hw5Fa2Fa0e',
-  'Event Planning|Medium Event (30–75 guests) — $600|deposit':     'https://book.stripe.com/7sYcN79906ON6vk7Ni2Fa0i',
-  'Event Planning|Medium Event (30–75 guests) — $600|full':        'https://book.stripe.com/9B600l70S8WV2f46Je2Fa0f',
-  'Event Planning|Large Event (76–200+ guests) — $1,200+|deposit': 'https://book.stripe.com/eVqdRb1Gya0Z06W0kQ2Fa0h',
-  'Event Planning|Large Event (76–200+ guests) — $1,200+|full':    'https://book.stripe.com/6oUbJ3bh86ONaLA2sY2Fa0g',
-
-  // Wedding / Planning tier
-  'Event Planning|Day-Of Coordination — $800|deposit':     'https://book.stripe.com/cNi8wR2KC5KJdXM3x22Fa0k',
-  'Event Planning|Day-Of Coordination — $800|full':        'https://book.stripe.com/14A3cx0Cu8WVf1QgjO2Fa0n',
-  'Event Planning|Partial Planning — $1,500|deposit':      'https://book.stripe.com/00wfZj70S3CB4nc1oU2Fa0l',
-  'Event Planning|Partial Planning — $1,500|full':         'https://book.stripe.com/3cIdRb5WO2yx2f49Vq2Fa0o',
-  'Event Planning|Full Service Wedding — $3,000|deposit':  'https://book.stripe.com/14AeVf0Cu5KJg5UaZu2Fa0m',
-  'Event Planning|Full Service Wedding — $3,000|full':     'https://book.stripe.com/bJe4gB3OG3CB1b07Ni2Fa0p',
-};
-
-function getStripeLink(service, subOption, payType) {
-  return STRIPE[`${service}|${subOption}|${payType}`]
-      || STRIPE[`${service}||${payType}`]
-      || null;
-}
-
-// SVG icons for payment options
-const iconCard = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="2" y1="10" x2="22" y2="10" stroke="currentColor" stroke-width="1.5"/><rect x="5" y="13" width="4" height="2" rx="0.5" fill="currentColor" opacity="0.5"/></svg>`;
-const iconStar = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
-const iconCash = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="13.5" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M6 7V5a2 2 0 012-2h8a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
-
-function buildPaymentOption(value, icon, title, subtitle, checked) {
-  return `<label class="payment-option pay-choice">
-    <input type="radio" name="entry.PAYMETHOD" value="${value}"${checked ? ' checked' : ''}/>
-    ${icon}
-    <span>
-      <strong style="display:block;font-size:0.82rem;">${title}</strong>
-      <span style="font-size:0.72rem;opacity:0.7;">${subtitle}</span>
-    </span>
-  </label>`;
-}
-
-// ── Update payment options based on selected service + sub-option
-function updatePaymentOptions(service, subOption) {
-  const section = document.getElementById('payment-section');
-  const container = document.getElementById('payment-options-container');
-  const policyTitle = document.getElementById('deposit-policy-title');
-  const policyText = document.getElementById('deposit-policy-text');
-
-  if (!service) { section.style.display = 'none'; return; }
-
-  const isFullOnly = FULL_ONLY_SERVICES.includes(service)
-    || (service === 'Hair Braiding' && FULL_ONLY_HAIR.includes(subOption));
-
-  section.style.display = '';
-
-  if (isFullOnly) {
-    policyTitle.textContent = 'Payment Required to Book';
-    policyText.textContent = 'This service is priced at a flat rate. Pay online now to confirm your booking, or pay in person at time of service.';
-    container.innerHTML =
-      buildPaymentOption('Full Payment', iconStar, 'Pay Online Now', 'Confirm instantly via Stripe', true) +
-      buildPaymentOption('Cash (In Person)', iconCash, 'Pay in Person', 'Cash at time of service', false);
-  } else {
-    policyTitle.textContent = 'Deposit Policy';
-    policyText.textContent = 'A deposit secures your date. Pay now and the remainder at time of service — or pay in full today.';
-    container.innerHTML =
-      buildPaymentOption('Deposit', iconCard, 'Pay Deposit', 'Secure your date · pay rest at service', true) +
-      buildPaymentOption('Full Payment', iconStar, 'Pay in Full', 'One payment · completely covered', false) +
-      buildPaymentOption('Cash (Deposit via Card)', iconCash, 'Pay Cash at Service', 'Deposit via card now · rest in cash', false);
-  }
-}
-
-// ── Service selector (sidebar) — syncs with form dropdown
-function selectService(el, name) {
-  document.querySelectorAll('.bsl-item').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  const sel = document.getElementById('serviceSelect');
-  if (sel) {
-    sel.value = name;
-    showServiceOptions(name);
-  }
-}
-
-// ── Show/hide service-specific fields and update payment options
-function showServiceOptions(value) {
-  document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
-  if (value === 'Catering') document.getElementById('svc-catering').style.display = '';
-  if (value === 'Hair Braiding') document.getElementById('svc-hair').style.display = '';
-  if (value === 'Private Sitting') document.getElementById('svc-sitting').style.display = '';
-  if (value === 'Event Planning') {
-    document.getElementById('svc-event').style.display = '';
-    document.getElementById('svc-planning').style.display = '';
-  }
-  // Show payment section for services with no sub-option needed
-  if (['Home Organizing', 'Private Sitting'].includes(value)) {
-    updatePaymentOptions(value, '');
-  } else if (value === 'Catering' || value === 'Event Planning') {
-    // Wait for sub-option selection
-    document.getElementById('payment-section').style.display = 'none';
-  } else if (value === 'Hair Braiding') {
-    document.getElementById('payment-section').style.display = 'none';
-  } else {
-    document.getElementById('payment-section').style.display = 'none';
-  }
-}
-
-// ── Listen for sub-option changes to reveal payment section
-document.addEventListener('change', function(e) {
-  const name = e.target.name;
-  const subSelects = ['entry.2111116416', 'entry.1878703687', 'entry.1696621745', 'entry.136010715'];
-  if (subSelects.includes(name) && e.target.value) {
-    const service = (document.getElementById('serviceSelect') || {}).value || '';
-    updatePaymentOptions(service, e.target.value);
-  }
-  // Also update when Private Sitting type changes
-  if (name === 'entry.1878703687' && document.getElementById('serviceSelect').value === 'Private Sitting') {
-    updatePaymentOptions('Private Sitting', e.target.value);
-  }
-});
-
-// ── Combined booking handler
-function handleBooking(e) {
-  e.preventDefault();
-  const form = document.getElementById('bookingForm');
-
-  const service     = (form.querySelector('[name="entry.1578334907"]') || {}).value || '';
-  const hairOpt     = (form.querySelector('[name="entry.1878703687"]') || {}).value || '';
-  const cateringOpt = (form.querySelector('[name="entry.2111116416"]') || {}).value || '';
-  const eventOpt    = (form.querySelector('[name="entry.1696621745"]') || {}).value || '';
-  const planOpt     = (form.querySelector('[name="entry.136010715"]') || {}).value || '';
-  const payMethod   = (form.querySelector('input[name="entry.PAYMETHOD"]:checked') || {}).value || '';
-
-  let subOption = '';
-  if (service === 'Hair Braiding') subOption = hairOpt;
-  else if (service === 'Catering') subOption = cateringOpt;
-  else if (service === 'Event Planning') subOption = eventOpt || planOpt;
-  else if (service === 'Private Sitting') subOption = hairOpt; // reuses same field
-
-  const payType = payMethod === 'Full Payment' ? 'full'
-                : payMethod === 'Deposit'      ? 'deposit'
-                : 'deposit'; // Cash = deposit via card
-
-  // Submit to Google Form in background
-  const data = new FormData(form);
-  fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
-
-  // Open correct Stripe link (not for in-person cash)
-  if (payMethod !== 'Cash (In Person)') {
-    const stripeUrl = getStripeLink(service, subOption, payType);
-    if (stripeUrl) window.open(stripeUrl, '_blank');
-  }
-
-  // Show confirmation
-  const btn = form.querySelector('.btn-submit');
-  const originalHTML = btn.innerHTML;
-  btn.innerHTML = '✓ Request Submitted!';
-  btn.style.background = 'var(--sage)';
-  btn.style.color = 'white';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.innerHTML = originalHTML;
-    btn.style.background = '';
-    btn.style.color = '';
-    btn.disabled = false;
-    form.reset();
-    document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
-    document.getElementById('payment-section').style.display = 'none';
-  }, 4000);
-}
-
-// ── Inquiry form handler
-function handleInquiry(e) {
-  e.preventDefault();
-  const form = e.target;
-  const data = new FormData(form);
-  fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
-
-  const btn = form.querySelector('.btn-submit');
-  const originalHTML = btn.innerHTML;
-  btn.innerHTML = '✓ Message Sent!';
-  btn.style.background = 'var(--sage)';
-  btn.style.color = 'white';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.innerHTML = originalHTML;
-    btn.style.background = '';
-    btn.style.color = '';
-    btn.disabled = false;
-    form.reset();
-  }, 4000);
-}
-  // ── Legal modal
-function openModal(tab) {
-  document.getElementById('legalModal').classList.add('open');
-  switchTab(tab);
-}
-function closeModal() {
-  document.getElementById('legalModal').classList.remove('open');
-}
-function switchTab(tab) {
-  document.querySelectorAll('.modal-tab').forEach((t, i) => {
-    t.classList.toggle('active', (tab==='privacy'&&i===0)||(tab==='tos'&&i===1));
-  });
-  document.getElementById('tab-privacy').classList.toggle('active', tab==='privacy');
-  document.getElementById('tab-tos').classList.toggle('active', tab==='tos');
-}
-document.getElementById('legalModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeModal();
-});
-  // ── Review system
-let reviewRating = 0;
-let siteReviews = JSON.parse(localStorage.getItem('xindies_reviews') || '[]');
-
-function updateReviewTile() {
-  if (!siteReviews.length) return;
-  const avg = siteReviews.reduce((s,r) => s + r.rating, 0) / siteReviews.length;
-  document.getElementById('tile-rating').textContent = avg.toFixed(1) + ' / 5';
-  const sc = document.getElementById('tile-stars');
-  sc.style.display = 'flex';
-  sc.innerHTML = [1,2,3,4,5].map(i =>
-    `<svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="${i<=Math.round(avg)?'#d4af37':'#ecddd8'}"/></svg>`
-  ).join('');
-  document.getElementById('tile-count').textContent = siteReviews.length + ' review' + (siteReviews.length !== 1 ? 's' : '');
-}
-
-function setRating(val) {
-  reviewRating = val;
-  document.querySelectorAll('.star-btn').forEach(b => {
-    b.classList.toggle('lit', parseInt(b.dataset.val) <= val);
-  });
-}
-
-function updateCharCount() {
-  const ta = document.getElementById('r-text');
-  document.getElementById('charLeft').textContent = 280 - ta.value.length;
-}
-
-function openReviewForm() {
-  reviewRating = 0;
-  document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('lit'));
-  document.getElementById('r-name').value = '';
-  document.getElementById('r-service').value = '';
-  document.getElementById('r-text').value = '';
-  document.getElementById('charLeft').textContent = '280';
-  document.getElementById('reviewFormOverlay').classList.add('open');
-}
-
-function openReviewsModal() {
-  const list = document.getElementById('reviewsList');
-  if (!siteReviews.length) {
-    list.innerHTML = '<div style="padding:2.5rem 1.8rem;text-align:center;color:var(--muted);font-size:0.85rem;">No reviews yet — be the first to share your experience!</div>';
-  } else {
-    list.innerHTML = [...siteReviews].reverse().map(r => `
-      <div style="padding:1.4rem 1.8rem;border-bottom:1px solid var(--pale);">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.5rem;gap:1rem;">
-          <div>
-            <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;color:var(--dark);">${r.name}</div>
-            <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:2px;">${r.service}</div>
-          </div>
-          <div style="display:flex;gap:2px;flex-shrink:0;">${[1,2,3,4,5].map(i=>`<svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="${i<=r.rating?'#d4af37':'#ecddd8'}"/></svg>`).join('')}</div>
-        </div>
-        <div style="font-size:0.82rem;line-height:1.75;color:var(--muted);font-weight:300;">${r.text}</div>
-      </div>`).join('');
-  }
-  document.getElementById('reviewsViewOverlay').classList.add('open');
-}
-
-function closeReviewModals() {
-  document.getElementById('reviewFormOverlay').classList.remove('open');
-  document.getElementById('reviewsViewOverlay').classList.remove('open');
-}
-
-function submitReview() {
-  const name = document.getElementById('r-name').value.trim();
-  const service = document.getElementById('r-service').value;
-  const text = document.getElementById('r-text').value.trim();
-  if (!name || !service || !reviewRating || !text) {
-    alert('Please fill in all fields and select a star rating.');
-    return;
-  }
-  siteReviews.push({ name, service, rating: reviewRating, text, date: new Date().toISOString() });
-  localStorage.setItem('xindies_reviews', JSON.stringify(siteReviews));
-  updateReviewTile();
-  document.getElementById('reviewFormBody').innerHTML = `
-    <div style="text-align:center;padding:2.5rem 1rem;">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style="margin:0 auto 1rem;display:block;">
-        <circle cx="12" cy="12" r="10" stroke="#4a9e7a" stroke-width="1.5"/>
-        <path d="M8 12l3 3 5-5" stroke="#4a9e7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <h4 style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--dark);margin-bottom:0.5rem;">Thank You!</h4>
-      <p style="font-size:0.82rem;color:var(--muted);">Your review has been submitted. We truly appreciate your feedback.</p>
-    </div>`;
-  setTimeout(closeReviewModals, 2500);
-}
-
-document.querySelectorAll('.overlay').forEach(o => {
-  o.addEventListener('click', function(e) { if (e.target === this) closeReviewModals(); });
-});
-
-updateReviewTile();
-</script>
-  <!-- LEGAL MODAL -->
+<!-- ════════════════ LEGAL MODAL ════════════════ -->
 <div class="modal-overlay" id="legalModal">
   <div class="modal-box">
     <div class="modal-header">
@@ -2306,5 +1982,441 @@ updateReviewTile();
     </div>
   </div>
 </div>
+
+<!-- ════════════════ REVIEW FORM OVERLAY (was missing entirely) ════════════════ -->
+<div class="overlay" id="reviewFormOverlay">
+  <div class="overlay-box">
+    <div class="overlay-header">
+      <h2>Leave a Review</h2>
+      <button class="overlay-close" onclick="closeReviewModals()">&#x2715;</button>
+    </div>
+    <div class="overlay-body" id="reviewFormBody">
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300;line-height:1.6;">We'd love to hear about your experience! Your feedback helps us grow and serve our community better.</p>
+
+      <!-- Star rating -->
+      <div style="margin-bottom:1.2rem;">
+        <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose);font-weight:500;margin-bottom:0.6rem;">Your Rating</div>
+        <div class="star-row" id="starRow">
+          <button class="star-btn" data-val="1" onclick="setRating(1)" type="button">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </button>
+          <button class="star-btn" data-val="2" onclick="setRating(2)" type="button">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </button>
+          <button class="star-btn" data-val="3" onclick="setRating(3)" type="button">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </button>
+          <button class="star-btn" data-val="4" onclick="setRating(4)" type="button">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </button>
+          <button class="star-btn" data-val="5" onclick="setRating(5)" type="button">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="review-fg">
+        <label>Your Name</label>
+        <input type="text" id="r-name" placeholder="Jane Doe"/>
+      </div>
+      <div class="review-fg">
+        <label>Service Received</label>
+        <select id="r-service">
+          <option value="">— Select a service —</option>
+          <option value="Catering">Catering</option>
+          <option value="Hair Braiding / Styling">Hair Braiding / Styling</option>
+          <option value="Private Sitting">Private Sitting</option>
+          <option value="Event Planning & Coordination">Event Planning &amp; Coordination</option>
+          <option value="Home Organizing">Home Organizing</option>
+          <option value="Multiple Services">Multiple Services</option>
+        </select>
+      </div>
+      <div class="review-fg">
+        <label>Your Review</label>
+        <textarea id="r-text" maxlength="280" placeholder="Tell us about your experience…" oninput="updateCharCount()"></textarea>
+        <div class="char-count"><span id="charLeft">280</span> characters remaining</div>
+      </div>
+
+      <button class="btn-submit" onclick="submitReview()" type="button" style="margin-top:0.5rem;">
+        Submit Review
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ REVIEWS VIEW OVERLAY (was missing entirely) ════════════════ -->
+<div class="overlay" id="reviewsViewOverlay">
+  <div class="overlay-box">
+    <div class="overlay-header">
+      <h2>Client Reviews</h2>
+      <button class="overlay-close" onclick="closeReviewModals()">&#x2715;</button>
+    </div>
+    <div class="overlay-body">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+        <div id="reviews-summary" style="font-size:0.82rem;color:var(--muted);"></div>
+        <button class="btn-solid" onclick="closeReviewModals(); setTimeout(openReviewForm, 200);" style="font-size:0.65rem;padding:0.6rem 1.4rem;">+ Write a Review</button>
+      </div>
+      <div id="reviewsList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Nav scroll
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── Scroll reveal
+const revEls = document.querySelectorAll('.reveal-up, .reveal-left');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 100);
+      revObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+revEls.forEach(el => revObs.observe(el));
+
+// ── Service card toggle
+document.querySelectorAll('.svc-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  });
+});
+
+// ── Services that require FULL PAYMENT only
+const FULL_ONLY_SERVICES = ['Home Organizing', 'Private Sitting'];
+const FULL_ONLY_HAIR = ['Natural Hair Braiding ($45)', 'Crochet Styles ($135)'];
+
+// ── Stripe link lookup table
+const STRIPE = {
+  'Catering|Small (1–30 guests) — Starting at $500|deposit':       'https://book.stripe.com/5kQ8wR2KC1utbPEaZu2Fa06',
+  'Catering|Small (1–30 guests) — Starting at $500|full':          'https://book.stripe.com/5kQeVf5WOfljbPEaZu2Fa0b',
+  'Catering|Medium (31–74 guests) — Starting at $1,500|deposit':   'https://book.stripe.com/14A5kFclc7SRg5U6Je2Fa07',
+  'Catering|Medium (31–74 guests) — Starting at $1,500|full':      'https://book.stripe.com/eVqcN7gBs4GF3j82sY2Fa0a',
+  'Catering|Large (75–200+ guests) — Starting at $3,000+|deposit': 'https://book.stripe.com/8x24gB2KCflj4nc4B62Fa08',
+  'Catering|Large (75–200+ guests) — Starting at $3,000+|full':    'https://book.stripe.com/bJe4gBgBsc97aLAffK2Fa09',
+  'Hair Braiding|Box Braids – Small ($200)|deposit':   'https://book.stripe.com/aFabJ384W7SRg5U1oU2Fa05',
+  'Hair Braiding|Box Braids – Small ($200)|full':      'https://buy.stripe.com/eVq6oJ5WO6ON06WebG2Fa03',
+  'Hair Braiding|Box Braids – Medium ($175)|deposit':  'https://book.stripe.com/eVq7sNfxogpn9HwebG2Fa04',
+  'Hair Braiding|Box Braids – Medium ($175)|full':     'https://buy.stripe.com/5kQ28t0Cu2yxf1Qc3y2Fa02',
+  'Hair Braiding|Box Braids – Large ($165)|deposit':   'https://book.stripe.com/bJefZj0Cu3CBbPE8Rm2Fa00',
+  'Hair Braiding|Box Braids – Large ($165)|full':      'https://buy.stripe.com/7sYcN7etk0qp3j8aZu2Fa01',
+  'Hair Braiding|Sew-In w/ Leave Out ($175)|deposit':  'https://book.stripe.com/14A7sN3OG1ut3j89Vq2Fa0c',
+  'Hair Braiding|Sew-In w/ Leave Out ($175)|full':     'https://book.stripe.com/8x2eVf84W5KJdXM5Fa2Fa0d',
+  'Hair Braiding|Natural Hair Braiding ($45)|full':    'https://book.stripe.com/14A8wR84W2yx9HwebG2Fa0r',
+  'Hair Braiding|Crochet Styles ($135)|full':          'https://book.stripe.com/8x25kFclc6ONaLA4B62Fa0q',
+  'Private Sitting|Childcare ($40/hr)|full':           'https://book.stripe.com/3cI9AV5WO3CBg5Uc3y2Fa0t',
+  'Private Sitting|Elderly Care ($40/hr)|full':        'https://book.stripe.com/aFacN74SKddb06W7Ni2Fa0s',
+  'Home Organizing||full':                             'https://book.stripe.com/8x26oJ5WO0qpcTI5Fa2Fa0u',
+  'Event Planning|Intimate Event (1–29 guests) — $300|deposit':    'https://book.stripe.com/eVqcN7gBs4GFf1Q1oU2Fa0j',
+  'Event Planning|Intimate Event (1–29 guests) — $300|full':       'https://book.stripe.com/aFa5kF5WO0qp9Hw5Fa2Fa0e',
+  'Event Planning|Medium Event (30–75 guests) — $600|deposit':     'https://book.stripe.com/7sYcN79906ON6vk7Ni2Fa0i',
+  'Event Planning|Medium Event (30–75 guests) — $600|full':        'https://book.stripe.com/9B600l70S8WV2f46Je2Fa0f',
+  'Event Planning|Large Event (76–200+ guests) — $1,200+|deposit': 'https://book.stripe.com/eVqdRb1Gya0Z06W0kQ2Fa0h',
+  'Event Planning|Large Event (76–200+ guests) — $1,200+|full':    'https://book.stripe.com/6oUbJ3bh86ONaLA2sY2Fa0g',
+  'Event Planning|Day-Of Coordination — $800|deposit':     'https://book.stripe.com/cNi8wR2KC5KJdXM3x22Fa0k',
+  'Event Planning|Day-Of Coordination — $800|full':        'https://book.stripe.com/14A3cx0Cu8WVf1QgjO2Fa0n',
+  'Event Planning|Partial Planning — $1,500|deposit':      'https://book.stripe.com/00wfZj70S3CB4nc1oU2Fa0l',
+  'Event Planning|Partial Planning — $1,500|full':         'https://book.stripe.com/3cIdRb5WO2yx2f49Vq2Fa0o',
+  'Event Planning|Full Service Wedding — $3,000|deposit':  'https://book.stripe.com/14AeVf0Cu5KJg5UaZu2Fa0m',
+  'Event Planning|Full Service Wedding — $3,000|full':     'https://book.stripe.com/bJe4gB3OG3CB1b07Ni2Fa0p',
+};
+
+function getStripeLink(service, subOption, payType) {
+  return STRIPE[`${service}|${subOption}|${payType}`]
+      || STRIPE[`${service}||${payType}`]
+      || null;
+}
+
+const iconCard = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="2" y1="10" x2="22" y2="10" stroke="currentColor" stroke-width="1.5"/><rect x="5" y="13" width="4" height="2" rx="0.5" fill="currentColor" opacity="0.5"/></svg>`;
+const iconStar = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
+const iconCash = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="13.5" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M6 7V5a2 2 0 012-2h8a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
+
+function buildPaymentOption(value, icon, title, subtitle, checked) {
+  return `<label class="payment-option pay-choice">
+    <input type="radio" name="entry.PAYMETHOD" value="${value}"${checked ? ' checked' : ''}/>
+    ${icon}
+    <span>
+      <strong style="display:block;font-size:0.82rem;">${title}</strong>
+      <span style="font-size:0.72rem;opacity:0.7;">${subtitle}</span>
+    </span>
+  </label>`;
+}
+
+function updatePaymentOptions(service, subOption) {
+  const section = document.getElementById('payment-section');
+  const container = document.getElementById('payment-options-container');
+  const policyTitle = document.getElementById('deposit-policy-title');
+  const policyText = document.getElementById('deposit-policy-text');
+  if (!service) { section.style.display = 'none'; return; }
+  const isFullOnly = FULL_ONLY_SERVICES.includes(service)
+    || (service === 'Hair Braiding' && FULL_ONLY_HAIR.includes(subOption));
+  section.style.display = '';
+  if (isFullOnly) {
+    policyTitle.textContent = 'Payment Required to Book';
+    policyText.textContent = 'This service is priced at a flat rate. Pay online now to confirm your booking, or pay in person at time of service.';
+    container.innerHTML =
+      buildPaymentOption('Full Payment', iconStar, 'Pay Online Now', 'Confirm instantly via Stripe', true) +
+      buildPaymentOption('Cash (In Person)', iconCash, 'Pay in Person', 'Cash at time of service', false);
+  } else {
+    policyTitle.textContent = 'Deposit Policy';
+    policyText.textContent = 'A deposit secures your date. Pay now and the remainder at time of service — or pay in full today.';
+    container.innerHTML =
+      buildPaymentOption('Deposit', iconCard, 'Pay Deposit', 'Secure your date · pay rest at service', true) +
+      buildPaymentOption('Full Payment', iconStar, 'Pay in Full', 'One payment · completely covered', false) +
+      buildPaymentOption('Cash (Deposit via Card)', iconCash, 'Pay Cash at Service', 'Deposit via card now · rest in cash', false);
+  }
+}
+
+function selectService(el, name) {
+  document.querySelectorAll('.bsl-item').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const sel = document.getElementById('serviceSelect');
+  if (sel) { sel.value = name; showServiceOptions(name); }
+}
+
+function showServiceOptions(value) {
+  document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
+  if (value === 'Catering') document.getElementById('svc-catering').style.display = '';
+  if (value === 'Hair Braiding') document.getElementById('svc-hair').style.display = '';
+  if (value === 'Private Sitting') document.getElementById('svc-sitting').style.display = '';
+  if (value === 'Event Planning') {
+    document.getElementById('svc-event').style.display = '';
+    document.getElementById('svc-planning').style.display = '';
+  }
+  if (['Home Organizing', 'Private Sitting'].includes(value)) {
+    updatePaymentOptions(value, '');
+  } else {
+    document.getElementById('payment-section').style.display = 'none';
+  }
+}
+
+document.addEventListener('change', function(e) {
+  const subSelects = ['entry.2111116416', 'entry.1878703687', 'entry.1696621745', 'entry.136010715'];
+  if (subSelects.includes(e.target.name) && e.target.value) {
+    const service = (document.getElementById('serviceSelect') || {}).value || '';
+    updatePaymentOptions(service, e.target.value);
+  }
+});
+
+function handleBooking(e) {
+  e.preventDefault();
+  const form = document.getElementById('bookingForm');
+  const service     = (form.querySelector('[name="entry.1578334907"]') || {}).value || '';
+  const hairOpt     = (form.querySelector('[name="entry.1878703687"]') || {}).value || '';
+  const cateringOpt = (form.querySelector('[name="entry.2111116416"]') || {}).value || '';
+  const eventOpt    = (form.querySelector('[name="entry.1696621745"]') || {}).value || '';
+  const planOpt     = (form.querySelector('[name="entry.136010715"]') || {}).value || '';
+  const payMethod   = (form.querySelector('input[name="entry.PAYMETHOD"]:checked') || {}).value || '';
+  let subOption = '';
+  if (service === 'Hair Braiding') subOption = hairOpt;
+  else if (service === 'Catering') subOption = cateringOpt;
+  else if (service === 'Event Planning') subOption = eventOpt || planOpt;
+  else if (service === 'Private Sitting') subOption = hairOpt;
+  const payType = payMethod === 'Full Payment' ? 'full' : payMethod === 'Deposit' ? 'deposit' : 'deposit';
+  const data = new FormData(form);
+  fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
+  if (payMethod !== 'Cash (In Person)') {
+    const stripeUrl = getStripeLink(service, subOption, payType);
+    if (stripeUrl) window.open(stripeUrl, '_blank');
+  }
+  const btn = form.querySelector('.btn-submit');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '✓ Request Submitted!';
+  btn.style.background = 'var(--sage)';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = originalHTML;
+    btn.style.background = '';
+    btn.disabled = false;
+    form.reset();
+    document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
+    document.getElementById('payment-section').style.display = 'none';
+  }, 4000);
+}
+
+function handleInquiry(e) {
+  e.preventDefault();
+  const form = e.target;
+  fetch(form.action, { method: 'POST', body: new FormData(form), mode: 'no-cors' }).catch(() => {});
+  const btn = form.querySelector('.btn-submit');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '✓ Message Sent!';
+  btn.style.background = 'var(--sage)';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = originalHTML;
+    btn.style.background = '';
+    btn.disabled = false;
+    form.reset();
+  }, 4000);
+}
+
+// ── Legal modal
+function openModal(tab) {
+  document.getElementById('legalModal').classList.add('open');
+  switchTab(tab);
+}
+function closeModal() {
+  document.getElementById('legalModal').classList.remove('open');
+}
+function switchTab(tab) {
+  document.querySelectorAll('.modal-tab').forEach((t, i) => {
+    t.classList.toggle('active', (tab==='privacy'&&i===0)||(tab==='tos'&&i===1));
+  });
+  document.getElementById('tab-privacy').classList.toggle('active', tab==='privacy');
+  document.getElementById('tab-tos').classList.toggle('active', tab==='tos');
+}
+document.getElementById('legalModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeModal(); closeReviewModals(); }
+});
+
+// ── Review system
+let reviewRating = 0;
+let siteReviews = [];
+try { siteReviews = JSON.parse(localStorage.getItem('xindies_reviews') || '[]'); } catch(e) { siteReviews = []; }
+
+function updateReviewTile() {
+  if (!siteReviews.length) return;
+  const avg = siteReviews.reduce((s,r) => s + r.rating, 0) / siteReviews.length;
+  document.getElementById('tile-rating').textContent = avg.toFixed(1) + ' / 5';
+  const sc = document.getElementById('tile-stars');
+  sc.style.display = 'flex';
+  sc.innerHTML = [1,2,3,4,5].map(i =>
+    `<svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="${i<=Math.round(avg)?'#d4af37':'#ecddd8'}"/></svg>`
+  ).join('');
+  document.getElementById('tile-count').textContent = siteReviews.length + ' review' + (siteReviews.length !== 1 ? 's' : '');
+}
+
+function setRating(val) {
+  reviewRating = val;
+  document.querySelectorAll('.star-btn').forEach(b => {
+    b.classList.toggle('lit', parseInt(b.dataset.val) <= val);
+  });
+}
+
+function updateCharCount() {
+  const ta = document.getElementById('r-text');
+  document.getElementById('charLeft').textContent = 280 - ta.value.length;
+}
+
+function openReviewForm() {
+  // Reset form state
+  reviewRating = 0;
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('lit'));
+  // Restore form body in case it was replaced by success message
+  const body = document.getElementById('reviewFormBody');
+  if (!body.querySelector('#r-name')) {
+    body.innerHTML = `
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300;line-height:1.6;">We'd love to hear about your experience! Your feedback helps us grow and serve our community better.</p>
+      <div style="margin-bottom:1.2rem;">
+        <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose);font-weight:500;margin-bottom:0.6rem;">Your Rating</div>
+        <div class="star-row" id="starRow">
+          ${[1,2,3,4,5].map(i=>`<button class="star-btn" data-val="${i}" onclick="setRating(${i})" type="button"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>`).join('')}
+        </div>
+      </div>
+      <div class="review-fg"><label>Your Name</label><input type="text" id="r-name" placeholder="Jane Doe"/></div>
+      <div class="review-fg">
+        <label>Service Received</label>
+        <select id="r-service">
+          <option value="">— Select a service —</option>
+          <option>Catering</option>
+          <option>Hair Braiding / Styling</option>
+          <option>Private Sitting</option>
+          <option>Event Planning &amp; Coordination</option>
+          <option>Home Organizing</option>
+          <option>Multiple Services</option>
+        </select>
+      </div>
+      <div class="review-fg">
+        <label>Your Review</label>
+        <textarea id="r-text" maxlength="280" placeholder="Tell us about your experience…" oninput="updateCharCount()"></textarea>
+        <div class="char-count"><span id="charLeft">280</span> characters remaining</div>
+      </div>
+      <button class="btn-submit" onclick="submitReview()" type="button" style="margin-top:0.5rem;">Submit Review</button>`;
+  } else {
+    document.getElementById('r-name').value = '';
+    document.getElementById('r-service').value = '';
+    document.getElementById('r-text').value = '';
+    document.getElementById('charLeft').textContent = '280';
+  }
+  document.getElementById('reviewFormOverlay').classList.add('open');
+}
+
+function openReviewsModal() {
+  const list = document.getElementById('reviewsList');
+  const summary = document.getElementById('reviews-summary');
+  if (!siteReviews.length) {
+    summary.textContent = 'No reviews yet.';
+    list.innerHTML = '<div class="no-reviews">Be the first to share your experience with Xindies Amazing Hands!</div>';
+  } else {
+    const avg = siteReviews.reduce((s,r) => s + r.rating, 0) / siteReviews.length;
+    summary.innerHTML = `<strong style="color:var(--dark)">${avg.toFixed(1)}</strong> out of 5 &nbsp;·&nbsp; ${siteReviews.length} review${siteReviews.length !== 1 ? 's' : ''}`;
+    list.innerHTML = [...siteReviews].reverse().map(r => `
+      <div class="review-card">
+        <div class="review-card-top">
+          <div>
+            <div class="review-name">${r.name}</div>
+            <div class="review-service">${r.service}</div>
+          </div>
+          <div class="review-stars">${[1,2,3,4,5].map(i=>`<svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="${i<=r.rating?'#d4af37':'#ecddd8'}"/></svg>`).join('')}</div>
+        </div>
+        <div class="review-text">${r.text}</div>
+      </div>`).join('');
+  }
+  document.getElementById('reviewsViewOverlay').classList.add('open');
+}
+
+function closeReviewModals() {
+  document.getElementById('reviewFormOverlay').classList.remove('open');
+  document.getElementById('reviewsViewOverlay').classList.remove('open');
+}
+
+function submitReview() {
+  const nameEl = document.getElementById('r-name');
+  const serviceEl = document.getElementById('r-service');
+  const textEl = document.getElementById('r-text');
+  if (!nameEl || !serviceEl || !textEl) return;
+  const name = nameEl.value.trim();
+  const service = serviceEl.value;
+  const text = textEl.value.trim();
+  if (!name || !service || !reviewRating || !text) {
+    alert('Please fill in all fields and select a star rating.');
+    return;
+  }
+  siteReviews.push({ name, service, rating: reviewRating, text, date: new Date().toISOString() });
+  try { localStorage.setItem('xindies_reviews', JSON.stringify(siteReviews)); } catch(e) {}
+  updateReviewTile();
+  document.getElementById('reviewFormBody').innerHTML = `
+    <div style="text-align:center;padding:3rem 1rem;">
+      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" style="margin:0 auto 1.2rem;display:block;">
+        <circle cx="12" cy="12" r="10" stroke="#4a9e7a" stroke-width="1.5"/>
+        <path d="M8 12l3 3 5-5" stroke="#4a9e7a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h4 style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--dark);margin-bottom:0.6rem;">Thank You!</h4>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;">Your review has been submitted. We truly appreciate you taking the time to share your experience.</p>
+    </div>`;
+  setTimeout(closeReviewModals, 2800);
+}
+
+// Close overlays when clicking backdrop
+document.getElementById('reviewFormOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeReviewModals();
+});
+document.getElementById('reviewsViewOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeReviewModals();
+});
+
+updateReviewTile();
+</script>
 </body>
 </html>
