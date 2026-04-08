@@ -10,25 +10,29 @@
 
 <style>
 :root {
-  --rose:      #d4548a;
-  --rose-deep: #9b2257;
-  --blush:     #f5d0e8;
-  --sand:      #f0e6d8;
-  --sage:      #5a9e7a;
-  --cream:     #fdf8fc;
-  --ivory:     #f9f2f7;
-  --ink:       #0f0a14;
-  --muted:     #6b5c72;
-  --pale:      #e8d5e8;
-  --gold:      #c9a84c;
-  /* New palette from the image */
-  --vivid-purple:  #7b3fa0;
-  --vivid-teal:    #1a9e8a;
-  --vivid-orange:  #e8762a;
-  --vivid-blue:    #2a6dd9;
-  --balloon-pink:  #e8457a;
-  --glitter-dark:  #12071e;
-  --glitter-mid:   #2a1040;
+  --rose:      #d4415a;
+  --rose-deep: #b82240;
+  --blush:     #fdf0e8;
+  --sand:      #f5e6d0;
+  --sage:      #4a9e7a;
+  --cream:     #fefcf8;
+  --ivory:     #faf5ee;
+  --ink:       #d4415a;
+  --dark:      #0e0c10;
+  --muted:     #6b5d5a;
+  --pale:      #ecddd8;
+  --gold:      #d4af37;
+  --btn-gold:  #d4af37;
+  --blue:      #2a6fc4;
+  --blue-light:#4a8fd4;
+  --blue-deep: #1a4f9a;
+  --balloon-red:    #d63c3c;
+  --balloon-orange: #e07830;
+  --balloon-yellow: #d4b020;
+  --balloon-green:  #3a9e5a;
+  --balloon-blue:   #2a70c8;
+  --balloon-purple: #7a40b8;
+  --sparkle:   #d4af37;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,50 +42,11 @@ body {
   font-family: 'Jost', sans-serif;
   font-weight: 300;
   background: var(--cream);
-  color: var(--ink);
+  color: var(--dark);
   overflow-x: hidden;
-  cursor: none;
+  cursor: auto;
 }
 
-/* ── Festive ambient glow ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 20% 50%, rgba(123,63,160,0.04) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(232,69,122,0.04) 0%, transparent 50%),
-    radial-gradient(circle at 60% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── CUSTOM CURSOR ── */
-#cursor {
-  width: 10px; height: 10px;
-  background: var(--rose);
-  border-radius: 50%;
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%,-50%);
-  transition: width .2s, height .2s, background .2s;
-  mix-blend-mode: multiply;
-}
-#cursor-ring {
-  width: 38px; height: 38px;
-  border: 1px solid var(--rose);
-  border-radius: 50%;
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%,-50%);
-  transition: transform .12s ease, width .2s, height .2s;
-  opacity: 0.5;
-}
-body:hover #cursor { opacity: 1; }
 
 /* ── NAV ── */
 nav {
@@ -92,17 +57,17 @@ nav {
   transition: background .4s, padding .3s;
 }
 nav.scrolled {
-  background: rgba(253,248,252,0.97);
+  background: rgba(245,222,222,0.97);
   backdrop-filter: blur(16px);
+}
   padding: 1rem 3.5rem;
-  border-bottom: 1px solid var(--pale);
-  box-shadow: 0 2px 20px rgba(123,63,160,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 .nav-wordmark {
   font-family: 'Bodoni Moda', serif;
   font-size: 1.05rem;
   letter-spacing: 0.04em;
-  color: var(--ink);
+  color: var(--dark);
   line-height: 1.2;
 }
 .nav-wordmark sup {
@@ -135,25 +100,25 @@ nav.scrolled {
   position: absolute;
   bottom: -2px; left: 0; right: 0;
   height: 1px;
-  background: var(--rose);
+  background: var(--blue);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform .3s ease;
 }
-.nav-links a:hover { color: var(--rose); }
+.nav-links a:hover { color: var(--dark); }
 .nav-links a:hover::after { transform: scaleX(1); }
 .nav-book {
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--cream);
-  background: var(--rose-deep);
+  color: white;
+  background: var(--blue);
   padding: 0.7rem 1.8rem;
   text-decoration: none;
-  transition: background .3s;
+  transition: background .3s, color .3s;
 }
-.nav-book:hover { background: var(--glitter-dark); }
+.nav-book:hover { background: var(--blue-deep); color: white; }
 
 /* ── HERO ── */
 #hero {
@@ -164,7 +129,7 @@ nav.scrolled {
   overflow: hidden;
 }
 .hero-left {
-  background: linear-gradient(145deg, #f5d0e8 0%, #e8c5f0 50%, #d4b0e8 100%);
+  background: #f5dede;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -184,7 +149,7 @@ nav.scrolled {
   font-weight: 400;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--rose-deep);
+  color: var(--blue);
   margin-bottom: 1.6rem;
   display: flex;
   align-items: center;
@@ -194,19 +159,19 @@ nav.scrolled {
   content: '';
   display: block;
   width: 32px; height: 1px;
-  background: var(--rose-deep);
+  background: var(--blue);
 }
 .hero-h1 {
   font-family: 'Bodoni Moda', serif;
   font-size: clamp(3rem, 5.5vw, 5.2rem);
   line-height: 1.07;
   font-weight: 400;
-  color: var(--ink);
+  color: var(--dark);
   margin-bottom: 2rem;
 }
 .hero-h1 em {
   font-style: italic;
-  color: var(--rose-deep);
+  color: var(--rose);
 }
 .hero-desc {
   font-size: 0.95rem;
@@ -223,31 +188,31 @@ nav.scrolled {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: white;
-  background: var(--rose-deep);
+  background: var(--blue);
   padding: 1rem 2.5rem;
   text-decoration: none;
   display: inline-block;
   transition: background .3s, transform .2s;
 }
-.btn-solid:hover { background: var(--glitter-dark); transform: translateY(-1px); }
+.btn-solid:hover { background: var(--blue-deep); color: white; transform: translateY(-1px); }
 .btn-ghost {
   font-size: 0.7rem;
   font-weight: 400;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--rose-deep);
+  color: var(--muted);
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: gap .3s;
+  transition: gap .3s, color .2s;
 }
-.btn-ghost:hover { gap: 0.9rem; }
+.btn-ghost:hover { gap: 0.9rem; color: var(--dark); }
 .btn-ghost svg { transition: transform .3s; }
 .btn-ghost:hover svg { transform: translateX(3px); }
 
 .hero-right {
-  background: var(--ivory);
+  background: var(--cream);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -277,16 +242,16 @@ nav.scrolled {
   transition: transform .3s;
 }
 .stat-block:hover { transform: translateY(-3px); }
-.stat-block:nth-child(1) { background: var(--rose-deep); }
+.stat-block:nth-child(1) { background: var(--rose); }
 .stat-block:nth-child(1) .stat-num,
 .stat-block:nth-child(1) .stat-label { color: white; }
-.stat-block:nth-child(2) { background: var(--glitter-dark); }
+.stat-block:nth-child(2) { background: var(--dark); }
 .stat-block:nth-child(2) .stat-num,
 .stat-block:nth-child(2) .stat-label { color: white; }
-.stat-block:nth-child(3) { background: var(--sand); }
-.stat-block:nth-child(4) { background: var(--vivid-purple); }
-.stat-block:nth-child(4) .stat-num,
-.stat-block:nth-child(4) .stat-label { color: white; }
+.stat-block:nth-child(3) { background: #e8ddd4; }
+.stat-block:nth-child(3) .stat-num,
+.stat-block:nth-child(3) .stat-label { color: var(--dark); }
+.stat-block:nth-child(4) { background: var(--sage); }
 .stat-block:nth-child(4) .stat-num,
 .stat-block:nth-child(4) .stat-label { color: white; }
 .stat-num {
@@ -294,7 +259,7 @@ nav.scrolled {
   font-size: 2.8rem;
   font-weight: 400;
   line-height: 1;
-  color: var(--ink);
+  color: var(--dark);
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -306,45 +271,51 @@ nav.scrolled {
   font-weight: 400;
 }
 
-/* Marquee strip */
-.marquee-strip {
-  background: var(--glitter-dark);
-  padding: 0.9rem 0;
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
+/* ── SERVICES BANNER ── */
+.services-banner {
+  background: var(--cream);
+  padding: 0;
+  border-top: 1px solid var(--pale);
+  border-bottom: 1px solid var(--pale);
 }
-.marquee-strip::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.08), rgba(232,69,122,0.08), rgba(123,63,160,0.08), transparent);
-  pointer-events: none;
+.services-banner-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 3.5rem;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0;
 }
-.marquee-inner {
-  display: inline-block;
-  animation: marquee 22s linear infinite;
-}
-.marquee-inner span {
+.banner-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1.1rem 1.4rem;
   font-size: 0.68rem;
-  font-weight: 400;
-  letter-spacing: 0.25em;
+  font-weight: 500;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
-  margin: 0 2.5rem;
+  color: var(--dark);
+  border-right: 1px solid rgba(0,0,0,0.08);
+  flex: 1;
+  justify-content: center;
+  transition: background .25s;
+  text-decoration: none;
 }
-.marquee-inner .dot {
-  color: var(--rose);
-  margin: 0;
-}
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+.banner-item:first-child { border-left: none; }
+.banner-item:last-child { border-right: none; }
+.banner-item:hover { background: rgba(0,0,0,0.03); }
+.banner-item .bi-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 /* ── ABOUT ── */
 #about {
   padding: 8rem 0;
+  background: #f5dede;
   position: relative;
 }
 .about-layout {
@@ -371,7 +342,7 @@ nav.scrolled {
   position: relative;
 }
 .about-main-block {
-  background: linear-gradient(145deg, #f5d0e8 0%, #e8c5f0 40%, #c8a8e0 100%);
+  background: #ddc8c8;
   aspect-ratio: 4/5;
   display: flex;
   align-items: center;
@@ -379,114 +350,36 @@ nav.scrolled {
   position: relative;
   overflow: hidden;
 }
-.about-main-block::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(232,118,42,0.15) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(42,109,217,0.15) 0%, transparent 40%),
-    radial-gradient(circle at 80% 20%, rgba(232,69,122,0.12) 0%, transparent 40%);
-  pointer-events: none;
+.about-main-block img.about-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform .6s ease;
+}
+.about-main-block:hover img.about-photo {
+  transform: scale(1.03);
 }
 .about-main-block svg.center-flower {
   width: 65%;
   height: 65%;
   opacity: 0.5;
 }
-
-/* Xindie portrait */
-.xindie-portrait-wrap {
-  position: relative;
-  width: 85%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-}
-.xindie-portrait-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
-  box-shadow:
-    0 0 0 6px rgba(201,168,76,0.4),
-    0 0 0 12px rgba(232,69,122,0.2),
-    0 0 0 20px rgba(123,63,160,0.15),
-    0 20px 60px rgba(12,7,30,0.35);
-  animation: portrait-float 6s ease-in-out infinite;
-  position: relative;
-  z-index: 3;
-}
-@keyframes portrait-float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-10px); }
-}
-.xindie-portrait-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 2px solid;
-  animation: ring-spin linear infinite;
-  pointer-events: none;
-}
-.xindie-ring-1 {
-  inset: -14px;
-  border-color: rgba(201,168,76,0.5);
-  animation-duration: 12s;
-}
-.xindie-ring-2 {
-  inset: -28px;
-  border-color: rgba(232,69,122,0.35);
-  border-style: dashed;
-  animation-duration: 18s;
-  animation-direction: reverse;
-}
-.xindie-ring-3 {
-  inset: -44px;
-  border-color: rgba(123,63,160,0.25);
-  animation-duration: 25s;
-}
-@keyframes ring-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-.xindie-portrait-sparkles {
-  position: absolute;
-  inset: -50px;
-  pointer-events: none;
-  z-index: 4;
-}
-.sparkle {
-  position: absolute;
-  color: var(--gold);
-  font-size: 1.1rem;
-  animation: sparkle-twinkle 2.5s ease-in-out infinite;
-}
-.sp1 { top: 8%;  left: 5%;  animation-delay: 0s;    color: #e8762a; }
-.sp2 { top: 5%;  right: 8%; animation-delay: 0.5s;  color: var(--gold); }
-.sp3 { bottom: 12%; left: 8%;  animation-delay: 1s;  color: #e8457a; }
-.sp4 { bottom: 8%;  right: 5%; animation-delay: 1.5s; color: #7b3fa0; }
-.sp5 { top: 50%; right: 0%;  animation-delay: 0.8s; color: var(--gold); }
-@keyframes sparkle-twinkle {
-  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-  50%       { opacity: 1; transform: scale(1.2) rotate(180deg); }
-}
 .about-pull-card {
   position: absolute;
   bottom: -2rem;
   right: -2.5rem;
-  background: linear-gradient(135deg, var(--glitter-dark) 0%, var(--vivid-purple) 100%);
+  background: var(--rose);
   color: white;
   padding: 1.8rem 2rem;
   width: 220px;
-  border: 1px solid rgba(201,168,76,0.3);
-  box-shadow: 0 8px 32px rgba(123,63,160,0.3);
 }
 .about-pull-card .pull-num {
   font-family: 'Bodoni Moda', serif;
   font-size: 2.6rem;
   line-height: 1;
-  color: var(--gold);
+  color: var(--rose);
   display: block;
 }
 .about-pull-card .pull-text {
@@ -507,7 +400,7 @@ nav.scrolled {
   font-size: 0.68rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--rose-deep);
+  color: var(--blue);
   margin-bottom: 1.4rem;
 }
 .section-kicker::after {
@@ -523,8 +416,9 @@ nav.scrolled {
   font-weight: 400;
   line-height: 1.12;
   margin-bottom: 2rem;
+  color: var(--dark);
 }
-.section-heading em { font-style: italic; color: var(--rose-deep); }
+.section-heading em { font-style: italic; color: var(--blue); }
 .body-text {
   font-size: 0.95rem;
   line-height: 1.9;
@@ -567,7 +461,7 @@ nav.scrolled {
 /* ── SERVICES ── */
 #services {
   padding: 8rem 0;
-  background: linear-gradient(160deg, var(--glitter-dark) 0%, var(--glitter-mid) 50%, var(--glitter-dark) 100%);
+  background: var(--cream);
   position: relative;
   overflow: hidden;
 }
@@ -591,14 +485,14 @@ nav.scrolled {
   margin-bottom: 5rem;
   gap: 2rem;
 }
-.services-top .section-kicker { color: var(--rose); }
+.services-top .section-kicker { color: var(--blue-light); }
 .services-top .section-kicker::after { background: rgba(255,255,255,0.1); }
-.services-top .section-heading { color: white; margin-bottom: 0; }
-.services-top .section-heading em { color: var(--rose); }
+.services-top .section-heading { color: var(--dark); margin-bottom: 0; }
+.services-top .section-heading em { color: var(--blue-light); }
 .services-tagline {
   font-size: 0.88rem;
   line-height: 1.75;
-  color: rgba(255,255,255,0.45);
+  color: var(--muted);
   max-width: 320px;
   font-weight: 300;
   text-align: right;
@@ -607,11 +501,11 @@ nav.scrolled {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 0;
-  border: 1px solid rgba(255,255,255,0.07);
+  border: 1px solid rgba(0,0,0,0.08);
 }
 .svc-card {
   padding: 2.8rem 2rem;
-  border-right: 1px solid rgba(255,255,255,0.07);
+  border-right: 1px solid rgba(0,0,0,0.08);
   position: relative;
   overflow: hidden;
   transition: background .35s;
@@ -627,12 +521,12 @@ nav.scrolled {
   transform-origin: left;
   transition: transform .4s ease;
 }
-.svc-card.s1::before { background: var(--balloon-pink); }
-.svc-card.s2::before { background: var(--gold); }
-.svc-card.s3::before { background: var(--vivid-teal); }
-.svc-card.s4::before { background: var(--vivid-purple); }
-.svc-card.s5::before { background: var(--vivid-orange); }
-.svc-card:hover { background: rgba(255,255,255,0.04); }
+.svc-card.s1::before { background: var(--balloon-red); }
+.svc-card.s2::before { background: var(--sparkle); }
+.svc-card.s3::before { background: var(--balloon-green); }
+.svc-card.s4::before { background: var(--balloon-purple); }
+.svc-card.s5::before { background: var(--balloon-blue); }
+.svc-card:hover { background: rgba(255,255,255,0.5); }
 .svc-card:hover::before { transform: scaleX(1); }
 
 .svc-icon {
@@ -647,13 +541,13 @@ nav.scrolled {
 .svc-card:hover .svc-icon rect,
 .svc-card:hover .svc-icon line,
 .svc-card:hover .svc-icon polyline,
-.svc-card:hover .svc-icon polygon { stroke: var(--gold) !important; }
+.svc-card:hover .svc-icon polygon { stroke: var(--blue) !important; }
 
 .svc-num {
   font-family: 'Bodoni Moda', serif;
   font-size: 0.65rem;
   font-style: italic;
-  color: rgba(255,255,255,0.2);
+  color: rgba(0,0,0,0.2);
   display: block;
   margin-bottom: 0.6rem;
   letter-spacing: 0.1em;
@@ -661,7 +555,7 @@ nav.scrolled {
 .svc-title {
   font-family: 'Tenor Sans', serif;
   font-size: 1rem;
-  color: white;
+  color: var(--dark);
   letter-spacing: 0.04em;
   margin-bottom: 1.2rem;
   line-height: 1.3;
@@ -669,7 +563,7 @@ nav.scrolled {
 .svc-body {
   font-size: 0.8rem;
   line-height: 1.8;
-  color: rgba(255,255,255,0.4);
+  color: var(--muted);
   font-weight: 300;
   margin-bottom: 1.8rem;
 }
@@ -681,7 +575,7 @@ nav.scrolled {
 }
 .svc-list li {
   font-size: 0.73rem;
-  color: rgba(255,255,255,0.3);
+  color: var(--muted);
   display: flex;
   align-items: flex-start;
   gap: 0.6rem;
@@ -689,7 +583,7 @@ nav.scrolled {
 }
 .svc-list li::before {
   content: '—';
-  color: var(--rose);
+  color: var(--blue-light);
   flex-shrink: 0;
   font-size: 0.65rem;
   margin-top: 0.1em;
@@ -706,7 +600,7 @@ nav.scrolled {
 /* ── GALLERY ── */
 #gallery {
   padding: 8rem 0 0;
-  background: var(--cream);
+  background: #f5dede;
   position: relative;
   overflow: hidden;
 }
@@ -787,7 +681,7 @@ nav.scrolled {
 /* ── BOOKING ── */
 #booking {
   padding: 8rem 0;
-  background: linear-gradient(160deg, #fdf5fb 0%, #f5eafa 50%, #fdf5fb 100%);
+  background: var(--cream);
   position: relative;
   overflow: hidden;
 }
@@ -831,7 +725,7 @@ nav.scrolled {
   transition: color .2s, padding-left .2s;
 }
 .bsl-item:hover, .bsl-item.active {
-  color: var(--rose-deep);
+  color: var(--blue);
   padding-left: 0.5rem;
 }
 .bsl-item svg { flex-shrink: 0; opacity: 0.5; transition: opacity .2s; }
@@ -839,9 +733,9 @@ nav.scrolled {
 
 .booking-form-wrap { }
 .booking-form-card {
-  background: white;
+  background: #f5dede;
   padding: 3rem 3rem 3rem;
-  box-shadow: 0 2px 40px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 24px rgba(0,0,0,0.06);
 }
 .booking-form-card h3 {
   font-family: 'Bodoni Moda', serif;
@@ -874,27 +768,23 @@ nav.scrolled {
   font-size: 0.92rem;
   font-family: 'Jost', sans-serif;
   font-weight: 300;
-  color: var(--ink);
+  color: var(--dark);
   outline: none;
   transition: border-color .2s;
   width: 100%;
 }
 .fg input:focus, .fg select:focus, .fg textarea:focus {
-  border-bottom-color: var(--rose-deep);
+  border-bottom-color: var(--blue);
 }
 .fg textarea { resize: none; min-height: 90px; }
 .deposit-row {
   background: var(--cream);
   padding: 1.4rem 1.6rem;
-  margin: 1.2rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
+  margin: 1.2rem 0 0.5rem;
+  border-left: 3px solid var(--blue);
 }
 .deposit-text { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.5; }
-.deposit-text strong { display: block; font-weight: 500; color: var(--ink); font-size: 0.85rem; margin-bottom: 0.2rem; }
+.deposit-text strong { display: block; font-weight: 500; color: var(--dark); font-size: 0.85rem; margin-bottom: 0.2rem; }
 .stripe-btn {
   display: flex;
   align-items: center;
@@ -912,6 +802,66 @@ nav.scrolled {
   transition: background .2s;
 }
 .stripe-btn:hover { background: #4f47e0; }
+
+/* Payment method radio group */
+.payment-group {
+  margin: 0.8rem 0 1.2rem;
+  padding: 1.2rem 1.6rem;
+  background: var(--cream);
+  border: 1px solid var(--pale);
+}
+.payment-group-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 400;
+  display: block;
+  margin-bottom: 1rem;
+}
+.payment-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.55rem 1.1rem;
+  border: 1.5px solid var(--pale);
+  background: var(--cream);
+  transition: border-color .2s, background .2s;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  position: relative;
+}
+.payment-option input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--pale);
+  border-radius: 50%;
+  background: white;
+  flex-shrink: 0;
+  transition: border-color .2s, background .2s;
+  cursor: pointer;
+}
+.payment-option input[type="radio"]:checked {
+  border-color: var(--blue);
+  background: var(--blue);
+  box-shadow: inset 0 0 0 3px white;
+}
+.payment-option:has(input:checked) {
+  border-color: var(--blue);
+  background: #eef4fc;
+  color: var(--dark);
+}
+
 .form-note {
   font-size: 0.7rem;
   color: var(--muted);
@@ -926,7 +876,7 @@ nav.scrolled {
   width: 100%;
   margin-top: 1.8rem;
   padding: 1.1rem;
-  background: var(--rose-deep);
+  background: var(--blue);
   color: white;
   border: none;
   font-size: 0.72rem;
@@ -935,14 +885,29 @@ nav.scrolled {
   letter-spacing: 0.25em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background .3s;
+  transition: background .3s, transform .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
 }
-.btn-submit:hover { background: var(--glitter-dark); }
+.btn-submit:hover { background: var(--blue-deep); color: white; transform: translateY(-1px); }
+.btn-submit .stripe-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255,255,255,0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  gap: 0.3rem;
+}
+.btn-submit:hover .stripe-badge { background: rgba(14,12,16,0.12); }
 
 /* ── INQUIRY ── */
 #inquiry {
   padding: 8rem 0;
-  background: linear-gradient(135deg, #f5d0e8 0%, #e8c5f0 50%, #d4b0e8 100%);
+  background: #f5dede;
   position: relative;
   overflow: hidden;
 }
@@ -950,7 +915,7 @@ nav.scrolled {
   position: absolute;
   bottom: -80px; left: -80px;
   width: 420px; height: 420px;
-  opacity: 0.12;
+  opacity: 0.06;
   pointer-events: none;
 }
 .inquiry-inner {
@@ -962,8 +927,10 @@ nav.scrolled {
   gap: 6rem;
   align-items: center;
 }
-.inquiry-left .section-heading { margin-bottom: 1.5rem; }
-.inquiry-left .body-text { margin-bottom: 2.5rem; }
+.inquiry-left .section-heading { margin-bottom: 1.5rem; color: var(--dark); }
+.inquiry-left .section-kicker { color: var(--blue); }
+.inquiry-left .section-kicker::after { background: var(--pale); }
+.inquiry-left .body-text { margin-bottom: 2.5rem; color: var(--muted); }
 .contact-tiles {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -971,7 +938,7 @@ nav.scrolled {
   background: var(--pale);
 }
 .ct {
-  background: white;
+  background: var(--cream);
   padding: 1.6rem;
 }
 .ct-label {
@@ -985,15 +952,15 @@ nav.scrolled {
 .ct-value {
   font-family: 'Tenor Sans', serif;
   font-size: 0.9rem;
-  color: var(--ink);
+  color: var(--dark);
 }
-.ct-value a { color: var(--rose-deep); text-decoration: none; }
+.ct-value a { color: var(--blue); text-decoration: none; }
 .ct svg { margin-bottom: 0.75rem; opacity: 0.45; display: block; }
 
 .inquiry-form-card {
-  background: white;
+  background: var(--cream);
   padding: 3rem;
-  box-shadow: 0 2px 40px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 24px rgba(0,0,0,0.06);
 }
 .inquiry-form-card h3 {
   font-family: 'Bodoni Moda', serif;
@@ -1004,7 +971,7 @@ nav.scrolled {
 
 /* ── FOOTER ── */
 footer {
-  background: linear-gradient(160deg, var(--glitter-dark) 0%, var(--glitter-mid) 50%, var(--glitter-dark) 100%);
+  background: var(--cream);
   padding: 5rem 3.5rem 2.5rem;
   position: relative;
   overflow: hidden;
@@ -1014,12 +981,12 @@ footer {
   top: 50%; right: -100px;
   transform: translateY(-50%);
   width: 500px; height: 500px;
-  opacity: 0.04;
+  opacity: 0.08;
   pointer-events: none;
 }
 .footer-top {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 4rem;
   max-width: 1280px;
   margin: 0 auto 4rem;
@@ -1028,12 +995,12 @@ footer {
   font-family: 'Bodoni Moda', serif;
   font-size: 1.6rem;
   font-weight: 400;
-  color: white;
+  color: var(--dark);
   margin-bottom: 0.6rem;
 }
 .footer-brand p {
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.35);
+  color: var(--muted);
   line-height: 1.8;
   max-width: 280px;
   font-weight: 300;
@@ -1042,23 +1009,29 @@ footer {
   font-size: 0.62rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
+  color: var(--rose);
   margin-bottom: 1.5rem;
   font-weight: 400;
 }
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
 .footer-col li a {
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.5);
+  color: var(--muted);
   text-decoration: none;
   font-weight: 300;
   transition: color .2s;
 }
-.footer-col li a:hover { color: var(--gold); }
+.footer-col li a:hover { color: var(--rose); }
+.footer-svc-item {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 300;
+  cursor: default;
+}
 .footer-bottom {
   max-width: 1280px;
   margin: 0 auto;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid var(--pale);
   padding-top: 2rem;
   display: flex;
   justify-content: space-between;
@@ -1068,7 +1041,7 @@ footer {
 }
 .footer-copy {
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.2);
+  color: var(--muted);
   letter-spacing: 0.05em;
 }
 .footer-legal {
@@ -1076,11 +1049,11 @@ footer {
 }
 .footer-legal a {
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.2);
+  color: var(--muted);
   text-decoration: none;
   transition: color .2s;
 }
-.footer-legal a:hover { color: rgba(255,255,255,0.5); }
+.footer-legal a:hover { color: var(--rose); }
 
 /* ── ANIMATIONS ── */
 .reveal-up {
@@ -1117,77 +1090,9 @@ footer {
   .inquiry-inner { padding: 0 2rem; }
   footer { padding: 4rem 2rem 2rem; }
 }
-/* ── Balloon confetti floaters on about section ── */
-#about {
-  padding: 8rem 0;
-  position: relative;
-  background: var(--cream);
-}
-#about::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(circle at 5% 10%, rgba(232,118,42,0.06) 0%, transparent 30%),
-    radial-gradient(circle at 95% 5%,  rgba(232,69,122,0.06) 0%, transparent 30%),
-    radial-gradient(circle at 50% 95%, rgba(123,63,160,0.05) 0%, transparent 30%);
-  pointer-events: none;
-}
-
-/* ── Gallery placeholder vivid colors ── */
-.g-item:nth-child(1) .g-placeholder  { background: linear-gradient(135deg, #e8457a22, #7b3fa022); }
-.g-item:nth-child(2) .g-placeholder  { background: linear-gradient(135deg, #c9a84c22, #e8762a22); }
-.g-item:nth-child(3) .g-placeholder  { background: linear-gradient(135deg, #1a9e8a22, #2a6dd922); }
-.g-item:nth-child(4) .g-placeholder  { background: linear-gradient(135deg, #7b3fa022, #e8457a22); }
-.g-item:nth-child(5) .g-placeholder  { background: linear-gradient(135deg, #e8762a22, #c9a84c22); }
-.g-item:nth-child(6) .g-placeholder  { background: linear-gradient(135deg, #2a6dd922, #1a9e8a22); }
-
-/* ── Glitter shimmer on section kickers ── */
-.section-kicker {
-  background: linear-gradient(90deg, var(--rose-deep), var(--vivid-purple), var(--rose-deep));
-  background-size: 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer-kicker 4s linear infinite;
-}
-@keyframes shimmer-kicker {
-  0%   { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
-/* Keep kickers in dark sections readable */
-#services .section-kicker,
-footer .section-kicker {
-  background: linear-gradient(90deg, var(--gold), var(--balloon-pink), var(--gold));
-  background-size: 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer-kicker 4s linear infinite;
-}
-#services .section-kicker::after { background: rgba(255,255,255,0.1); }
-
-/* ── Gold accent line on inquiry ── */
-#inquiry .inquiry-form-card {
-  border-top: 3px solid var(--gold);
-  box-shadow: 0 4px 40px rgba(123,63,160,0.12);
-}
-
-/* ── Colorful balloon dots in marquee ── */
-.marquee-inner .dot {
-  background: linear-gradient(90deg, #e8457a, #c9a84c, #1a9e8a, #7b3fa0, #e8762a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 </style>
 </head>
 <body>
-
-<!-- CURSOR -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <!-- ════════════════ NAV ════════════════ -->
 <nav id="mainNav">
@@ -1207,37 +1112,38 @@ footer .section-kicker {
   <div class="hero-left">
     <!-- Large background peony SVG -->
     <svg class="hero-left-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-      <g transform="translate(250,250)">
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(0)"/>
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(20)"/>
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(40)"/>
-        <ellipse rx="55" ry="120" fill="#c97b8a" transform="rotate(60)"/>
-        <ellipse rx="55" ry="120" fill="#c97b8a" transform="rotate(80)"/>
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(100)"/>
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(120)"/>
-        <ellipse rx="55" ry="120" fill="#c97b8a" transform="rotate(140)"/>
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(160)"/>
-        <ellipse rx="55" ry="120" fill="#c97b8a" transform="rotate(180)"/>
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(200)"/>
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(220)"/>
-        <ellipse rx="55" ry="120" fill="#c97b8a" transform="rotate(240)"/>
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(260)"/>
-        <ellipse rx="55" ry="120" fill="#c97b8a" transform="rotate(280)"/>
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(300)"/>
-        <ellipse rx="55" ry="120" fill="#c97b8a" transform="rotate(320)"/>
-        <ellipse rx="55" ry="120" fill="#a35468" transform="rotate(340)"/>
-        <ellipse rx="40" ry="80" fill="#f2dde2" transform="rotate(10)"/>
-        <ellipse rx="40" ry="80" fill="#f2dde2" transform="rotate(50)"/>
-        <ellipse rx="40" ry="80" fill="#f2dde2" transform="rotate(90)"/>
-        <ellipse rx="40" ry="80" fill="#f2dde2" transform="rotate(130)"/>
-        <ellipse rx="40" ry="80" fill="#f2dde2" transform="rotate(170)"/>
-        <ellipse rx="40" ry="80" fill="#f2dde2" transform="rotate(210)"/>
-        <ellipse rx="40" ry="80" fill="#f2dde2" transform="rotate(250)"/>
-        <ellipse rx="40" ry="80" fill="#f2dde2" transform="rotate(290)"/>
-        <ellipse rx="40" ry="80" fill="#f2dde2" transform="rotate(330)"/>
-        <circle r="35" fill="#faf7f4"/>
-        <circle r="20" fill="#f2dde2"/>
-        <circle r="10" fill="#c97b8a"/>
+      <!-- Balloon cluster: hero left background -->
+      <g opacity="1">
+        <!-- balloon 1: red -->
+        <ellipse cx="120" cy="160" rx="38" ry="50" fill="#d63c3c"/>
+        <path d="M120 210 Q118 230 115 245" stroke="#d63c3c" stroke-width="2" fill="none" opacity="0.7"/>
+        <line x1="115" y1="245" x2="125" y2="245" stroke="#d63c3c" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="118" cy="148" rx="8" ry="5" fill="rgba(255,255,255,0.25)" transform="rotate(-30,118,148)"/>
+        <!-- balloon 2: gold -->
+        <ellipse cx="200" cy="120" rx="42" ry="55" fill="#d4af37"/>
+        <path d="M200 175 Q198 198 195 215" stroke="#d4af37" stroke-width="2" fill="none" opacity="0.7"/>
+        <line x1="195" y1="215" x2="205" y2="215" stroke="#d4af37" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="198" cy="106" rx="9" ry="6" fill="rgba(255,255,255,0.25)" transform="rotate(-30,198,106)"/>
+        <!-- balloon 3: blue -->
+        <ellipse cx="300" cy="150" rx="40" ry="52" fill="#2a6fc4"/>
+        <path d="M300 202 Q298 222 295 238" stroke="#2a6fc4" stroke-width="2" fill="none" opacity="0.7"/>
+        <line x1="295" y1="238" x2="305" y2="238" stroke="#2a6fc4" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="298" cy="137" rx="9" ry="6" fill="rgba(255,255,255,0.25)" transform="rotate(-30,298,137)"/>
+        <!-- balloon 4: green -->
+        <ellipse cx="380" cy="100" rx="36" ry="48" fill="#3a9e5a"/>
+        <path d="M380 148 Q378 168 375 184" stroke="#3a9e5a" stroke-width="2" fill="none" opacity="0.7"/>
+        <line x1="375" y1="184" x2="385" y2="184" stroke="#3a9e5a" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="378" cy="88" rx="8" ry="5" fill="rgba(255,255,255,0.25)" transform="rotate(-30,378,88)"/>
+        <!-- balloon 5: purple -->
+        <ellipse cx="160" cy="60" rx="34" ry="45" fill="#7a40b8"/>
+        <path d="M160 105 Q158 125 155 140" stroke="#7a40b8" stroke-width="2" fill="none" opacity="0.7"/>
+        <line x1="155" y1="140" x2="165" y2="140" stroke="#7a40b8" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="158" cy="49" rx="7" ry="5" fill="rgba(255,255,255,0.25)" transform="rotate(-30,158,49)"/>
+        <!-- balloon 6: orange -->
+        <ellipse cx="270" cy="55" rx="32" ry="43" fill="#e07830"/>
+        <path d="M270 98 Q268 118 265 133" stroke="#e07830" stroke-width="2" fill="none" opacity="0.7"/>
+        <line x1="265" y1="133" x2="275" y2="133" stroke="#e07830" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="268" cy="44" rx="7" ry="5" fill="rgba(255,255,255,0.25)" transform="rotate(-30,268,44)"/>
       </g>
     </svg>
 
@@ -1257,21 +1163,13 @@ footer .section-kicker {
 
   <div class="hero-right">
     <svg class="hero-right-flower" viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg">
-      <g transform="translate(220,220)">
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(0)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(30)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(60)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(90)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(120)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(150)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(180)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(210)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(240)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(270)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(300)"/>
-        <ellipse rx="30" ry="90" fill="#8aab96" transform="rotate(330)"/>
-        <circle r="28" fill="#e8ddd4"/>
-        <circle r="14" fill="#8aab96"/>
+      <g opacity="0.18">
+        <ellipse cx="220" cy="180" rx="55" ry="72" fill="white"/>
+        <ellipse cx="140" cy="200" rx="48" ry="62" fill="white"/>
+        <ellipse cx="300" cy="200" rx="48" ry="62" fill="white"/>
+        <ellipse cx="180" cy="120" rx="42" ry="55" fill="white"/>
+        <ellipse cx="260" cy="120" rx="42" ry="55" fill="white"/>
+        <ellipse cx="220" cy="80" rx="36" ry="48" fill="white"/>
       </g>
     </svg>
     <div class="hero-stats">
@@ -1295,25 +1193,24 @@ footer .section-kicker {
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-strip">
-  <div class="marquee-inner">
-    <span>Catering</span><span class="dot">✦</span>
-    <span>Hair Braiding</span><span class="dot">✦</span>
-    <span>Event Planning</span><span class="dot">✦</span>
-    <span>Wedding Coordination</span><span class="dot">✦</span>
-    <span>Private Sitting</span><span class="dot">✦</span>
-    <span>Home Organizing</span><span class="dot">✦</span>
-    <span>All Occasions</span><span class="dot">✦</span>
-    <span>Xindies Amazing Hands LLC</span><span class="dot">✦</span>
-    <span>Catering</span><span class="dot">✦</span>
-    <span>Hair Braiding</span><span class="dot">✦</span>
-    <span>Event Planning</span><span class="dot">✦</span>
-    <span>Wedding Coordination</span><span class="dot">✦</span>
-    <span>Private Sitting</span><span class="dot">✦</span>
-    <span>Home Organizing</span><span class="dot">✦</span>
-    <span>All Occasions</span><span class="dot">✦</span>
-    <span>Xindies Amazing Hands LLC</span><span class="dot">✦</span>
+<!-- SERVICES BANNER -->
+<div class="services-banner">
+  <div class="services-banner-inner">
+    <a href="#services" class="banner-item">
+      <span class="bi-dot" style="background:var(--balloon-red);"></span>Catering
+    </a>
+    <a href="#services" class="banner-item">
+      <span class="bi-dot" style="background:var(--blue);"></span>Hair Styling
+    </a>
+    <a href="#services" class="banner-item">
+      <span class="bi-dot" style="background:var(--balloon-green);"></span>Wedding Planning
+    </a>
+    <a href="#services" class="banner-item">
+      <span class="bi-dot" style="background:var(--balloon-blue);"></span>Event Planning
+    </a>
+    <a href="#services" class="banner-item">
+      <span class="bi-dot" style="background:var(--balloon-purple);"></span>Home Organizing
+    </a>
   </div>
 </div>
 
@@ -1324,20 +1221,7 @@ footer .section-kicker {
 
     <div class="about-visual-col reveal-left">
       <div class="about-main-block">
-        <!-- Xindie portrait image replacing center flower -->
-        <div class="xindie-portrait-wrap">
-          <div class="xindie-portrait-ring xindie-ring-1"></div>
-          <div class="xindie-portrait-ring xindie-ring-2"></div>
-          <div class="xindie-portrait-ring xindie-ring-3"></div>
-          <img src="Xindies_Amazing_Hands_AI.png" alt="Xindie&apos;s Amazing Hands" class="xindie-portrait-img" />
-          <div class="xindie-portrait-sparkles">
-            <span class="sparkle sp1">✦</span>
-            <span class="sparkle sp2">✦</span>
-            <span class="sparkle sp3">✦</span>
-            <span class="sparkle sp4">✦</span>
-            <span class="sparkle sp5">✦</span>
-          </div>
-        </div>
+        <img class="about-photo" src="Xindies_Amazing_Hands_AI.png" alt="Xindie — founder of Xindies Amazing Hands LLC"/>
         <div class="about-pull-card">
           <span class="pull-num">100%</span>
           <span class="pull-text">Dedicated to Your Vision</span>
@@ -1376,26 +1260,24 @@ footer .section-kicker {
 <section id="services">
   <!-- Big background flower -->
   <svg class="services-bg-flower" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(450,450)">
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(0)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(20)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(40)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(60)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(80)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(100)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(120)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(140)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(160)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(180)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(200)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(220)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(240)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(260)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(280)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(300)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(320)"/>
-      <ellipse rx="60" ry="180" fill="#c97b8a" transform="rotate(340)"/>
-      <circle r="60" fill="#1e1a1c"/>
+    <g opacity="0.12">
+      <ellipse cx="150" cy="200" rx="70" ry="90" fill="white"/>
+      <path d="M150 290 Q148 320 144 345" stroke="white" stroke-width="3" fill="none"/>
+      <ellipse cx="145" cy="183" rx="15" ry="10" fill="rgba(255,255,255,0.4)" transform="rotate(-30,145,183)"/>
+      <ellipse cx="380" cy="120" rx="65" ry="85" fill="white"/>
+      <path d="M380 205 Q378 235 374 258" stroke="white" stroke-width="3" fill="none"/>
+      <ellipse cx="375" cy="104" rx="14" ry="9" fill="rgba(255,255,255,0.4)" transform="rotate(-30,375,104)"/>
+      <ellipse cx="620" cy="180" rx="72" ry="94" fill="white"/>
+      <path d="M620 274 Q618 304 614 328" stroke="white" stroke-width="3" fill="none"/>
+      <ellipse cx="615" cy="162" rx="16" ry="10" fill="rgba(255,255,255,0.4)" transform="rotate(-30,615,162)"/>
+      <ellipse cx="800" cy="100" rx="60" ry="78" fill="white"/>
+      <path d="M800 178 Q798 208 794 230" stroke="white" stroke-width="3" fill="none"/>
+      <ellipse cx="795" cy="85" rx="13" ry="9" fill="rgba(255,255,255,0.4)" transform="rotate(-30,795,85)"/>
+      <ellipse cx="500" cy="700" rx="68" ry="88" fill="white"/>
+      <path d="M500 788 Q498 818 494 840" stroke="white" stroke-width="3" fill="none"/>
+      <ellipse cx="495" cy="683" rx="15" ry="10" fill="rgba(255,255,255,0.4)" transform="rotate(-30,495,683)"/>
+      <ellipse cx="250" cy="650" rx="55" ry="72" fill="white"/>
+      <ellipse cx="750" cy="680" rx="58" ry="76" fill="white"/>
     </g>
   </svg>
 
@@ -1614,20 +1496,15 @@ footer .section-kicker {
 <!-- ════════════════ BOOKING ════════════════ -->
 <section id="booking">
   <svg class="booking-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(250,250)">
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(0)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(30)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(60)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(90)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(120)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(150)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(180)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(210)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(240)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(270)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(300)"/>
-      <ellipse rx="35" ry="110" fill="#c97b8a" transform="rotate(330)"/>
-      <circle r="35" fill="#f5f0ea"/>
+    <g opacity="0.1">
+      <ellipse cx="350" cy="120" rx="60" ry="78" fill="white"/>
+      <path d="M350 198 Q348 220 344 240" stroke="white" stroke-width="2.5" fill="none"/>
+      <ellipse cx="345" cy="105" rx="13" ry="8" fill="rgba(255,255,255,0.35)" transform="rotate(-30,345,105)"/>
+      <ellipse cx="430" cy="220" rx="50" ry="65" fill="white"/>
+      <path d="M430 285 Q428 305 424 322" stroke="white" stroke-width="2" fill="none"/>
+      <ellipse cx="425" cy="207" rx="11" ry="7" fill="rgba(255,255,255,0.35)" transform="rotate(-30,425,207)"/>
+      <ellipse cx="460" cy="80" rx="40" ry="52" fill="white"/>
+      <path d="M460 132 Q458 152 454 168" stroke="white" stroke-width="2" fill="none"/>
     </g>
   </svg>
 
@@ -1686,38 +1563,38 @@ footer .section-kicker {
         <h3>Submit a Request</h3>
         <p class="form-subtitle">We'll confirm availability and follow up within 24 hours.</p>
 
-        <!--
-          SETUP INSTRUCTIONS:
-          1. Replace action="YOUR_GOOGLE_FORM_ACTION_URL" with your Google Form POST URL
-          2. Update each name="entry.XXXXXXXX" with your actual Google Form field IDs
-        -->
-        <form id="bookingForm" action="YOUR_GOOGLE_FORM_ACTION_URL" method="POST" target="_blank" onsubmit="handleBooking(event)">
+        <form id="bookingForm" action="https://docs.google.com/forms/d/e/1FAIpQLSccrRPLXdMYP_3lw4T7tfx7yXBEu5IOwLvHe29rvFew_cEw4A/formResponse" method="POST" target="_blank" onsubmit="handleBooking(event)">
+
+          <!-- Name + Contact -->
           <div class="frow">
             <div class="fg">
               <label>First Name</label>
-              <input type="text" name="entry.FIRSTNAME" placeholder="Jane" required/>
+              <input type="text" name="entry.2132996580" placeholder="Jane" required/>
             </div>
             <div class="fg">
               <label>Last Name</label>
-              <input type="text" name="entry.LASTNAME" placeholder="Doe" required/>
+              <input type="text" name="entry.360198021" placeholder="Doe" required/>
             </div>
           </div>
           <div class="frow">
             <div class="fg">
               <label>Email Address</label>
-              <input type="email" name="entry.EMAIL" placeholder="jane@email.com" required/>
+              <input type="email" name="entry.425656258" placeholder="jane@email.com" required/>
             </div>
             <div class="fg">
               <label>Phone Number</label>
-              <input type="tel" name="entry.PHONE" placeholder="(555) 000-0000"/>
+              <input type="tel" name="entry.487425429" placeholder="(555) 000-0000"/>
             </div>
           </div>
+
+          <!-- Service + Date -->
           <div class="frow">
             <div class="fg">
               <label>Service Requested</label>
-              <select name="entry.SERVICE" id="serviceSelect" required>
+              <select name="entry.1578334907" id="serviceSelect" required onchange="showServiceOptions(this.value)">
+                <option value="">— Select a service —</option>
                 <option value="Catering">Catering</option>
-                <option value="Hair Braiding">Hair Braiding</option>
+                <option value="Hair Braiding">Hair Braiding / Styling</option>
                 <option value="Private Sitting">Private Sitting</option>
                 <option value="Event Planning">Event Planning &amp; Coordination</option>
                 <option value="Home Organizing">Home Organizing</option>
@@ -1725,35 +1602,140 @@ footer .section-kicker {
             </div>
             <div class="fg">
               <label>Preferred Date</label>
-              <input type="date" name="entry.DATE" required/>
-            </div>
-          </div>
-          <div class="frow full">
-            <div class="fg">
-              <label>Details &amp; Special Requests</label>
-              <textarea name="entry.DETAILS" placeholder="Tell us about your event, number of guests, vision or any specific needs…"></textarea>
+              <input type="date" name="entry.1686805789" required/>
             </div>
           </div>
 
+          <!-- Dynamic service-specific pricing options -->
+          <div id="svc-catering" class="svc-options" style="display:none;">
+            <div class="frow full">
+              <div class="fg">
+                <label>Catering Package</label>
+                <select name="entry.2111116416">
+                  <option value="">— Select a package —</option>
+                  <option value="Small (1–30 guests) — Starting at $500">Small (1–30 guests) — Starting at $500</option>
+                  <option value="Medium (31–74 guests) — Starting at $1,500">Medium (31–74 guests) — Starting at $1,500</option>
+                  <option value="Large (75–200+ guests) — Starting at $3,000+">Large (75–200+ guests) — Starting at $3,000+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="svc-hair" class="svc-options" style="display:none;">
+            <div class="frow full">
+              <div class="fg">
+                <label>Hair Service</label>
+                <select name="entry.1878703687">
+                  <option value="">— Select a style —</option>
+                  <option value="Knotless Braids – Small ($250)">Knotless Braids – Small ($250)</option>
+                  <option value="Knotless Braids – Medium ($200)">Knotless Braids – Medium ($200)</option>
+                  <option value="Box Braids – Medium ($175)">Box Braids – Medium ($175)</option>
+                  <option value="Box Braids – Large ($150)">Box Braids – Large ($150)</option>
+                  <option value="Goddess Braids ($100+)">Goddess Braids ($100+)</option>
+                  <option value="Locs – Starter ($200+)">Locs – Starter ($200+)</option>
+                  <option value="Wash &amp; Style ($65+)">Wash &amp; Style ($65+)</option>
+                  <option value="Other / Consultation">Other / Consultation</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="svc-event" class="svc-options" style="display:none;">
+            <div class="frow full">
+              <div class="fg">
+                <label>Event Size</label>
+                <select name="entry.1696621745">
+                  <option value="">— Select event size —</option>
+                  <option value="Intimate Event (1–29 guests) — $300">Intimate Event (1–29 guests) — $300</option>
+                  <option value="Medium Event (30–75 guests) — $600">Medium Event (30–75 guests) — $600</option>
+                  <option value="Large Event (76–200+ guests) — $1,200+">Large Event (76–200+ guests) — $1,200+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="svc-planning" class="svc-options" style="display:none;">
+            <div class="frow full">
+              <div class="fg">
+                <label>Wedding / Event Planning Tier</label>
+                <select name="entry.136010715">
+                  <option value="">— Select a tier —</option>
+                  <option value="Day-Of Coordination — $800">Day-Of Coordination — $800</option>
+                  <option value="Partial Planning — $1,500">Partial Planning — $1,500</option>
+                  <option value="Full Planning — $3,000+">Full Planning — $3,000+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Special notes -->
+          <div class="frow full">
+            <div class="fg">
+              <label>Details &amp; Special Requests</label>
+              <textarea name="entry.2472791" placeholder="Tell us about your vision, number of guests, or any specific needs…"></textarea>
+            </div>
+          </div>
+
+          <!-- Deposit policy -->
           <div class="deposit-row">
             <div class="deposit-text">
-              <strong>Secure Your Date with a Deposit</strong>
-              Processed safely through Stripe. Remaining balance is due at time of service.
+              <strong>Deposit Policy</strong>
+              A deposit is required to secure your date. Remaining balance is due at time of service.
             </div>
-            <button type="button" class="stripe-btn" onclick="redirectStripe()">
-              <svg width="38" height="16" viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.7 10.1c0-.6.5-1 1.3-1 1.2 0 2.6.4 3.7 1l.7-4.1C11.1 5.4 9.5 5 7.9 5 4 5 1.3 7 1.3 10.4c0 5.2 7 4.4 7 6.6 0 .7-.6 1.1-1.5 1.1-1.3 0-3-.5-4.3-1.3L2 21c1.4.7 3.2 1.1 4.8 1.1C11 22.1 14 20.2 14 16.6c0-5.5-7.3-4.6-7.3-6.5zm17.1-4.8L20.7 22h4.3l3.1-16.7h-4.3zm-5.6 0L15 22h4.3l3.1-16.7h-4.1zm25.3 0c-1.6 0-2.9.8-3.5 2l-.3-1.7H36l-2.8 16.4h4.3l1.1-6.4c.4 2.1 2 3.5 4 3.5 4 0 6.5-4 6.5-8.6 0-3.5-1.8-5.2-4.3-5.2zm-.8 10.7c-1.3 0-2.1-1.1-1.8-2.5l.4-2.3c.3-1.4 1.3-2.4 2.5-2.4 1.2 0 1.8.9 1.8 2.2 0 2.8-1.2 5-2.9 5z" fill="white"/>
-              </svg>
-              Pay Deposit
-            </button>
           </div>
+
+          <!-- Payment method -->
+          <div class="payment-group">
+            <span class="payment-group-label">How would you like to pay?</span>
+            <div class="payment-options">
+              <label class="payment-option">
+                <input type="radio" name="entry.PAYMETHOD" value="Stripe (Card Online)" checked/>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                  <line x1="2" y1="10" x2="22" y2="10" stroke="currentColor" stroke-width="1.5"/>
+                  <rect x="5" y="13" width="4" height="2" rx="0.5" fill="currentColor" opacity="0.5"/>
+                </svg>
+                Card Online (Stripe)
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="entry.PAYMETHOD" value="Cash"/>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                  <circle cx="12" cy="13.5" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                  <path d="M6 7V5a2 2 0 012-2h8a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                </svg>
+                Cash
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="entry.PAYMETHOD" value="Zelle"/>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="5" y="2" width="14" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                  <path d="M9 7l6 5-6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="18.5" r="0.75" fill="currentColor"/>
+                </svg>
+                Zelle
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="entry.PAYMETHOD" value="CashApp"/>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                  <path d="M12 6v12M9 8.5h4.5a1.5 1.5 0 010 3h-3a1.5 1.5 0 000 3H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                Cash App
+              </label>
+            </div>
+          </div>
+
           <div class="form-note">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 12a1 1 0 110-2 1 1 0 010 2zm1-4H9V6h2v4z" fill="#7a6e72"/>
+              <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 12a1 1 0 110-2 1 1 0 010 2zm1-4H9V6h2v4z" fill="#6b5d5a"/>
             </svg>
             Your information is protected. We will never share your data with third parties.
           </div>
-          <button type="submit" class="btn-submit">Submit Booking Request</button>
+          <button type="submit" class="btn-submit">
+            Submit Request &amp; Pay Deposit
+            <span class="stripe-badge"><svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1L1 7h4l-1 4 5-6H5l1-4z" fill="currentColor"/></svg> Stripe</span>
+          </button>
         </form>
       </div>
     </div>
@@ -1763,20 +1745,14 @@ footer .section-kicker {
 <!-- ════════════════ INQUIRY ════════════════ -->
 <section id="inquiry">
   <svg class="inquiry-bg-flower" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(210,210)">
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(0)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(30)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(60)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(90)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(120)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(150)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(180)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(210)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(240)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(270)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(300)"/>
-      <ellipse rx="28" ry="90" fill="#c97b8a" transform="rotate(330)"/>
-      <circle r="28" fill="#f2dde2"/>
+    <g opacity="0.12">
+      <ellipse cx="80" cy="300" rx="52" ry="68" fill="white"/>
+      <path d="M80 368 Q78 390 74 408" stroke="white" stroke-width="2.5" fill="none"/>
+      <ellipse cx="75" cy="286" rx="11" ry="7" fill="rgba(255,255,255,0.35)" transform="rotate(-30,75,286)"/>
+      <ellipse cx="180" cy="350" rx="45" ry="58" fill="white"/>
+      <path d="M180 408 Q178 418 175 420" stroke="white" stroke-width="2" fill="none"/>
+      <ellipse cx="40" cy="180" rx="38" ry="50" fill="white"/>
+      <path d="M40 230 Q38 250 34 265" stroke="white" stroke-width="2" fill="none"/>
     </g>
   </svg>
 
@@ -1793,7 +1769,7 @@ footer .section-kicker {
             <polyline points="22,6 12,13 2,6" stroke="#7a6e72" stroke-width="1.5"/>
           </svg>
           <span class="ct-label">Email</span>
-          <div class="ct-value"><a href="/cdn-cgi/l/email-protection#fc9499909093bc8495929895998f9d919d8695929b949d92988fd29f9391"><span class="__cf_email__" data-cfemail="bdd5d8d1d1d2fdc5d4d3d9d4d8cedcd0dcc7d4d3dad5dcd3d9ce93ded2d0">[email&#160;protected]</span></a></div>
+          <div class="ct-value"><a href="/cdn-cgi/l/email-protection#b2dad7dededdf2cadbdcd6dbd7c1d3dfd3c8dbdcd5dad3dcd6c19cd1dddf"><span class="__cf_email__" data-cfemail="c6aea3aaaaa986beafa8a2afa3b5a7aba7bcafa8a1aea7a8a2b5e8a5a9ab">[email&#160;protected]</span></a></div>
         </div>
         <div class="ct">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1829,35 +1805,30 @@ footer .section-kicker {
         <h3>Send a Message</h3>
         <p class="form-subtitle" style="font-size:.82rem;color:var(--muted);margin-bottom:2rem;font-weight:300;line-height:1.6;">Tell us about yourself and what you need — we'll take it from there.</p>
 
-        <!--
-          SETUP INSTRUCTIONS:
-          Replace action="YOUR_GOOGLE_INQUIRY_FORM_URL" with your Google Forms POST URL
-          Update name="entry.XXXXXXXX" attributes with your form's entry IDs
-        -->
-        <form action="YOUR_GOOGLE_INQUIRY_FORM_URL" method="POST" target="_blank" onsubmit="handleInquiry(event)">
+        <form action="https://docs.google.com/forms/d/e/1FAIpQLScw5AwWl5g3TEOvk_szqdT9gLwa5iM4xew7yk4OJrU_HJ1sFw/formResponse" method="POST" target="_blank" onsubmit="handleInquiry(event)">
           <div class="frow">
             <div class="fg">
               <label>Your Name</label>
-              <input type="text" name="entry.INQNAME" placeholder="Jane Doe" required/>
+              <input type="text" name="entry.177308334" placeholder="Jane Doe" required/>
             </div>
             <div class="fg">
               <label>Email Address</label>
-              <input type="email" name="entry.INQEMAIL" placeholder="jane@email.com" required/>
+              <input type="email" name="entry.897189091" placeholder="jane@email.com" required/>
             </div>
           </div>
           <div class="frow full">
             <div class="fg">
               <label>Subject</label>
-              <input type="text" name="entry.INQSUBJECT" placeholder="How can we help you?"/>
+              <input type="text" name="entry.1092033928" placeholder="How can we help you?"/>
             </div>
           </div>
           <div class="frow full">
             <div class="fg">
               <label>Message</label>
-              <textarea name="entry.INQMESSAGE" rows="5" placeholder="Share your vision, questions, or any details that will help us assist you best." required></textarea>
+              <textarea name="entry.820538370" rows="5" placeholder="Share your vision, questions, or any details that will help us assist you best." required></textarea>
             </div>
           </div>
-          <button type="submit" class="btn-submit" style="background:var(--ink);">Send Message</button>
+          <button type="submit" class="btn-submit" style="background:var(--blue);color:white;">Send Message</button>
         </form>
       </div>
     </div>
@@ -1867,20 +1838,15 @@ footer .section-kicker {
 <!-- ════════════════ FOOTER ════════════════ -->
 <footer>
   <svg class="footer-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(250,250)">
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(0)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(30)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(60)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(90)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(120)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(150)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(180)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(210)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(240)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(270)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(300)"/>
-      <ellipse rx="32" ry="100" fill="#c97b8a" transform="rotate(330)"/>
-      <circle r="32" fill="#1e1a1c"/>
+    <g opacity="0.06">
+      <ellipse cx="380" cy="250" rx="70" ry="90" fill="white"/>
+      <path d="M380 340 Q378 365 374 385" stroke="white" stroke-width="3" fill="none"/>
+      <ellipse cx="375" cy="233" rx="15" ry="10" fill="rgba(255,255,255,0.4)" transform="rotate(-30,375,233)"/>
+      <ellipse cx="460" cy="140" rx="55" ry="72" fill="white"/>
+      <path d="M460 212 Q458 232 454 250" stroke="white" stroke-width="2.5" fill="none"/>
+      <ellipse cx="455" cy="125" rx="12" ry="8" fill="rgba(255,255,255,0.4)" transform="rotate(-30,455,125)"/>
+      <ellipse cx="440" cy="360" rx="48" ry="62" fill="white"/>
+      <path d="M440 422 Q438 442 434 460" stroke="white" stroke-width="2" fill="none"/>
     </g>
   </svg>
 
@@ -1892,11 +1858,11 @@ footer .section-kicker {
     <div class="footer-col">
       <h4>Services</h4>
       <ul>
-        <li><a href="#services">Catering</a></li>
-        <li><a href="#services">Hair Braiding</a></li>
-        <li><a href="#services">Private Sitting</a></li>
-        <li><a href="#services">Event Planning</a></li>
-        <li><a href="#services">Home Organizing</a></li>
+        <li><span class="footer-svc-item">Catering</span></li>
+        <li><span class="footer-svc-item">Hair Styling</span></li>
+        <li><span class="footer-svc-item">Private Sitting</span></li>
+        <li><span class="footer-svc-item">Event Planning</span></li>
+        <li><span class="footer-svc-item">Home Organizing</span></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1906,15 +1872,6 @@ footer .section-kicker {
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#booking">Book a Service</a></li>
         <li><a href="#inquiry">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Connect</h4>
-      <ul>
-        <li><a href="/cdn-cgi/l/email-protection#2a424f4646456a5243444e434f594b474b5043444d424b444e5904494547">Email Us</a></li>
-        <li><a href="tel:+15550000000">Call / Text</a></li>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Facebook</a></li>
       </ul>
     </div>
   </div>
@@ -1928,20 +1885,7 @@ footer .section-kicker {
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── Cursor
-const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursor-ring');
-let rx = 0, ry = 0, cx = 0, cy = 0;
-document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; cursor.style.left = cx+'px'; cursor.style.top = cy+'px'; });
-(function animRing() {
-  rx += (cx - rx) * 0.12;
-  ry += (cy - ry) * 0.12;
-  ring.style.left = rx+'px';
-  ring.style.top  = ry+'px';
-  requestAnimationFrame(animRing);
-})();
-
+<script>
 // ── Nav scroll
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
@@ -1960,23 +1904,85 @@ const revObs = new IntersectionObserver(entries => {
 }, { threshold: 0.08 });
 revEls.forEach(el => revObs.observe(el));
 
-// ── Service selector (sidebar)
+// ── Service selector (sidebar) — syncs with form dropdown
 function selectService(el, name) {
   document.querySelectorAll('.bsl-item').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
   const sel = document.getElementById('serviceSelect');
-  if (sel) sel.value = name;
+  if (sel) {
+    sel.value = name;
+    showServiceOptions(name);
+  }
 }
 
-// ── Stripe redirect
-function redirectStripe() {
-  // Replace with your actual Stripe payment link
-  window.open('https://buy.stripe.com/YOUR_STRIPE_PAYMENT_LINK', '_blank');
+// ── Show/hide service-specific pricing fields
+function showServiceOptions(value) {
+  document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
+  if (value === 'Catering') document.getElementById('svc-catering').style.display = '';
+  if (value === 'Hair Braiding') document.getElementById('svc-hair').style.display = '';
+  if (value === 'Event Planning') {
+    document.getElementById('svc-event').style.display = '';
+    document.getElementById('svc-planning').style.display = '';
+  }
 }
 
-// ── Form handlers
+// ── Combined booking handler: submits Google Form + opens Stripe if card selected
 function handleBooking(e) {
+  e.preventDefault();
   const form = document.getElementById('bookingForm');
-  if (form.action.includes('YOUR_GOOGLE_FORM')) {
-    e.preventDefault();
-    alert('Boo
+
+  // Check selected payment method
+  const payMethod = form.querySelector('input[name="entry.PAYMETHOD"]:checked');
+  const isCard = payMethod && payMethod.value === 'Stripe (Card Online)';
+
+  // Submit to Google Form in background via fetch
+  const data = new FormData(form);
+  fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
+
+  // Open Stripe only if card payment selected
+  if (isCard) {
+    // Replace with your actual Stripe payment link
+    window.open('https://buy.stripe.com/YOUR_STRIPE_PAYMENT_LINK', '_blank');
+  }
+
+  // Show confirmation to user
+  const btn = form.querySelector('.btn-submit');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '✓ Request Submitted!';
+  btn.style.background = 'var(--sage)';
+  btn.style.color = 'white';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = originalText;
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.disabled = false;
+    form.reset();
+  }, 4000);
+}
+
+// ── Inquiry form handler
+function handleInquiry(e) {
+  e.preventDefault();
+  const form = e.target;
+
+  if (!form.action.includes('YOUR_GOOGLE_INQUIRY')) {
+    const data = new FormData(form);
+    fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
+  }
+
+  const btn = form.querySelector('.btn-submit');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '✓ Message Sent!';
+  btn.style.background = 'var(--sage)';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = originalText;
+    btn.style.background = '';
+    btn.disabled = false;
+    form.reset();
+  }, 4000);
+}
+</script>
+</body>
+</html>
