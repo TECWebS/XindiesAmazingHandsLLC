@@ -1436,7 +1436,7 @@ footer {
       <svg width="28" height="8" viewBox="0 0 28 8" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M1 4h26M22 1l5 3-5 3" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      Auto-scrolling · Hover to pause
+      Hover to pause
     </div>
   </div>
 
@@ -1824,7 +1824,7 @@ footer {
   </div>
 
   <div class="footer-bottom">
-    <span class="footer-copy">© 2025 Xindies Amazing Hands LLC. All rights reserved.</span>
+    <span class="footer-copy">© 2026-2027 Xindies Amazing Hands LLC. All rights reserved.</span>
     <div class="footer-legal">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Service</a>
@@ -2050,139 +2050,6 @@ function handleBooking(e) {
     form.reset();
     document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
     document.getElementById('payment-section').style.display = 'none';
-  }, 4000);
-}
-
-// ── Inquiry form handler
-function handleInquiry(e) {
-  e.preventDefault();
-  const form = e.target;
-  const data = new FormData(form);
-  fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
-
-  const btn = form.querySelector('.btn-submit');
-  const originalHTML = btn.innerHTML;
-  btn.innerHTML = '✓ Message Sent!';
-  btn.style.background = 'var(--sage)';
-  btn.style.color = 'white';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.innerHTML = originalHTML;
-    btn.style.background = '';
-    btn.style.color = '';
-    btn.disabled = false;
-    form.reset();
-  }, 4000);
-}
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-});
-
-// ── Scroll reveal
-const revEls = document.querySelectorAll('.reveal-up, .reveal-left');
-const revObs = new IntersectionObserver(entries => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('in'), i * 100);
-      revObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.08 });
-revEls.forEach(el => revObs.observe(el));
-
-// ── Service selector (sidebar) — syncs with form dropdown
-function selectService(el, name) {
-  document.querySelectorAll('.bsl-item').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  const sel = document.getElementById('serviceSelect');
-  if (sel) {
-    sel.value = name;
-    showServiceOptions(name);
-  }
-}
-
-// ── Show/hide service-specific pricing fields
-function showServiceOptions(value) {
-  document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
-  if (value === 'Catering') document.getElementById('svc-catering').style.display = '';
-  if (value === 'Hair Braiding') document.getElementById('svc-hair').style.display = '';
-  if (value === 'Event Planning') {
-    document.getElementById('svc-event').style.display = '';
-    document.getElementById('svc-planning').style.display = '';
-  }
-}
-
-// ── Stripe link lookup table
-// Keys: "ServiceName|SubOption|deposit" or "ServiceName|SubOption|full"
-const STRIPE = {
-  // Catering
-  'Catering|Small (1–30 guests) — Starting at $500|deposit':  'https://book.stripe.com/5kQ8wR2KC1utbPEaZu2Fa06',
-  'Catering|Small (1–30 guests) — Starting at $500|full':     'https://book.stripe.com/5kQeVf5WOfljbPEaZu2Fa0b',
-  'Catering|Medium (31–74 guests) — Starting at $1,500|deposit': 'https://book.stripe.com/14A5kFclc7SRg5U6Je2Fa07',
-  'Catering|Medium (31–74 guests) — Starting at $1,500|full':    'https://book.stripe.com/eVqcN7gBs4GF3j82sY2Fa0a',
-  'Catering|Large (75–200+ guests) — Starting at $3,000+|deposit': 'https://book.stripe.com/8x24gB2KCflj4nc4B62Fa08',
-  'Catering|Large (75–200+ guests) — Starting at $3,000+|full':    'https://book.stripe.com/bJe4gBgBsc97aLAffK2Fa09',
-
-  // Hair Braiding
-  'Hair Braiding|Box Braids – Small ($200)|deposit':          'https://book.stripe.com/aFabJ384W7SRg5U1oU2Fa05',
-  'Hair Braiding|Box Braids – Small ($200)|full':             'https://buy.stripe.com/eVq6oJ5WO6ON06WebG2Fa03',
-  'Hair Braiding|Box Braids – Medium ($175)|deposit':         'https://book.stripe.com/eVq7sNfxogpn9HwebG2Fa04',
-  'Hair Braiding|Box Braids – Medium ($175)|full':            'https://buy.stripe.com/5kQ28t0Cu2yxf1Qc3y2Fa02',
-  'Hair Braiding|Box Braids – Large ($165)|deposit':          'https://book.stripe.com/bJefZj0Cu3CBbPE8Rm2Fa00',
-  'Hair Braiding|Box Braids – Large ($165)|full':             'https://buy.stripe.com/7sYcN7etk0qp3j8aZu2Fa01',
-  'Hair Braiding|Natural Hair Braiding ($45 deposit)|deposit':'https://book.stripe.com/14A8wR84W2yx9HwebG2Fa0r',
-  'Hair Braiding|Crochet Styles ($135 deposit)|deposit':      'https://book.stripe.com/8x25kFclc6ONaLA4B62Fa0q',
-  'Hair Braiding|Sew-In w/ Leave Out ($175)|deposit':         'https://book.stripe.com/14A7sN3OG1ut3j89Vq2Fa0c',
-  'Hair Braiding|Sew-In w/ Leave Out ($175)|full':            'https://book.stripe.com/8x2eVf84W5KJdXM5Fa2Fa0d',
-
-
-
-// ── Combined booking handler
-function handleBooking(e) {
-  e.preventDefault();
-  const form = document.getElementById('bookingForm');
-
-  // Get values
-  const service   = (form.querySelector('[name="entry.1578334907"]') || {}).value || '';
-  const hairOpt   = (form.querySelector('[name="entry.1878703687"]') || {}).value || '';
-  const cateringOpt = (form.querySelector('[name="entry.2111116416"]') || {}).value || '';
-  const eventOpt  = (form.querySelector('[name="entry.1696621745"]') || {}).value || '';
-  const planOpt   = (form.querySelector('[name="entry.136010715"]') || {}).value || '';
-  const payMethod = (form.querySelector('input[name="entry.PAYMETHOD"]:checked') || {}).value || '';
-
-  // Determine sub-option based on service
-  let subOption = '';
-  if (service === 'Hair Braiding') subOption = hairOpt;
-  else if (service === 'Catering') subOption = cateringOpt;
-  else if (service === 'Event Planning') subOption = eventOpt || planOpt;
-
-  // Determine pay type
-  const payType = payMethod === 'Full Payment' ? 'full' : 'deposit';
-
-  // Submit to Google Form in background
-  const data = new FormData(form);
-  fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
-
-  // Look up and open correct Stripe link
-  const stripeUrl = getStripeLink(service, subOption, payType);
-  if (stripeUrl) {
-    window.open(stripeUrl, '_blank');
-  }
-
-  // Show confirmation
-  const btn = form.querySelector('.btn-submit');
-  const originalHTML = btn.innerHTML;
-  btn.innerHTML = '✓ Request Submitted!';
-  btn.style.background = 'var(--sage)';
-  btn.style.color = 'white';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.innerHTML = originalHTML;
-    btn.style.background = '';
-    btn.style.color = '';
-    btn.disabled = false;
-    form.reset();
-    document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
   }, 4000);
 }
 
