@@ -1657,7 +1657,8 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
         <h3>Submit a Request</h3>
         <p class="form-subtitle">We'll confirm availability and follow up within 24 hours.</p>
 
-        <form id="bookingForm" action="https://docs.google.com/forms/d/e/1FAIpQLSccrRPLXdMYP_3lw4T7tfx7yXBEu5IOwLvHe29rvFew_cEw4A/formResponse" method="POST" target="_blank" onsubmit="handleBooking(event)">
+        <iframe name="hidden_booking_frame" style="display:none;"></iframe>
+        <form id="bookingForm" action="https://docs.google.com/forms/d/e/1FAIpQLSccrRPLXdMYP_3lw4T7tfx7yXBEu5IOwLvHe29rvFew_cEw4A/formResponse" method="POST" target="hidden_booking_frame" onsubmit="handleBooking(event)">
           <div class="frow">
             <div class="fg"><label>First Name</label><input type="text" name="entry.2132996580" placeholder="Jane" required/></div>
             <div class="fg"><label>Last Name</label><input type="text" name="entry.360198021" placeholder="Doe" required/></div>
@@ -1835,7 +1836,8 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
       <div class="inquiry-form-card">
         <h3>Send a Message</h3>
         <p class="form-subtitle" style="font-size:.82rem;color:var(--muted);margin-bottom:2rem;font-weight:300;line-height:1.6;">Tell us about yourself and what you need — we'll take it from there.</p>
-        <form action="https://docs.google.com/forms/d/e/1FAIpQLScw5AwWl5g3TEOvk_szqdT9gLwa5iM4xew7yk4OJrU_HJ1sFw/formResponse" method="POST" target="_blank" onsubmit="handleInquiry(event)">
+        <iframe name="hidden_inquiry_frame" style="display:none;"></iframe>
+        <form action="https://docs.google.com/forms/d/e/1FAIpQLScw5AwWl5g3TEOvk_szqdT9gLwa5iM4xew7yk4OJrU_HJ1sFw/formResponse" method="POST" target="hidden_inquiry_frame" onsubmit="handleInquiry(event)">
           <div class="frow">
             <div class="fg"><label>Your Name</label><input type="text" name="entry.177308334" placeholder="Jane Doe" required/></div>
             <div class="fg"><label>Email Address</label><input type="email" name="entry.897189091" placeholder="jane@email.com" required/></div>
@@ -2152,18 +2154,23 @@ function selectService(el, name) {
 
 function showServiceOptions(value) {
   document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
+  document.getElementById('payment-section').style.display = 'none';
+
   if (value === 'Catering') document.getElementById('svc-catering').style.display = '';
   if (value === 'Hair Braiding') document.getElementById('svc-hair').style.display = '';
-  if (value === 'Private Sitting') document.getElementById('svc-sitting').style.display = '';
+  if (value === 'Private Sitting') {
+    document.getElementById('svc-sitting').style.display = '';
+    updatePaymentOptions('Private Sitting', '');
+  }
   if (value === 'Event Planning') {
     document.getElementById('svc-event').style.display = '';
     document.getElementById('svc-planning').style.display = '';
   }
-  if (['Home Organizing', 'Private Sitting'].includes(value)) {
-    updatePaymentOptions(value, '');
-  } else {
-    document.getElementById('payment-section').style.display = 'none';
+  if (value === 'Home Organizing') {
+    updatePaymentOptions('Home Organizing', '');
   }
+  // For Catering, Hair Braiding, Event Planning — payment section
+  // appears after user picks a sub-option (handled by change listener below)
 }
 
 document.addEventListener('change', function(e) {
@@ -2175,31 +2182,38 @@ document.addEventListener('change', function(e) {
 });
 
 function handleBooking(e) {
-  e.preventDefault();
+  // Don't preventDefault — let the form submit naturally to hidden_booking_frame
+  // which silently posts to Google Forms without any redirect
   const form = document.getElementById('bookingForm');
+
   const service     = (form.querySelector('[name="entry.1578334907"]') || {}).value || '';
   const hairOpt     = (form.querySelector('[name="entry.1878703687"]') || {}).value || '';
   const cateringOpt = (form.querySelector('[name="entry.2111116416"]') || {}).value || '';
   const eventOpt    = (form.querySelector('[name="entry.1696621745"]') || {}).value || '';
   const planOpt     = (form.querySelector('[name="entry.136010715"]') || {}).value || '';
   const payMethod   = (form.querySelector('input[name="entry.PAYMETHOD"]:checked') || {}).value || '';
+
   let subOption = '';
   if (service === 'Hair Braiding') subOption = hairOpt;
   else if (service === 'Catering') subOption = cateringOpt;
   else if (service === 'Event Planning') subOption = eventOpt || planOpt;
   else if (service === 'Private Sitting') subOption = hairOpt;
+
   const payType = payMethod === 'Full Payment' ? 'full' : payMethod === 'Deposit' ? 'deposit' : 'deposit';
-  const data = new FormData(form);
-  fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' }).catch(() => {});
+
+  // Open Stripe link in new tab (do before form submit to avoid popup blockers)
   if (payMethod !== 'Cash (In Person)') {
     const stripeUrl = getStripeLink(service, subOption, payType);
     if (stripeUrl) window.open(stripeUrl, '_blank');
   }
+
+  // Show confirmation UI
   const btn = form.querySelector('.btn-submit');
   const originalHTML = btn.innerHTML;
   btn.innerHTML = '✓ Request Submitted!';
   btn.style.background = 'var(--sage)';
   btn.disabled = true;
+
   setTimeout(() => {
     btn.innerHTML = originalHTML;
     btn.style.background = '';
@@ -2208,12 +2222,12 @@ function handleBooking(e) {
     document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
     document.getElementById('payment-section').style.display = 'none';
   }, 4000);
+  // Form submits naturally to hidden_booking_frame — no redirect occurs
 }
 
 function handleInquiry(e) {
-  e.preventDefault();
+  // Form submits naturally to hidden_inquiry_frame — no redirect occurs
   const form = e.target;
-  fetch(form.action, { method: 'POST', body: new FormData(form), mode: 'no-cors' }).catch(() => {});
   const btn = form.querySelector('.btn-submit');
   const originalHTML = btn.innerHTML;
   btn.innerHTML = '✓ Message Sent!';
@@ -2378,4 +2392,15 @@ function submitReview() {
 }
 
 // Close overlays when clicking backdrop
-document.getElementById('reviewFormOverlay').addEventLi
+
+document.getElementById('reviewFormOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeReviewModals();
+});
+document.getElementById('reviewsViewOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeReviewModals();
+});
+
+updateReviewTile();
+</script>
+</body>
+</html>
