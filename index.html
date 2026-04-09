@@ -120,6 +120,41 @@ nav.scrolled {
 }
 .nav-book:hover { background: var(--blue-deep); color: white; }
 
+/* Hamburger */
+.ham-bar {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--dark);
+  border-radius: 2px;
+  transition: transform .3s, opacity .3s;
+}
+#hamburger.open .ham-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#hamburger.open .ham-bar:nth-child(2) { opacity: 0; }
+#hamburger.open .ham-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile nav dropdown */
+@media (max-width: 768px) {
+  #hamburger { display: flex !important; }
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(245,222,222,0.98);
+    backdrop-filter: blur(16px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    z-index: 499;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a {
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    color: var(--dark);
+  }
+}
+
 /* ── HERO ── */
 #hero {
   min-height: 100vh;
@@ -1259,6 +1294,7 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
 }
 
 /* ── RESPONSIVE ── */
+/* ── TABLET (≤1024px) ── */
 @media (max-width: 1024px) {
   #hero { grid-template-columns: 1fr; }
   .hero-right { display: none; }
@@ -1266,18 +1302,153 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
   .about-layout { grid-template-columns: 1fr; padding: 0 2rem; }
   .about-side-label { display: none; }
   .services-grid { grid-template-columns: 1fr 1fr; }
-  .svc-card { border-bottom: 1px solid rgba(255,255,255,0.07); }
-  .booking-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .svc-card { border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .booking-inner { grid-template-columns: 1fr; gap: 3rem; padding: 0 2rem; }
   .booking-left { position: static; }
-  .inquiry-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .inquiry-inner { grid-template-columns: 1fr; gap: 3rem; padding: 0 2rem; }
+  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
   nav { padding: 1.2rem 1.8rem; }
   .nav-links { display: none; }
   .services-inner { padding: 0 2rem; }
-  .booking-inner { padding: 0 2rem; }
   .gallery-header { padding: 0 2rem; }
-  .inquiry-inner { padding: 0 2rem; }
   footer { padding: 4rem 2rem 2rem; }
+  .services-banner-inner { flex-wrap: wrap; padding: 0 1rem; }
+  .banner-item { flex: 1 1 33%; min-width: 120px; font-size: 0.6rem; padding: 0.9rem 0.8rem; }
+  .booking-form-card { padding: 2rem 1.5rem; }
+  .inquiry-form-card { padding: 2rem 1.5rem; }
+  .about-main-block { max-height: 480px; }
+}
+
+/* ── MOBILE (≤768px) ── */
+@media (max-width: 768px) {
+  /* Nav */
+  nav { padding: 1rem 1.2rem; }
+  .nav-book { font-size: 0.6rem; padding: 0.55rem 1rem; letter-spacing: 0.12em; }
+
+  /* Hero */
+  .hero-left { padding: 7rem 1.5rem 4rem; }
+  .hero-h1 { font-size: clamp(2.2rem, 8vw, 3rem); }
+  .hero-desc { font-size: 0.88rem; margin-bottom: 2rem; }
+  .hero-ctas { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .btn-solid { width: 100%; text-align: center; padding: 0.9rem 1.5rem; }
+
+  /* Services banner */
+  .services-banner-inner { flex-wrap: wrap; padding: 0; }
+  .banner-item { flex: 1 1 50%; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 0.6rem; padding: 0.75rem 0.5rem; justify-content: center; }
+
+  /* About */
+  #about { padding: 5rem 0; }
+  .about-layout { gap: 2rem; padding: 0 1.5rem; }
+  .about-main-block { max-height: 360px; }
+  .about-text-col { padding-top: 0; }
+  .section-heading { font-size: clamp(1.7rem, 6vw, 2.2rem); }
+  .body-text { font-size: 0.92rem; }
+
+  /* Services */
+  #services { padding: 5rem 0; }
+  .services-inner { padding: 0 1.5rem; }
+  .services-top { flex-direction: column; align-items: flex-start; margin-bottom: 2.5rem; gap: 1rem; }
+  .services-tagline { text-align: left; max-width: 100%; }
+  .services-grid { grid-template-columns: 1fr; }
+  .svc-card { padding: 2rem 1.5rem; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
+
+  /* Gallery */
+  #gallery { padding: 5rem 0 0; }
+  .gallery-header { padding: 0 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 2rem; }
+  .g-item { width: 220px; height: 280px; }
+
+  /* Booking */
+  #booking { padding: 5rem 0; }
+  .booking-inner { padding: 0 1.5rem; gap: 2.5rem; }
+  .booking-form-card { padding: 1.8rem 1.2rem; }
+  .frow { grid-template-columns: 1fr; gap: 1rem; }
+  .payment-option { min-width: 100%; flex: 1 1 100%; }
+  .deposit-row { padding: 1rem 1.2rem; }
+  .btn-submit { font-size: 0.65rem; letter-spacing: 0.15em; padding: 1rem; }
+
+  /* Inquiry */
+  #inquiry { padding: 5rem 0; }
+  .inquiry-inner { padding: 0 1.5rem; gap: 2.5rem; }
+  .contact-tiles { grid-template-columns: 1fr 1fr; gap: 1px; }
+  .inquiry-form-card { padding: 1.8rem 1.2rem; }
+
+  /* Footer */
+  footer { padding: 3.5rem 1.5rem 2rem; }
+  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .footer-legal { gap: 1.2rem; }
+
+  /* Modals / overlays */
+  .modal-box { width: 96vw; max-height: 88vh; }
+  .modal-header { padding: 1.2rem 1.4rem 0; }
+  .modal-body { padding: 1.4rem; }
+  .overlay-box { width: 96vw; max-height: 90vh; }
+  .overlay-header { padding: 1.2rem 1.4rem; }
+  .overlay-body { padding: 1.4rem; }
+
+  /* Booking service sidebar */
+  .booking-services-list { margin-bottom: 1.5rem; }
+  .bsl-item { font-size: 0.78rem; padding: 0.85rem 0; }
+}
+
+/* ── SMALL PHONES (≤480px) ── */
+@media (max-width: 480px) {
+  /* Nav */
+  .nav-wordmark { font-size: 0.95rem; }
+  .nav-book { display: none; }
+
+  /* Add mobile CTA inside hero instead */
+  .hero-left { padding: 6.5rem 1.2rem 3.5rem; }
+  .hero-eyebrow { font-size: 0.6rem; }
+  .hero-h1 { font-size: clamp(2rem, 9vw, 2.6rem); margin-bottom: 1.2rem; }
+  .hero-desc { font-size: 0.85rem; margin-bottom: 1.8rem; }
+
+  /* Services banner — single column */
+  .banner-item { flex: 1 1 100%; border-bottom: 1px solid rgba(0,0,0,0.08); border-right: none; }
+
+  /* About */
+  .about-main-block { max-height: 300px; }
+  .pillar-name { font-size: 0.8rem; }
+  .pillar-tag { font-size: 0.58rem; padding: 0.2rem 0.5rem; }
+
+  /* Services */
+  .svc-card { padding: 1.6rem 1.2rem; }
+  .svc-title { font-size: 0.95rem; }
+  .svc-body { font-size: 0.78rem; }
+
+  /* Gallery items smaller */
+  .g-item { width: 180px; height: 240px; }
+
+  /* Booking form */
+  .booking-form-card { padding: 1.4rem 1rem; }
+  .booking-form-card h3 { font-size: 1.3rem; }
+  .fg input, .fg select, .fg textarea { font-size: 16px; } /* prevent iOS zoom */
+
+  /* Payment options stack */
+  .payment-options { flex-direction: column; }
+  .payment-option { min-width: 100%; }
+  .payment-group { padding: 1rem; }
+
+  /* Contact tiles stack */
+  .contact-tiles { grid-template-columns: 1fr; }
+  .ct { padding: 1.2rem; }
+
+  /* Inquiry form */
+  .inquiry-form-card { padding: 1.4rem 1rem; }
+
+  /* Footer */
+  footer { padding: 3rem 1.2rem 2rem; }
+  .footer-brand h2 { font-size: 1.4rem; }
+  .footer-legal { flex-direction: column; gap: 0.6rem; }
+
+  /* Modals full-width */
+  .modal-box { width: 100vw; max-height: 92vh; border-radius: 0; }
+  .overlay-box { width: 100vw; max-height: 92vh; border-radius: 0; }
+  .star-btn svg { width: 24px; height: 24px; }
+
+  /* Stripe badge wrapping */
+  .btn-submit { flex-wrap: wrap; gap: 0.5rem; font-size: 0.62rem; }
+  .btn-submit .stripe-badge { font-size: 0.58rem; }
 }
 </style>
 </head>
@@ -1286,14 +1457,21 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
 <!-- ════════════════ NAV ════════════════ -->
 <nav id="mainNav">
   <div class="nav-wordmark">Xindies Amazing Hands<sup>LLC</sup></div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#booking">Book</a></li>
-    <li><a href="#inquiry">Contact</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" onclick="closeNav()">About</a></li>
+    <li><a href="#services" onclick="closeNav()">Services</a></li>
+    <li><a href="#gallery" onclick="closeNav()">Gallery</a></li>
+    <li><a href="#booking" onclick="closeNav()">Book</a></li>
+    <li><a href="#inquiry" onclick="closeNav()">Contact</a></li>
   </ul>
-  <a href="#booking" class="nav-book">Reserve a Date</a>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a href="#booking" class="nav-book">Reserve a Date</a>
+    <button id="hamburger" aria-label="Open menu" onclick="toggleNav()" style="display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:5px;align-items:center;justify-content:center;">
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+    </button>
+  </div>
 </nav>
 
 <!-- ════════════════ HERO ════════════════ -->
@@ -1795,7 +1973,7 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
             <polyline points="22,6 12,13 2,6" stroke="#7a6e72" stroke-width="1.5"/>
           </svg>
           <span class="ct-label">Email</span>
-          <div class="ct-value"><a href="mailto:xindiesamazinghandsllc@gmail.com">xindiesamazinghandsllc@gmail.com</a></div>
+          <div class="ct-value"><a href="/cdn-cgi/l/email-protection#d3abbabdb7bab6a0b2beb2a9babdb4bbb2bdb7a0bfbfb093b4beb2babffdb0bcbe"><span class="__cf_email__" data-cfemail="047c6d6a606d61776569657e6d6a636c656a6077686867446369656d682a676b69">[email&#160;protected]</span></a></div>
         </div>
 
         <!-- FIX 2: Review tile now calls openReviewForm() which opens the review modal that was previously missing from the HTML -->
@@ -2028,12 +2206,28 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Nav scroll
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 });
+
+// ── Mobile hamburger menu
+function toggleNav() {
+  const links = document.getElementById('navLinks');
+  const burger = document.getElementById('hamburger');
+  links.classList.toggle('open');
+  burger.classList.toggle('open');
+  document.body.style.overflow = links.classList.contains('open') ? 'hidden' : '';
+}
+function closeNav() {
+  const links = document.getElementById('navLinks');
+  const burger = document.getElementById('hamburger');
+  links.classList.remove('open');
+  burger.classList.remove('open');
+  document.body.style.overflow = '';
+}
 
 // ── Scroll reveal (progressive enhancement only)
 // js-ready enables CSS animations — content stays visible without JS
@@ -2392,7 +2586,6 @@ function submitReview() {
 }
 
 // Close overlays when clicking backdrop
-
 document.getElementById('reviewFormOverlay').addEventListener('click', function(e) {
   if (e.target === this) closeReviewModals();
 });
