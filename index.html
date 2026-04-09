@@ -1055,18 +1055,22 @@ footer {
 .footer-legal a:hover { color: var(--rose); }
 
 /* ── ANIMATIONS ── */
-.reveal-up {
+/* Elements are visible by default — JS adds .js-ready to body to enable animations */
+.reveal-up { opacity: 1; transform: none; }
+.reveal-left { opacity: 1; transform: none; }
+
+body.js-ready .reveal-up {
   opacity: 0;
   transform: translateY(36px);
   transition: opacity .8s ease, transform .8s ease;
 }
-.reveal-up.in { opacity: 1; transform: translateY(0); }
-.reveal-left {
+body.js-ready .reveal-up.in { opacity: 1; transform: translateY(0); }
+body.js-ready .reveal-left {
   opacity: 0;
   transform: translateX(-30px);
   transition: opacity .8s ease, transform .8s ease;
 }
-.reveal-left.in { opacity: 1; transform: translateX(0); }
+body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
 
 /* ── MODAL (Legal) ── */
 .modal-overlay {
@@ -2029,17 +2033,21 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 });
 
-// ── Scroll reveal
+// ── Scroll reveal (progressive enhancement only)
+// js-ready enables CSS animations — content stays visible without JS
+document.body.classList.add('js-ready');
 const revEls = document.querySelectorAll('.reveal-up, .reveal-left');
 const revObs = new IntersectionObserver(entries => {
   entries.forEach((e, i) => {
     if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('in'), i * 100);
+      setTimeout(() => e.target.classList.add('in'), i * 80);
       revObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.08 });
+}, { threshold: 0.01, rootMargin: '0px 0px -20px 0px' });
 revEls.forEach(el => revObs.observe(el));
+// Safety fallback: force-reveal everything after 1.5s if observer stalls
+setTimeout(() => { revEls.forEach(el => el.classList.add('in')); }, 1500);
 
 // ── Service card toggle
 document.querySelectorAll('.svc-card').forEach(card => {
