@@ -135,32 +135,44 @@ nav.scrolled {
 #hamburger.open .ham-bar:nth-child(2) { opacity: 0; }
 #hamburger.open .ham-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile nav dropdown */
+/* Mobile fullscreen nav overlay — driven by JS inline style to beat all specificity */
+#mobileNavOverlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%;
+  background-color: #f5dede;
+  z-index: 99990;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.8rem;
+}
+#mobileNavOverlay a {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.12em;
+  color: #0e0c10;
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 1rem;
+}
+#mobileNavOverlay a:hover { color: #2a6fc4; }
+#hamburger {
+  display: none;
+  position: relative;
+  z-index: 99999;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: #f5dede;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2.8rem;
-    z-index: 9996;
-    list-style: none;
-    margin: 0; padding: 0;
-  }
-  .nav-links.open { display: flex; }
-  .nav-links a {
-    font-size: 1.2rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--dark);
-    text-decoration: none;
-    font-family: 'DM Serif Display', serif;
-  }
-  .nav-links a::after { display: none; }
-  #hamburger { display: flex !important; position: relative; z-index: 9997; }
+  #hamburger { display: flex; }
 }
 
 /* ── HERO ── */
@@ -1466,11 +1478,11 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
 <nav id="mainNav">
   <div class="nav-wordmark">Xindies Amazing Hands<sup>LLC</sup></div>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#about" onclick="closeNav()">About</a></li>
-    <li><a href="#services" onclick="closeNav()">Services</a></li>
-    <li><a href="#gallery" onclick="closeNav()">Gallery</a></li>
-    <li><a href="#booking" onclick="closeNav()">Book</a></li>
-    <li><a href="#inquiry" onclick="closeNav()">Contact</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#inquiry">Contact</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1rem;">
     <a href="#booking" class="nav-book">Reserve a Date</a>
@@ -1482,7 +1494,15 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
   </div>
 </nav>
 
-<!-- ════════════════ HERO ════════════════ -->
+<!-- Mobile nav overlay — separate from the nav element to avoid all z-index/display conflicts -->
+<div id="mobileNavOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a href="#about"    onclick="closeNav()">About</a>
+  <a href="#services" onclick="closeNav()">Services</a>
+  <a href="#gallery"  onclick="closeNav()">Gallery</a>
+  <a href="#booking"  onclick="closeNav()">Book</a>
+  <a href="#inquiry"  onclick="closeNav()">Contact</a>
+  <a href="#booking"  onclick="closeNav()" style="margin-top:1rem;background:#2a6fc4;color:white;padding:0.8rem 2rem;font-family:'Poppins',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;">Reserve a Date</a>
+</div>
 <section id="hero">
   <div class="hero-left">
     <svg class="hero-left-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
@@ -2223,16 +2243,23 @@ window.addEventListener('scroll', () => {
 
 // ── Mobile hamburger menu
 function toggleNav() {
-  const links = document.getElementById('navLinks');
-  const burger = document.getElementById('hamburger');
-  links.classList.toggle('open');
-  burger.classList.toggle('open');
-  document.body.style.overflow = links.classList.contains('open') ? 'hidden' : '';
+  const overlay = document.getElementById('mobileNavOverlay');
+  const burger  = document.getElementById('hamburger');
+  const isOpen  = overlay.style.display === 'flex';
+  if (isOpen) {
+    overlay.style.display = 'none';
+    burger.classList.remove('open');
+    document.body.style.overflow = '';
+  } else {
+    overlay.style.display = 'flex';
+    burger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
 }
 function closeNav() {
-  const links = document.getElementById('navLinks');
-  const burger = document.getElementById('hamburger');
-  links.classList.remove('open');
+  const overlay = document.getElementById('mobileNavOverlay');
+  const burger  = document.getElementById('hamburger');
+  overlay.style.display = 'none';
   burger.classList.remove('open');
   document.body.style.overflow = '';
 }
