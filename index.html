@@ -1164,7 +1164,10 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
 }
 .modal-close:hover { color: var(--dark); }
 .modal-tabs {
-  display: flex; padding: 1rem 2rem 0; flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 2rem 0;
+  flex-shrink: 0;
   border-bottom: 1px solid var(--pale);
 }
 .modal-tab {
@@ -2118,8 +2121,7 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
     <div class="modal-tabs">
       <button class="modal-tab active" onclick="switchTab('privacy')">Privacy Policy</button>
       <button class="modal-tab" onclick="switchTab('tos')">Terms of Service</button>
-      <button class="modal-tab" onclick="switchTab('eaw')">Catering, Events, and Weddings</button>
-     
+      <button class="modal-tab" onclick="switchTab('eaw')">Catering, Events &amp; Weddings</button>
     </div>
     <div class="modal-body">
       <div class="tab-panel active" id="tab-privacy">
@@ -2146,7 +2148,7 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
         <h3>Bookings &amp; Deposits</h3>
         <p>A deposit is required to secure your booking date. Deposits are non-refundable unless the cancellation is initiated by Xindies Amazing Hands LLC. The remaining balance is due at the time of service unless otherwise agreed in writing.</p>
         <h3>Cancellations &amp; Rescheduling</h3>
-        <p>Clients may request to reschedule with at least <strong>Two weeks notice</strong> prior to the scheduled service date for services requiring a deposit, subject to availability. Cancellations made with less than 72 hours' notice may result in forfeiture of the deposit.</p>
+        <p>Clients may request to reschedule with at least <strong>two weeks' notice</strong> prior to the scheduled service date for services requiring a deposit, subject to availability. Cancellations made with less than 72 hours' notice may result in forfeiture of the deposit.</p>
         <h3>Limitation of Liability</h3>
         <p>Xindies Amazing Hands LLC shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services beyond the amount paid for the specific service in question.</p>
         <h3>Changes to Terms</h3>
@@ -2157,15 +2159,15 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
       </div>
       <div class="tab-panel" id="tab-eaw">
         <h3>Deposits</h3>
-        <p>All deposits are strickly non-refundable under any circumstances. The deposit secures your event date, reserves planning time, and may be used toward preliminary work and vendor coordination.</p>
+        <p>All deposits are strictly non-refundable under any circumstances. The deposit secures your event date, reserves planning time, and may be used toward preliminary work and vendor coordination.</p>
         <h3>Rescheduling</h3>
-        <p>Clients may request to reschedule their event date with a minimum of <strong> twenty-one (21) days' </strong> written notice prior to the scheduled event. Rescheduling is subject to availability. Requests made less than <strong> twenty-one (21) days </strong> before the event will not be accepted.</p>
+        <p>Clients may request to reschedule their event date with a minimum of <strong>twenty-one (21) days'</strong> written notice prior to the scheduled event. Rescheduling is subject to availability. Requests made less than <strong>twenty-one (21) days</strong> before the event will not be accepted.</p>
         <h3>Cancellations</h3>
         <p>All cancellations will result in forfeiture of the deposit. No refunds will be issued for any payments made.</p>
         <h3>Client No-Shows &amp; Late Changes</h3>
         <p>Failure to appear, last-minute changes, or inability to proceed with the event on the scheduled date will be treated as a cancellation, and all payments made will be retained.</p>
-        <h3>Force Majeure/Emergencies</h3>
-        <p>In the event of unforssen circumstances beyond either party's control (including but not limited to severe weather, natural disasters, or government restrictions), rescheduling may be considered at Xindies Amazing Hands LLC sole discretion. Deposits will remain non-refundable.</p>
+        <h3>Force Majeure / Emergencies</h3>
+        <p>In the event of unforeseen circumstances beyond either party's control (including but not limited to severe weather, natural disasters, or government restrictions), rescheduling may be considered at Xindies Amazing Hands LLC's sole discretion. Deposits will remain non-refundable.</p>
         <h3>Scope of Policy</h3>
         <p>This policy applies exclusively to catering events, parties, and wedding planning services and does not apply to other services offered.</p>
         <h3>Contact</h3>
@@ -2499,11 +2501,14 @@ function closeModal() {
   document.getElementById('legalModal').classList.remove('open');
 }
 function switchTab(tab) {
-  document.querySelectorAll('.modal-tab').forEach((t, i) => {
-    t.classList.toggle('active', (tab==='privacy'&&i===0)||(tab==='tos'&&i===1));
+  // Update tab buttons — match by their onclick attribute
+  document.querySelectorAll('.modal-tab').forEach(t => {
+    t.classList.toggle('active', t.getAttribute('onclick') === `switchTab('${tab}')`);
   });
-  document.getElementById('tab-privacy').classList.toggle('active', tab==='privacy');
-  document.getElementById('tab-tos').classList.toggle('active', tab==='tos');
+  // Update tab panels — hide all, show the matching one
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.classList.toggle('active', p.id === `tab-${tab}`);
+  });
 }
 document.getElementById('legalModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
