@@ -1474,9 +1474,108 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
   .btn-submit { flex-wrap: wrap; gap: 0.5rem; font-size: 0.62rem; }
   .btn-submit .stripe-badge { font-size: 0.58rem; }
 }
+
+/* ── PROMO BAR ── */
+.promo-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  background: var(--dark); color: #fff;
+  padding: 0.6rem 3rem 0.6rem 1rem;
+  font-size: 0.78rem; line-height: 1.4;
+}
+.promo-bar[hidden] { display: none; }
+.promo-bar-inner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 0.35rem 1rem; text-align: center;
+}
+.promo-bar-text strong { color: var(--gold); font-weight: 500; letter-spacing: 0.04em; }
+.promo-code {
+  display: inline-block; border: 1px dashed var(--gold); color: var(--gold);
+  padding: 0 0.45rem; letter-spacing: 0.12em; font-weight: 500;
+}
+.promo-bar-count { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; }
+.promo-bar-cta {
+  background: var(--gold); color: var(--dark); text-decoration: none;
+  font-size: 0.66rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.4rem 1rem;
+}
+.promo-bar-cta:hover { background: #e6c45a; }
+.promo-bar-close {
+  position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: #fff; opacity: 0.7; cursor: pointer;
+  font-size: 0.9rem; padding: 0.4rem;
+}
+.promo-bar-close:hover { opacity: 1; }
+body.has-promo { padding-top: var(--promo-h, 0px); }
+body.has-promo nav { top: var(--promo-h, 0px); }
+
+/* ── SEASONAL SPECIALS ── */
+#specials { padding: 7rem 0 5rem; background: var(--ivory); position: relative; }
+#specials[hidden] { display: none; }
+.specials-inner { max-width: 1280px; margin: 0 auto; padding: 0 3.5rem; }
+.specials-intro { max-width: 560px; margin: 1rem 0 2.5rem; }
+.specials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.special-card {
+  background: #fff; border-top: 4px solid var(--sp-accent, var(--gold));
+  padding: 2rem 1.8rem; display: flex; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+}
+.special-tag { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+.special-card h3 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 1.6rem; line-height: 1.15; color: var(--dark); margin-bottom: 0.6rem; }
+.special-card .tagline { font-size: 0.92rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.2rem; }
+.special-price { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
+.special-price .now { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: var(--dark); line-height: 1; }
+.special-price .was { text-decoration: line-through; color: var(--muted); }
+.special-price .off { background: var(--sp-accent, var(--gold)); color: var(--dark); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.55rem; }
+.special-meta { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.2rem; }
+.special-card ul { list-style: none; margin: 0 0 1.2rem; }
+.special-card li { font-size: 0.88rem; line-height: 1.55; padding: 0.35rem 0 0.35rem 1.5rem; position: relative; color: var(--dark); }
+.special-card li::before { content: '✓'; position: absolute; left: 0; color: var(--sage); font-weight: 500; }
+.special-addon-note { font-size: 0.84rem; background: var(--ivory); padding: 0.8rem 1rem; margin-bottom: 1rem; line-height: 1.55; }
+.special-dates { font-size: 0.82rem; line-height: 1.7; margin-bottom: 1rem; }
+.special-spots { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rose-deep); margin-bottom: 1.2rem; }
+.special-spots.soldout { color: var(--muted); }
+.special-card .btn-solid { margin-top: auto; text-align: center; border: none; cursor: pointer; font-family: inherit; }
+.special-card .btn-solid[disabled] { background: var(--pale); color: var(--muted); cursor: default; }
+.special-fine { font-size: 0.72rem; color: var(--muted); line-height: 1.55; margin-top: 0.9rem; }
+.special-steps { counter-reset: s; }
+.special-steps li::before { counter-increment: s; content: counter(s); background: var(--sp-accent, var(--gold)); color: var(--dark); border-radius: 50%; width: 1.1rem; height: 1.1rem; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; top: 0.55rem; }
+.special-summary { background: var(--ivory); border-left: 3px solid var(--sp-accent, var(--gold)); padding: 1rem 1.2rem; font-size: 0.85rem; line-height: 1.6; margin-bottom: 1rem; }
+.special-summary strong { font-weight: 500; }
+.special-addon { display: flex; gap: 0.7rem; align-items: flex-start; font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.4rem; cursor: pointer; }
+.special-addon input { width: 18px; height: 18px; margin-top: 0.15rem; flex-shrink: 0; }
+.field-hint { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+@media (max-width: 768px) {
+  #specials { padding: 5rem 0 3.5rem; }
+  .specials-inner { padding: 0 1.25rem; }
+  .special-card { padding: 1.6rem 1.3rem; }
+}
+
+/* ── PROMO / REFERRAL FIELDS (booking form) ── */
+.fg label .opt { text-transform: none; letter-spacing: 0; opacity: 0.7; font-weight: 300; }
+.promo-status { font-size: 0.78rem; line-height: 1.5; margin: -0.4rem 0 1rem; min-height: 0; }
+.promo-status:empty { display: none; }
+.promo-status.ok { color: var(--sage); }
+.promo-status.warn { color: var(--rose-deep); }
+.promo-terms { font-size: 0.7rem; color: var(--muted); line-height: 1.55; margin: 0 0 1.2rem; }
+.promo-terms summary { cursor: pointer; text-decoration: underline; }
+.promo-terms p { margin-top: 0.4rem; }
+.form-msg { font-size: 0.85rem; line-height: 1.6; margin: 0 0 1rem; }
+.form-msg:empty { display: none; }
+.form-msg.ok { color: var(--sage); }
+.form-msg.err { color: var(--rose-deep); }
+.review-filter-note { display: block; font-size: 0.72rem; margin-top: 0.25rem; }
 </style>
 </head>
 <body>
+
+<!-- ════════════════ PROMO BAR (filled from the booking system's promo calendar) ════════════════ -->
+<div id="promoBar" class="promo-bar" role="region" aria-label="Current offer" hidden>
+  <div class="promo-bar-inner">
+    <span class="promo-bar-text" id="promoBarText"></span>
+    <span class="promo-bar-count" id="promoCountdown"></span>
+    <a href="#specials" class="promo-bar-cta" id="promoBarCta">See the Special</a>
+  </div>
+  <button type="button" class="promo-bar-close" aria-label="Dismiss offer" onclick="dismissPromo()">&#x2715;</button>
+</div>
 
 <!-- ════════════════ NAV ════════════════ -->
 <nav id="mainNav">
@@ -1569,12 +1668,12 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
         <span class="stat-label">Years of Service</span>
       </div>
       <div class="stat-block">
-        <span class="stat-num">∞</span>
+        <span class="stat-num">5</span>
         <span class="stat-label">Services Offered</span>
       </div>
       <div class="stat-block">
-        <span class="stat-num">5★</span>
-        <span class="stat-label">Client Rating</span>
+        <span class="stat-num" id="statRatingNum">24hr</span>
+        <span class="stat-label" id="statRatingLabel">Response Time</span>
       </div>
       <div class="stat-block">
         <span class="stat-num">1</span>
@@ -1591,6 +1690,7 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
     <a href="#services" class="banner-item"><span class="bi-dot" style="background:var(--blue);"></span>Hair Styling</a>
     <a href="#services" class="banner-item"><span class="bi-dot" style="background:var(--balloon-green);"></span>Wedding Planning</a>
     <a href="#services" class="banner-item"><span class="bi-dot" style="background:var(--balloon-blue);"></span>Event Planning</a>
+    <a href="#services" class="banner-item"><span class="bi-dot" style="background:var(--balloon-orange);"></span>Private Sitting</a>
     <a href="#services" class="banner-item"><span class="bi-dot" style="background:var(--balloon-purple);"></span>Home Organizing</a>
   </div>
 </div>
@@ -1803,6 +1903,16 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
 </section>
 
 <!-- ════════════════ BOOKING ════════════════ -->
+<!-- ════════════════ SEASONAL SPECIALS (shown only while a promotion is running) ════════════════ -->
+<section id="specials" hidden>
+  <div class="specials-inner">
+    <div class="section-kicker">Seasonal Specials</div>
+    <h2 class="section-heading">Gather Beautifully.<br/><em>We'll Handle the Rest.</em></h2>
+    <p class="body-text specials-intro">One team plans it, sets it up, and can cater it too, so you can actually enjoy your own gathering.</p>
+    <div class="specials-grid" id="specialsGrid"></div>
+  </div>
+</section>
+
 <section id="booking">
   <svg class="booking-bg-flower" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
     <g opacity="0.1">
@@ -1816,7 +1926,7 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
     <div class="booking-left reveal-left">
       <div class="section-kicker">Reserve Your Date</div>
       <h2 class="section-heading">Book a<br/><em>Service</em></h2>
-      <p class="body-text">Select a service below, fill in your details, and submit your request. We will confirm availability within 24 hours and collect your deposit securely through Stripe.</p>
+      <p class="body-text">Select a service below, fill in your details, and submit your request. Nothing is charged today. We will confirm availability within 24 hours, then email you a secure Stripe link to pay your 40% deposit or pay in full.</p>
 
       <div class="booking-services-list">
         <div class="bsl-item active" onclick="selectService(this,'Catering')">
@@ -1941,12 +2051,35 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
 
           <div id="svc-sitting" class="svc-options" style="display:none;">
             <div class="frow full"><div class="fg"><label>Private Sitting Type</label>
-              <select name="entry.1878703687">
+              <select name="entry.1878703687" id="sittingSelect">
                 <option value="">— Select type —</option>
                 <option value="Childcare ($40/hr)">Childcare ($40/hr)</option>
                 <option value="Elderly Care ($40/hr)">Elderly Care ($40/hr)</option>
               </select>
             </div></div>
+            <div class="frow full"><div class="fg"><label for="sittingHours">Number of Hours <span class="opt">(2-hour minimum)</span></label>
+              <select id="sittingHours">
+                <option value="2">2 hours · $80</option>
+                <option value="3">3 hours · $120</option>
+                <option value="4">4 hours · $160</option>
+                <option value="5">5 hours · $200</option>
+                <option value="6">6 hours · $240</option>
+                <option value="7">7 hours · $280</option>
+                <option value="8">8 hours · $320</option>
+                <option value="9">9 hours · $360</option>
+                <option value="10">10 hours · $400</option>
+                <option value="11">11 hours · $440</option>
+                <option value="12">12 hours · $480</option>
+              </select>
+            </div></div>
+          </div>
+
+          <div id="svc-special" class="svc-options" style="display:none;">
+            <div class="special-summary" id="specialSummary"></div>
+            <label class="special-addon" id="specialCateringWrap">
+              <input type="checkbox" id="specialCatering"/>
+              <span><strong>Add catering</strong> <span id="specialCateringText"></span></span>
+            </label>
           </div>
 
           <div class="frow full">
@@ -1955,26 +2088,55 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
             </div>
           </div>
 
+          <div class="frow" id="referralRow">
+            <div class="fg"><label for="heardAbout">How did you hear about us?</label>
+              <select id="heardAbout">
+                <option value="">— Select one —</option>
+                <option>Friend or family referral</option>
+                <option>I'm a past client</option>
+                <option>Facebook</option>
+                <option>Instagram</option>
+                <option>Google search</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="fg" id="referredByWrap" style="display:none;"><label for="referredBy">Who referred you?</label>
+              <input type="text" id="referredBy" maxlength="80" placeholder="Their name, so we can thank them"/>
+            </div>
+          </div>
+          <div class="frow full" id="referrerEmailWrap" style="display:none;">
+            <div class="fg"><label for="referrerEmail">Their email <span class="opt">(optional)</span></label>
+              <input type="email" id="referrerEmail" maxlength="120" placeholder="friend@email.com"/>
+              <span class="field-hint" id="referrerHint">So we can send them a thank-you.</span>
+            </div>
+          </div>
+
+          <div id="promoFields">
+            <div class="frow full">
+              <div class="fg"><label for="promoCode">Promo or Credit Code <span class="opt">(optional)</span></label>
+                <input type="text" id="promoCode" maxlength="30" autocomplete="off" autocapitalize="characters" placeholder="e.g. THANKS-ABC123"/>
+              </div>
+            </div>
+            <div class="promo-status" id="promoStatus" aria-live="polite"></div>
+          </div>
+
           <div id="payment-section" style="display:none;">
             <div class="deposit-row" id="deposit-policy-row">
               <div class="deposit-text">
-                <strong id="deposit-policy-title">Deposit Policy</strong>
-                <span id="deposit-policy-text">A deposit secures your date. Pay now and the remainder at time of service — or pay in full today.</span>
+                <strong id="deposit-policy-title">How Payment Works</strong>
+                <span id="deposit-policy-text"></span>
               </div>
             </div>
-            <div class="payment-group">
-              <span class="payment-group-label">How would you like to pay?</span>
-              <div class="payment-options" id="payment-options-container"></div>
-            </div>
           </div>
+
+          <div class="form-msg" id="bookingMsg" role="status" aria-live="polite"></div>
 
           <div class="form-note">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 12a1 1 0 110-2 1 1 0 010 2zm1-4H9V6h2v4z" fill="#6b5d5a"/></svg>
             Your information is protected. We will never share your data with third parties.
           </div>
           <button type="submit" class="btn-submit">
-            Submit &amp; Proceed to Payment
-            <span class="stripe-badge"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M6 1L1 7h4l-1 4 5-6H5l1-4z" fill="currentColor"/></svg> Stripe</span>
+            Send Booking Request
           </button>
         </form>
       </div>
@@ -2005,11 +2167,10 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
             <polyline points="22,6 12,13 2,6" stroke="#7a6e72" stroke-width="1.5"/>
           </svg>
           <span class="ct-label">Email</span>
-          <div class="ct-value">Please use contact form for any questions or concerns</div>
+          <div class="ct-value" style="overflow-wrap:anywhere;"><a href="mailto:xindiesamazinghandsllc@gmail.com">xindiesamazinghandsllc@gmail.com</a></div>
         </div>
 
-        <!-- FIX 2: Review tile now calls openReviewForm() which opens the review modal that was previously missing from the HTML -->
-        <div class="ct clickable" onclick="openReviewForm()" style="cursor:pointer;">
+        <div class="ct clickable" onclick="openReviewTile()" style="cursor:pointer;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#7a6e72" stroke-width="1.5" fill="none"/>
           </svg>
@@ -2097,7 +2258,7 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#booking">Book a Service</a></li>
         <li><a href="#inquiry">Contact</a></li>
-        <li><a href="#" onclick="openReviewsModal(); return false;">&#9733; See all client reviews</a></li>
+        <li><a href="#" onclick="openReviewsModal(); return false;">&#9733; Read client reviews</a></li>
       </ul>
     </div>
   </div>
@@ -2176,7 +2337,7 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
   </div>
 </div>
 
-<!-- ════════════════ REVIEW FORM OVERLAY (was missing entirely) ════════════════ -->
+<!-- ════════════════ REVIEW FORM OVERLAY ════════════════ -->
 <div class="overlay" id="reviewFormOverlay">
   <div class="overlay-box">
     <div class="overlay-header">
@@ -2184,55 +2345,54 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
       <button class="overlay-close" onclick="closeReviewModals()">&#x2715;</button>
     </div>
     <div class="overlay-body" id="reviewFormBody">
+      <div id="reviewFormFields">
       <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300;line-height:1.6;">We'd love to hear about your experience! Your feedback helps us grow and serve our community better.</p>
-
-      <!-- Star rating -->
       <div style="margin-bottom:1.2rem;">
         <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose);font-weight:500;margin-bottom:0.6rem;">Your Rating</div>
         <div class="star-row" id="starRow">
-          <button class="star-btn" data-val="1" onclick="setRating(1)" type="button">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </button>
-          <button class="star-btn" data-val="2" onclick="setRating(2)" type="button">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </button>
-          <button class="star-btn" data-val="3" onclick="setRating(3)" type="button">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </button>
-          <button class="star-btn" data-val="4" onclick="setRating(4)" type="button">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </button>
-          <button class="star-btn" data-val="5" onclick="setRating(5)" type="button">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </button>
+          <button class="star-btn" data-val="1" onclick="setRating(1)" type="button" aria-label="1 star"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button class="star-btn" data-val="2" onclick="setRating(2)" type="button" aria-label="2 stars"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button class="star-btn" data-val="3" onclick="setRating(3)" type="button" aria-label="3 stars"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button class="star-btn" data-val="4" onclick="setRating(4)" type="button" aria-label="4 stars"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <button class="star-btn" data-val="5" onclick="setRating(5)" type="button" aria-label="5 stars"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
         </div>
       </div>
-
       <div class="review-fg">
-        <label>Your Name</label>
-        <input type="text" id="r-name" placeholder="Jane Doe"/>
+        <label for="r-name">Your Name</label>
+        <input type="text" id="r-name" maxlength="60" placeholder="Jane D."/>
       </div>
       <div class="review-fg">
-        <label>Service Received</label>
+        <label for="r-service">Service Received</label>
         <select id="r-service">
           <option value="">— Select a service —</option>
           <option value="Catering">Catering</option>
           <option value="Hair Braiding / Styling">Hair Braiding / Styling</option>
           <option value="Private Sitting">Private Sitting</option>
-          <option value="Event Planning & Coordination">Event Planning &amp; Coordination</option>
+          <option value="Event Planning &amp; Coordination">Event Planning &amp; Coordination</option>
           <option value="Home Organizing">Home Organizing</option>
           <option value="Multiple Services">Multiple Services</option>
         </select>
       </div>
       <div class="review-fg">
-        <label>Your Review</label>
+        <label for="r-text">Your Review</label>
         <textarea id="r-text" maxlength="280" placeholder="Tell us about your experience…" oninput="updateCharCount()"></textarea>
         <div class="char-count"><span id="charLeft">280</span> characters remaining</div>
       </div>
-
-      <button class="btn-submit" onclick="submitReview()" type="button" style="margin-top:0.5rem;">
-        Submit Review
-      </button>
+      <!-- Spam trap: hidden from people, bots fill it in -->
+      <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+        <label for="r-website">Website</label><input type="text" id="r-website" tabindex="-1" autocomplete="off"/>
+      </div>
+      <p style="font-size:0.7rem;color:var(--muted);line-height:1.5;margin-bottom:0.8rem;">Your name, rating, and review may be shown publicly on this website.</p>
+      <button class="btn-submit" id="reviewSubmitBtn" onclick="submitReview()" type="button" style="margin-top:0.5rem;">Submit Review</button>
+      </div>
+      <div id="reviewThanks" style="display:none;text-align:center;padding:3rem 1rem;">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" style="margin:0 auto 1.2rem;display:block;">
+          <circle cx="12" cy="12" r="10" stroke="#4a9e7a" stroke-width="1.5"/>
+          <path d="M8 12l3 3 5-5" stroke="#4a9e7a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h4 style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--dark);margin-bottom:0.6rem;">Thank You!</h4>
+        <p id="reviewThanksText" style="font-size:0.85rem;color:var(--muted);line-height:1.7;"></p>
+      </div>
     </div>
   </div>
 </div>
@@ -2254,7 +2414,7 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── Nav scroll
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
@@ -2309,89 +2469,33 @@ document.querySelectorAll('.svc-card').forEach(card => {
   });
 });
 
-// ── Services that require FULL PAYMENT only
+// ── Booking API (Cloudflare Worker). Deploy the Worker BEFORE publishing this page.
+// Set to '' to temporarily send bookings to Google Forms only.
+const BOOKING_API = 'https://book.xindiesamazinghandsllc.com';
+
+// Services paid in full (or cash) rather than with a deposit
 const FULL_ONLY_SERVICES = ['Home Organizing', 'Private Sitting'];
 const FULL_ONLY_HAIR = ['Natural Hair Braiding ($45)', 'Crochet Styles ($135)'];
 
-// ── Stripe link lookup table
-const STRIPE = {
-  'Catering|Small (1–30 guests) — Starting at $500|deposit':       'https://book.stripe.com/5kQ8wR2KC1utbPEaZu2Fa06',
-  'Catering|Small (1–30 guests) — Starting at $500|full':          'https://book.stripe.com/5kQeVf5WOfljbPEaZu2Fa0b',
-  'Catering|Medium (31–74 guests) — Starting at $1,500|deposit':   'https://book.stripe.com/14A5kFclc7SRg5U6Je2Fa07',
-  'Catering|Medium (31–74 guests) — Starting at $1,500|full':      'https://book.stripe.com/eVqcN7gBs4GF3j82sY2Fa0a',
-  'Catering|Large (75–200+ guests) — Starting at $3,000+|deposit': 'https://book.stripe.com/8x24gB2KCflj4nc4B62Fa08',
-  'Catering|Large (75–200+ guests) — Starting at $3,000+|full':    'https://book.stripe.com/bJe4gBgBsc97aLAffK2Fa09',
-  'Hair Braiding|Box Braids – Small ($200)|deposit':   'https://book.stripe.com/aFabJ384W7SRg5U1oU2Fa05',
-  'Hair Braiding|Box Braids – Small ($200)|full':      'https://buy.stripe.com/eVq6oJ5WO6ON06WebG2Fa03',
-  'Hair Braiding|Box Braids – Medium ($175)|deposit':  'https://book.stripe.com/eVq7sNfxogpn9HwebG2Fa04',
-  'Hair Braiding|Box Braids – Medium ($175)|full':     'https://buy.stripe.com/5kQ28t0Cu2yxf1Qc3y2Fa02',
-  'Hair Braiding|Box Braids – Large ($165)|deposit':   'https://book.stripe.com/bJefZj0Cu3CBbPE8Rm2Fa00',
-  'Hair Braiding|Box Braids – Large ($165)|full':      'https://buy.stripe.com/7sYcN7etk0qp3j8aZu2Fa01',
-  'Hair Braiding|Sew-In w/ Leave Out ($175)|deposit':  'https://book.stripe.com/14A7sN3OG1ut3j89Vq2Fa0c',
-  'Hair Braiding|Sew-In w/ Leave Out ($175)|full':     'https://book.stripe.com/8x2eVf84W5KJdXM5Fa2Fa0d',
-  'Hair Braiding|Natural Hair Braiding ($45)|full':    'https://book.stripe.com/14A8wR84W2yx9HwebG2Fa0r',
-  'Hair Braiding|Crochet Styles ($135)|full':          'https://book.stripe.com/8x25kFclc6ONaLA4B62Fa0q',
-  'Private Sitting|Childcare ($40/hr)|full':           'https://book.stripe.com/3cI9AV5WO3CBg5Uc3y2Fa0t',
-  'Private Sitting|Elderly Care ($40/hr)|full':        'https://book.stripe.com/aFacN74SKddb06W7Ni2Fa0s',
-  'Home Organizing||full':                             'https://book.stripe.com/8x26oJ5WO0qpcTI5Fa2Fa0u',
-  'Event Planning|Intimate Event (1–29 guests) — $300|deposit':    'https://book.stripe.com/eVqcN7gBs4GFf1Q1oU2Fa0j',
-  'Event Planning|Intimate Event (1–29 guests) — $300|full':       'https://book.stripe.com/aFa5kF5WO0qp9Hw5Fa2Fa0e',
-  'Event Planning|Medium Event (30–75 guests) — $600|deposit':     'https://book.stripe.com/7sYcN79906ON6vk7Ni2Fa0i',
-  'Event Planning|Medium Event (30–75 guests) — $600|full':        'https://book.stripe.com/9B600l70S8WV2f46Je2Fa0f',
-  'Event Planning|Large Event (76–200+ guests) — $1,200+|deposit': 'https://book.stripe.com/eVqdRb1Gya0Z06W0kQ2Fa0h',
-  'Event Planning|Large Event (76–200+ guests) — $1,200+|full':    'https://book.stripe.com/6oUbJ3bh86ONaLA2sY2Fa0g',
-  'Event Planning|Day-Of Coordination — $800|deposit':     'https://book.stripe.com/cNi8wR2KC5KJdXM3x22Fa0k',
-  'Event Planning|Day-Of Coordination — $800|full':        'https://book.stripe.com/14A3cx0Cu8WVf1QgjO2Fa0n',
-  'Event Planning|Partial Planning — $1,500|deposit':      'https://book.stripe.com/00wfZj70S3CB4nc1oU2Fa0l',
-  'Event Planning|Partial Planning — $1,500|full':         'https://book.stripe.com/3cIdRb5WO2yx2f49Vq2Fa0o',
-  'Event Planning|Full Service Wedding — $3,000|deposit':  'https://book.stripe.com/14AeVf0Cu5KJg5UaZu2Fa0m',
-  'Event Planning|Full Service Wedding — $3,000|full':     'https://book.stripe.com/bJe4gB3OG3CB1b07Ni2Fa0p',
-};
-
-function getStripeLink(service, subOption, payType) {
-  return STRIPE[`${service}|${subOption}|${payType}`]
-      || STRIPE[`${service}||${payType}`]
-      || null;
-}
-
-const iconCard = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="2" y1="10" x2="22" y2="10" stroke="currentColor" stroke-width="1.5"/><rect x="5" y="13" width="4" height="2" rx="0.5" fill="currentColor" opacity="0.5"/></svg>`;
-const iconStar = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
-const iconCash = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="13" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="12" cy="13.5" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M6 7V5a2 2 0 012-2h8a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`;
-
-function buildPaymentOption(value, icon, title, subtitle, checked) {
-  return `<label class="payment-option pay-choice">
-    <input type="radio" name="entry.PAYMETHOD" value="${value}"${checked ? ' checked' : ''}/>
-    ${icon}
-    <span>
-      <strong style="display:block;font-size:0.82rem;">${title}</strong>
-      <span style="font-size:0.72rem;opacity:0.7;">${subtitle}</span>
-    </span>
-  </label>`;
-}
-
 function updatePaymentOptions(service, subOption) {
   const section = document.getElementById('payment-section');
-  const container = document.getElementById('payment-options-container');
-  const policyTitle = document.getElementById('deposit-policy-title');
   const policyText = document.getElementById('deposit-policy-text');
   if (!service) { section.style.display = 'none'; return; }
+  if (service.startsWith('Special:')) {
+    const sp = getPromo(service.slice(8));
+    const total = sp ? sp.price + (document.getElementById('specialCatering').checked && sp.cateringAddon ? sp.cateringAddon.price : 0) : 0;
+    section.style.display = '';
+    policyText.textContent = 'Nothing is charged today. Once Xindies confirms your date, you\'ll sign a short agreement online and pay a 40% deposit' +
+      (total ? ' (' + fmtMoney(Math.round(total * 0.4)) + ')' : '') + ' to lock in your spot. The deposit is non-refundable.';
+    return;
+  }
   const isFullOnly = FULL_ONLY_SERVICES.includes(service)
     || (service === 'Hair Braiding' && FULL_ONLY_HAIR.includes(subOption));
   section.style.display = '';
-  if (isFullOnly) {
-    policyTitle.textContent = 'Payment Required to Book';
-    policyText.textContent = 'This service is priced at a flat rate. Pay online now to confirm your booking, or pay in person at time of service.';
-    container.innerHTML =
-      buildPaymentOption('Full Payment', iconStar, 'Pay Online Now', 'Confirm instantly via Stripe', true) +
-      buildPaymentOption('Cash (In Person)', iconCash, 'Pay in Person', 'Cash at time of service', false);
-  } else {
-    policyTitle.textContent = 'Deposit Policy';
-    policyText.textContent = 'A deposit secures your date. Pay now and the remainder at time of service — or pay in full today.';
-    container.innerHTML =
-      buildPaymentOption('Deposit', iconCard, 'Pay Deposit', 'Secure your date · pay rest at service', true) +
-      buildPaymentOption('Full Payment', iconStar, 'Pay in Full', 'One payment · completely covered', false) +
-      buildPaymentOption('Cash (Deposit via Card)', iconCash, 'Pay Cash at Service', 'Deposit via card now · rest in cash', false);
-  }
+  const start = 'Nothing is charged today. Once Xindies confirms your date, you\'ll get an email with a secure link to ';
+  if (isFullOnly) policyText.textContent = start + 'pay online, or you can choose to pay cash at the time of service.';
+  else if (service === 'Catering') policyText.textContent = start + 'pay a 40% deposit to lock in your date. The balance (including any extras) is due before your event.';
+  else policyText.textContent = start + 'pay a 40% deposit or pay in full. Deposits are non-refundable.';
 }
 
 function selectService(el, name) {
@@ -2404,6 +2508,10 @@ function selectService(el, name) {
 function showServiceOptions(value) {
   document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
   document.getElementById('payment-section').style.display = 'none';
+  const dateEl = document.querySelector('#bookingForm [name="entry.1686805789"]');
+  dateEl.min = todayISO(); dateEl.removeAttribute('max');
+
+  if (value && value.startsWith('Special:')) showSpecialOptions(value.slice(8));
 
   if (value === 'Catering') document.getElementById('svc-catering').style.display = '';
   if (value === 'Hair Braiding') document.getElementById('svc-hair').style.display = '';
@@ -2420,6 +2528,17 @@ function showServiceOptions(value) {
   }
   // For Catering, Hair Braiding, Event Planning — payment section
   // appears after user picks a sub-option (handled by change listener below)
+  syncSubSelects();
+  updatePromoStatus();
+}
+
+// Hidden package dropdowns are disabled so they don't post blank answers to the Google Form
+// (Hair and Private Sitting share the same form field).
+function syncSubSelects() {
+  document.querySelectorAll('.svc-options').forEach(el => {
+    const hidden = el.style.display === 'none';
+    el.querySelectorAll('select').forEach(s => { s.disabled = hidden; });
+  });
 }
 
 document.addEventListener('change', function(e) {
@@ -2430,38 +2549,93 @@ document.addEventListener('change', function(e) {
   }
 });
 
-function handleBooking(e) {
-  // Don't preventDefault — let the form submit naturally to hidden_booking_frame
-  // which silently posts to Google Forms without any redirect
+async function handleBooking(e) {
+  e.preventDefault();
   const form = document.getElementById('bookingForm');
+  const btn = form.querySelector('.btn-submit');
+  const msg = document.getElementById('bookingMsg');
+  const val = n => ((form.querySelector('[name="' + n + '"]:not([disabled])') || {}).value || '').trim();
 
-  const service     = (form.querySelector('[name="entry.1578334907"]') || {}).value || '';
-  const hairOpt     = (form.querySelector('[name="entry.1878703687"]') || {}).value || '';
-  const cateringOpt = (form.querySelector('[name="entry.2111116416"]') || {}).value || '';
-  const eventOpt    = (form.querySelector('[name="entry.1696621745"]') || {}).value || '';
-  const planOpt     = (form.querySelector('[name="entry.136010715"]') || {}).value || '';
-  const payMethod   = (form.querySelector('input[name="entry.PAYMETHOD"]:checked') || {}).value || '';
+  const selValue = val('entry.1578334907');
+  const isSpecial = selValue.startsWith('Special:');
+  const service = isSpecial ? 'Special' : selValue;
+  const { sub } = currentBookingSelection();
+  let bookingResult = null;
+  let subOption = isSpecial ? selValue.slice(8) : sub;
+  if (service === 'Private Sitting') subOption = (document.getElementById('sittingSelect') || {}).value || '';
+  const hours = service === 'Private Sitting' ? (document.getElementById('sittingHours') || {}).value : '';
 
-  let subOption = '';
-  if (service === 'Hair Braiding') subOption = hairOpt;
-  else if (service === 'Catering') subOption = cateringOpt;
-  else if (service === 'Event Planning') subOption = eventOpt || planOpt;
-  else if (service === 'Private Sitting') subOption = hairOpt;
-
-  const payType = payMethod === 'Full Payment' ? 'full' : payMethod === 'Deposit' ? 'deposit' : 'deposit';
-
-  // Open Stripe link in new tab (do before form submit to avoid popup blockers)
-  if (payMethod !== 'Cash (In Person)') {
-    const stripeUrl = getStripeLink(service, subOption, payType);
-    if (stripeUrl) window.open(stripeUrl, '_blank');
+  msg.className = 'form-msg'; msg.textContent = '';
+  if (service && service !== 'Home Organizing' && !subOption) {
+    msg.classList.add('err'); msg.textContent = 'Please choose a package or option for this service.';
+    return;
   }
 
-  // Show confirmation UI
-  const btn = form.querySelector('.btn-submit');
-  const originalHTML = btn.innerHTML;
-  btn.innerHTML = '✓ Request Submitted!';
-  btn.style.background = 'var(--sage)';
+  const heard = (document.getElementById('heardAbout') || {}).value || '';
+  const referrer = ((document.getElementById('referredBy') || {}).value || '').trim();
+  const enteredCode = getEnteredPromoCode();
+  const referrerEmail = ((document.getElementById('referrerEmail') || {}).value || '').trim();
+  const catering = isSpecial && document.getElementById('specialCatering').checked;
+  const detailsEl = form.querySelector('[name="entry.2472791"]');
+  const details = detailsEl ? detailsEl.value.trim() : '';
+
   btn.disabled = true;
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = 'Sending…';
+
+  // 1) Send to the booking system (texts/emails Xindies so she can accept)
+  if (BOOKING_API) {
+    try {
+      const res = await fetch(BOOKING_API + '/api/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: val('entry.2132996580'), lastName: val('entry.360198021'),
+          email: val('entry.425656258'), phone: val('entry.487425429'),
+          service, package: subOption, hours, date: val('entry.1686805789'),
+          details, heardAbout: heard, referredBy: referrer, referrerEmail, promoCode: enteredCode,
+          catering, preview: !!PROMO_PREVIEW, website: ''
+        })
+      });
+      const d = await res.json();
+      if (!d.ok) { const er = new Error(d.error || 'failed'); er.data = d; throw er; }
+      bookingResult = d;
+    } catch (err) {
+      btn.disabled = false; btn.innerHTML = originalHTML;
+      msg.classList.add('err');
+      const sp = isSpecial ? getPromo(subOption) : null;
+      const friendly = {
+        promo_date: sp ? 'This package is for gatherings between ' + fmtDate(sp.eventStart) + ' and ' + fmtDate(sp.eventEnd) + '. Please pick a date in that range.' : '',
+        sold_out: 'So sorry, this package just sold out. Please choose another service, or send us a message.',
+        promo_closed: 'This seasonal package is no longer available. Please choose another service.',
+        date: 'Please choose a date in the future.',
+        hours: 'Please choose at least 2 hours.',
+      }[err.data && err.data.error];
+      if (friendly) msg.textContent = friendly;
+      else msg.innerHTML = 'Sorry, your request didn\'t go through. Please try again, or email <a href="mailto:' + CONTACT_EMAIL + '">' + CONTACT_EMAIL + '</a>.';
+      if (err.data && err.data.error === 'sold_out') loadPromos();
+      return;
+    }
+  }
+
+  // 2) Keep a copy in Google Forms (hours, promo and referral go at the top of Details)
+  const notes = [];
+  if (hours) notes.push('Hours: ' + hours);
+  if (isSpecial) { const sp = getPromo(subOption); notes.push('Package: ' + (sp ? sp.name + ' (' + fmtMoney(sp.price) + ')' : subOption) + (catering ? ' + catering add-on' : '')); }
+  if (enteredCode) notes.push('Code: ' + enteredCode);
+  if (heard) notes.push('Heard about us: ' + heard + (referrer ? ' — referred by ' + referrer : '') + (referrerEmail ? ' (' + referrerEmail + ')' : ''));
+  if (detailsEl && notes.length) detailsEl.value = '[' + notes.join(' | ') + ']' + (details ? '\n\n' + details : '');
+  if (isSpecial) {
+    // The Google Form only knows the regular services, so packages are filed under Event Planning
+    document.getElementById('serviceSelect').value = 'Event Planning';
+  }
+  form.submit(); // posts to the hidden frame; does not re-run this handler
+
+  btn.innerHTML = '✓ Request Sent!';
+  btn.style.background = 'var(--sage)';
+  msg.classList.add('ok');
+  msg.textContent = 'Thank you! Xindies will confirm your date within 24 hours. Watch your email for your secure ' + (isSpecial ? 'link to sign and pay your deposit.' : 'payment link.') +
+    (bookingResult && bookingResult.codeMessage ? ' (Note: ' + bookingResult.codeMessage + ')' : '');
 
   setTimeout(() => {
     btn.innerHTML = originalHTML;
@@ -2470,8 +2644,11 @@ function handleBooking(e) {
     form.reset();
     document.querySelectorAll('.svc-options').forEach(el => el.style.display = 'none');
     document.getElementById('payment-section').style.display = 'none';
-  }, 4000);
-  // Form submits naturally to hidden_booking_frame — no redirect occurs
+    document.getElementById('referredByWrap').style.display = 'none';
+    document.getElementById('referrerEmailWrap').style.display = 'none';
+    syncSubSelects();
+    updatePromoStatus();
+  }, 6000);
 }
 
 function handleInquiry(e) {
@@ -2515,21 +2692,261 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeModal(); closeReviewModals(); }
 });
 
-// ── Review system
+// ════════════════ PROMOTIONS ════════════════
+// Everything (dates, prices, spots) comes from the booking system's promo calendar
+// (worker/src/config.js). Nothing to edit here. Preview a season before it starts with
+// ?preview=friendsgiving (or christmas, newyear, spring-referral) at the end of the site address.
+const PROMO_PREVIEW = (location.search.match(/[?&]preview=([a-z0-9-]+)/) || [])[1] || '';
+let PROMOS = [];
+
+const fmtMoney = c => '$' + (c / 100).toLocaleString('en-US', { maximumFractionDigits: c % 100 ? 2 : 0 });
+const fmtDate = s => new Date(s + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+const fmtDateLong = iso => new Date(iso).toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'America/New_York' });
+function todayISO() { return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date()); }
+const getPromo = id => PROMOS.find(p => p.id === id);
+const escHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+function getEnteredPromoCode() {
+  const el = document.getElementById('promoCode');
+  return el ? el.value.trim().toUpperCase() : '';
+}
+
+function currentBookingSelection() {
+  const form = document.getElementById('bookingForm');
+  const service = (document.getElementById('serviceSelect') || {}).value || '';
+  const val = n => ((form.querySelector('[name="' + n + '"]') || {}).value || '');
+  let sub = '';
+  if (service === 'Catering') sub = val('entry.2111116416');
+  else if (service === 'Event Planning') sub = val('entry.1696621745') || val('entry.136010715');
+  else if (service === 'Hair Braiding') sub = val('entry.1878703687');
+  else if (service === 'Private Sitting') sub = (document.getElementById('sittingSelect') || {}).value || '';
+  else if (service.startsWith('Special:')) return { service: 'Special', sub: service.slice(8) };
+  return { service, sub };
+}
+
+// Live check of credit codes against the booking system
+let codeTimer = null;
+function updatePromoStatus() {
+  const box = document.getElementById('promoStatus');
+  if (!box) return;
+  clearTimeout(codeTimer);
+  const code = getEnteredPromoCode();
+  box.className = 'promo-status';
+  if (!code) { box.textContent = ''; return; }
+  if (!BOOKING_API) { box.textContent = ''; return; }
+  codeTimer = setTimeout(async () => {
+    const { service, sub } = currentBookingSelection();
+    try {
+      const r = await fetch(BOOKING_API + '/api/code?' + new URLSearchParams({ code, service, package: sub }));
+      const d = await r.json();
+      if (code !== getEnteredPromoCode()) return;
+      box.className = 'promo-status ' + (d.ok ? 'ok' : 'warn');
+      box.textContent = d.ok ? '✓ ' + d.label + ' applied. It comes off your final payment.' : d.reason;
+    } catch (e) { box.textContent = ''; }
+  }, 450);
+}
+
+function showSpecialOptions(id) {
+  const sp = getPromo(id);
+  const wrap = document.getElementById('svc-special');
+  if (!sp) return;
+  wrap.style.display = '';
+  wrap.style.setProperty('--sp-accent', sp.theme.accent);
+  document.getElementById('specialSummary').innerHTML =
+    `${escHtml(sp.emoji)} <strong>${escHtml(sp.name)}</strong> · ${fmtMoney(sp.price)} <span style="text-decoration:line-through;opacity:.6">${fmtMoney(sp.basePrice)}</span> · ${escHtml(sp.guests)}<br>` +
+    `For gatherings ${fmtDate(sp.eventStart)} – ${fmtDate(sp.eventEnd)}. ${sp.spotsLeft} of ${sp.cap} spots left.`;
+  const cw = document.getElementById('specialCateringWrap');
+  cw.style.display = sp.cateringAddon ? '' : 'none';
+  if (sp.cateringAddon) document.getElementById('specialCateringText').textContent = `+${fmtMoney(sp.cateringAddon.price)} ${sp.cateringAddon.name.replace(/^Catering add-on /, '')}. Regular catering price; you'll plan the menu together.`;
+  const dateEl = document.querySelector('#bookingForm [name="entry.1686805789"]');
+  dateEl.min = sp.eventStart > todayISO() ? sp.eventStart : todayISO();
+  dateEl.max = sp.eventEnd;
+  updatePaymentOptions('Special:' + id, '');
+}
+
+function selectSpecial(id) {
+  const sel = document.getElementById('serviceSelect');
+  sel.value = 'Special:' + id;
+  document.querySelectorAll('.bsl-item').forEach(b => b.classList.remove('active'));
+  showServiceOptions(sel.value);
+  document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderSpecials() {
+  const section = document.getElementById('specials');
+  const grid = document.getElementById('specialsGrid');
+  if (!PROMOS.length) { section.hidden = true; return; }
+  grid.innerHTML = PROMOS.map(sp => {
+    if (sp.type === 'package') {
+      const sold = sp.spotsLeft <= 0;
+      return `<article class="special-card" style="--sp-accent:${escHtml(sp.theme.accent)}">
+        <div class="special-tag">${escHtml(sp.emoji)} Limited seasonal package</div>
+        <h3>${escHtml(sp.name)}</h3>
+        <p class="tagline">${escHtml(sp.tagline)}</p>
+        <div class="special-price"><span class="now">${fmtMoney(sp.price)}</span><span class="was">${fmtMoney(sp.basePrice)}</span><span class="off">${sp.percentOff}% off</span></div>
+        <div class="special-meta">Small-party planning · ${escHtml(sp.guests)}</div>
+        <ul>${sp.includes.map(i => `<li>${escHtml(i)}</li>`).join('')}</ul>
+        ${sp.cateringAddon ? `<div class="special-addon-note"><strong>Want it catered?</strong> Add catering for ${fmtMoney(sp.cateringAddon.price)} (up to 30 guests), so one team handles the plan, the setup, and the food.</div>` : ''}
+        <div class="special-dates">For gatherings <strong>${fmtDate(sp.eventStart)} – ${fmtDate(sp.eventEnd)}</strong><br>Book by <strong>${fmtDateLong(sp.salesEnd)}</strong></div>
+        <div class="special-spots${sold ? ' soldout' : ''}">${sold ? 'Sold out for this season' : `Only ${sp.cap} spots · ${sp.spotsLeft} left`}</div>
+        <button type="button" class="btn-solid" onclick="selectSpecial('${escHtml(sp.id)}')"${sold ? ' disabled' : ''}>${sold ? 'Sold Out' : 'Reserve This Package'}</button>
+        <p class="special-fine">A signed agreement and a 40% non-refundable deposit secure your date. Nothing is charged until Xindies confirms your date.</p>
+      </article>`;
+    }
+    if (sp.type === 'referral') {
+      return `<article class="special-card" style="--sp-accent:${escHtml(sp.theme.accent)}">
+        <div class="special-tag">${escHtml(sp.emoji)} Spring thank-you</div>
+        <h3>Share the Love, Get ${fmtMoney(sp.credit)}</h3>
+        <p class="tagline">${escHtml(sp.tagline)}</p>
+        <ul class="special-steps">
+          <li>Tell a friend about Xindies Amazing Hands.</li>
+          <li>When they book, they pick "Friend or family referral" and add your name and email.</li>
+          <li>Once their booking is paid in full, we email you a ${fmtMoney(sp.credit)} credit code.</li>
+        </ul>
+        <div class="special-dates">Referrals made <strong>through ${fmtDateLong(sp.salesEnd)}</strong></div>
+        <a href="#booking" class="btn-solid">Book a Service</a>
+        <p class="special-fine">Credit is good for catering and party or event planning services. It can't be used on hair braiding, home organizing, or private sitting. Valid ${sp.creditValidMonths} months from issue, one credit per booking, no cash value. Self-referrals don't qualify.</p>
+      </article>`;
+    }
+    return '';
+  }).join('');
+  section.hidden = false;
+}
+
+function addSpecialOptions() {
+  const sel = document.getElementById('serviceSelect');
+  sel.querySelectorAll('option[data-special]').forEach(o => o.remove());
+  PROMOS.filter(p => p.type === 'package' && p.spotsLeft > 0).reverse().forEach(sp => {
+    const o = document.createElement('option');
+    o.value = 'Special:' + sp.id; o.dataset.special = '1';
+    o.textContent = `${sp.emoji} ${sp.name} (${fmtMoney(sp.price)})`;
+    sel.insertBefore(o, sel.options[1]);
+  });
+}
+
+function renderReferralHint() {
+  const rp = PROMOS.find(p => p.type === 'referral');
+  document.getElementById('referrerHint').textContent = rp
+    ? `We'll email them a ${fmtMoney(rp.credit)} thank-you credit once your booking is paid in full.`
+    : 'So we can send them a thank-you.';
+}
+
+// ── Promo bar
+function setPromoBarHeight() {
+  const bar = document.getElementById('promoBar');
+  if (!bar || bar.hidden) return;
+  document.documentElement.style.setProperty('--promo-h', bar.offsetHeight + 'px');
+}
+function dismissPromo(silent) {
+  const bar = document.getElementById('promoBar');
+  bar.hidden = true;
+  document.body.classList.remove('has-promo');
+  if (!silent) { try { sessionStorage.setItem('promoDismissed', bar.dataset.promo || ''); } catch (e) {} }
+}
+function renderPromoBar() {
+  const bar = document.getElementById('promoBar');
+  const pkg = PROMOS.filter(p => p.type === 'package' && p.spotsLeft > 0).sort((a, b) => a.salesEnd.localeCompare(b.salesEnd))[0];
+  const sp = pkg || PROMOS.find(p => p.type === 'referral');
+  if (!sp) { dismissPromo(true); return; }
+  let dismissed = '';
+  try { dismissed = sessionStorage.getItem('promoDismissed') || ''; } catch (e) {}
+  if (dismissed === sp.id) return;
+  bar.dataset.promo = sp.id;
+  bar.style.background = sp.theme.bar;
+  bar.style.setProperty('--gold', sp.theme.accent);
+  document.getElementById('promoBarText').innerHTML = sp.type === 'package'
+    ? `${escHtml(sp.emoji)} <strong>${escHtml(sp.name)}</strong> &nbsp;${sp.percentOff}% off small-party planning · ${fmtMoney(sp.price)} <span style="opacity:.6;text-decoration:line-through">${fmtMoney(sp.basePrice)}</span> · only ${sp.spotsLeft} spot${sp.spotsLeft === 1 ? '' : 's'} left`
+    : `${escHtml(sp.emoji)} <strong>Spring Referral Thank-You</strong> &nbsp;Refer a friend and get a ${fmtMoney(sp.credit)} credit toward catering or party services`;
+  const days = Math.ceil((Date.parse(sp.salesEnd) - Date.now()) / 86400000);
+  document.getElementById('promoCountdown').textContent = days <= 1 ? 'Last day!' : days === 2 ? 'Ends tomorrow' : days <= 14 ? 'Ends in ' + days + ' days' : '';
+  document.getElementById('promoBarCta').textContent = sp.type === 'package' ? 'See the Package' : 'How It Works';
+  bar.hidden = false;
+  document.body.classList.add('has-promo');
+  setPromoBarHeight();
+}
+
+async function loadPromos() {
+  if (!BOOKING_API) return;
+  try {
+    const r = await fetch(BOOKING_API + '/api/promos' + (PROMO_PREVIEW ? '?preview=' + encodeURIComponent(PROMO_PREVIEW) : ''));
+    const d = await r.json();
+    PROMOS = Array.isArray(d.promos) ? d.promos : [];
+  } catch (e) { PROMOS = []; }
+  renderSpecials();
+  addSpecialOptions();
+  renderPromoBar();
+  renderReferralHint();
+}
+window.addEventListener('resize', setPromoBarHeight);
+document.getElementById('specialCatering').addEventListener('change', () => {
+  const v = document.getElementById('serviceSelect').value;
+  if (v.startsWith('Special:')) updatePaymentOptions(v, '');
+});
+document.getElementById('promoCode').addEventListener('input', updatePromoStatus);
+
+// Re-check promo eligibility whenever the booking form changes
+// Clear the "request sent" / error message once the visitor starts a new request
+['input', 'change'].forEach(evt => document.getElementById('bookingForm').addEventListener(evt, function () {
+  const msg = document.getElementById('bookingMsg');
+  if (msg.textContent && !document.querySelector('#bookingForm .btn-submit').disabled) { msg.textContent = ''; msg.className = 'form-msg'; }
+}));
+
+document.getElementById('bookingForm').addEventListener('change', function (e) {
+  if (e.target.id === 'heardAbout') {
+    const isReferral = e.target.value === 'Friend or family referral';
+    document.getElementById('referredByWrap').style.display = isReferral ? '' : 'none';
+    document.getElementById('referrerEmailWrap').style.display = isReferral ? '' : 'none';
+  }
+  if (e.target.id !== 'promoCode' && e.target.id !== 'specialCatering') setTimeout(updatePromoStatus, 0);
+});
+
+// ════════════════ REVIEWS ════════════════
+// Reviews are stored in a Google Sheet via Google Apps Script (see reviews-apps-script.gs).
+// Paste the Web App URL (ends in /exec) below. Until then, the review form shows a fallback.
+const REVIEWS_API = '';
+const CONTACT_EMAIL = 'xindiesamazinghandsllc@gmail.com';
+
 let reviewRating = 0;
-let siteReviews = [];
-try { siteReviews = JSON.parse(localStorage.getItem('xindies_reviews') || '[]'); } catch(e) { siteReviews = []; }
+let reviewFormOpenedAt = 0;
+let reviewData = { reviews: [], total: 0, shownCount: 0, average: null, minStars: 3 };
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function starIcons(n, size, empty) {
+  return [1, 2, 3, 4, 5].map(i =>
+    `<svg width="${size}" height="${size}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="${i <= n ? '#d4af37' : empty}"/></svg>`
+  ).join('');
+}
+
+async function loadReviews() {
+  if (!REVIEWS_API) return;
+  try {
+    const res = await fetch(REVIEWS_API, { cache: 'no-store' });
+    const d = await res.json();
+    if (d && Array.isArray(d.reviews)) {
+      reviewData = d;
+      updateReviewTile();
+    }
+  } catch (e) { /* keep defaults if the sheet can't be reached */ }
+}
 
 function updateReviewTile() {
-  if (!siteReviews.length) return;
-  const avg = siteReviews.reduce((s,r) => s + r.rating, 0) / siteReviews.length;
+  const total = reviewData.total || 0;
+  if (!total || reviewData.average == null) return;
+  const avg = Number(reviewData.average);
   document.getElementById('tile-rating').textContent = avg.toFixed(1) + ' / 5';
   const sc = document.getElementById('tile-stars');
   sc.style.display = 'flex';
-  sc.innerHTML = [1,2,3,4,5].map(i =>
-    `<svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="${i<=Math.round(avg)?'#d4af37':'#ecddd8'}"/></svg>`
-  ).join('');
-  document.getElementById('tile-count').textContent = siteReviews.length + ' review' + (siteReviews.length !== 1 ? 's' : '');
+  sc.innerHTML = starIcons(Math.round(avg), 14, '#ecddd8');
+  document.getElementById('tile-count').textContent =
+    total + ' review' + (total !== 1 ? 's' : '') + ' · tap to read or add yours';
+  // Hero stat switches from "24hr Response Time" to the real rating once there are 3+ reviews
+  if (total >= 3) {
+    document.getElementById('statRatingNum').textContent = avg.toFixed(1) + '★';
+    document.getElementById('statRatingLabel').textContent = 'Client Rating';
+  }
 }
 
 function setRating(val) {
@@ -2544,68 +2961,46 @@ function updateCharCount() {
   document.getElementById('charLeft').textContent = 280 - ta.value.length;
 }
 
+function openReviewTile() {
+  if (reviewData.shownCount > 0) openReviewsModal(); else openReviewForm();
+}
+
 function openReviewForm() {
-  // Reset form state
-  reviewRating = 0;
-  document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('lit'));
-  // Restore form body in case it was replaced by success message
-  const body = document.getElementById('reviewFormBody');
-  if (!body.querySelector('#r-name')) {
-    body.innerHTML = `
-      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300;line-height:1.6;">We'd love to hear about your experience! Your feedback helps us grow and serve our community better.</p>
-      <div style="margin-bottom:1.2rem;">
-        <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose);font-weight:500;margin-bottom:0.6rem;">Your Rating</div>
-        <div class="star-row" id="starRow">
-          ${[1,2,3,4,5].map(i=>`<button class="star-btn" data-val="${i}" onclick="setRating(${i})" type="button"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>`).join('')}
-        </div>
-      </div>
-      <div class="review-fg"><label>Your Name</label><input type="text" id="r-name" placeholder="Jane Doe"/></div>
-      <div class="review-fg">
-        <label>Service Received</label>
-        <select id="r-service">
-          <option value="">— Select a service —</option>
-          <option>Catering</option>
-          <option>Hair Braiding / Styling</option>
-          <option>Private Sitting</option>
-          <option>Event Planning &amp; Coordination</option>
-          <option>Home Organizing</option>
-          <option>Multiple Services</option>
-        </select>
-      </div>
-      <div class="review-fg">
-        <label>Your Review</label>
-        <textarea id="r-text" maxlength="280" placeholder="Tell us about your experience…" oninput="updateCharCount()"></textarea>
-        <div class="char-count"><span id="charLeft">280</span> characters remaining</div>
-      </div>
-      <button class="btn-submit" onclick="submitReview()" type="button" style="margin-top:0.5rem;">Submit Review</button>`;
-  } else {
-    document.getElementById('r-name').value = '';
-    document.getElementById('r-service').value = '';
-    document.getElementById('r-text').value = '';
-    document.getElementById('charLeft').textContent = '280';
-  }
+  setRating(0);
+  ['r-name', 'r-service', 'r-text', 'r-website'].forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('charLeft').textContent = '280';
+  document.getElementById('reviewFormFields').style.display = '';
+  document.getElementById('reviewThanks').style.display = 'none';
+  const btn = document.getElementById('reviewSubmitBtn');
+  btn.disabled = false; btn.textContent = 'Submit Review';
+  reviewFormOpenedAt = Date.now();
   document.getElementById('reviewFormOverlay').classList.add('open');
 }
 
 function openReviewsModal() {
   const list = document.getElementById('reviewsList');
   const summary = document.getElementById('reviews-summary');
-  if (!siteReviews.length) {
-    summary.textContent = 'No reviews yet.';
+  const total = reviewData.total || 0;
+  if (!reviewData.shownCount) {
+    summary.textContent = total ? '' : 'No reviews yet.';
     list.innerHTML = '<div class="no-reviews">Be the first to share your experience with Xindies Amazing Hands!</div>';
   } else {
-    const avg = siteReviews.reduce((s,r) => s + r.rating, 0) / siteReviews.length;
-    summary.innerHTML = `<strong style="color:var(--dark)">${avg.toFixed(1)}</strong> out of 5 &nbsp;·&nbsp; ${siteReviews.length} review${siteReviews.length !== 1 ? 's' : ''}`;
-    list.innerHTML = [...siteReviews].reverse().map(r => `
+    const avg = Number(reviewData.average);
+    let html = `<strong style="color:var(--dark)">${avg.toFixed(1)}</strong> out of 5 &nbsp;·&nbsp; ${total} review${total !== 1 ? 's' : ''}`;
+    if (reviewData.shownCount < total) {
+      html += `<span class="review-filter-note">Showing ${reviewData.shownCount} reviews rated ${reviewData.minStars}★ and up. The average includes all reviews.</span>`;
+    }
+    summary.innerHTML = html;
+    list.innerHTML = reviewData.reviews.map(r => `
       <div class="review-card">
         <div class="review-card-top">
           <div>
-            <div class="review-name">${r.name}</div>
-            <div class="review-service">${r.service}</div>
+            <div class="review-name">${esc(r.name)}</div>
+            <div class="review-service">${esc(r.service)}</div>
           </div>
-          <div class="review-stars">${[1,2,3,4,5].map(i=>`<svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="${i<=r.rating?'#d4af37':'#ecddd8'}"/></svg>`).join('')}</div>
+          <div class="review-stars">${starIcons(Number(r.rating), 13, '#ecddd8')}</div>
         </div>
-        <div class="review-text">${r.text}</div>
+        <div class="review-text">${esc(r.text)}</div>
       </div>`).join('');
   }
   document.getElementById('reviewsViewOverlay').classList.add('open');
@@ -2616,31 +3011,48 @@ function closeReviewModals() {
   document.getElementById('reviewsViewOverlay').classList.remove('open');
 }
 
-function submitReview() {
-  const nameEl = document.getElementById('r-name');
-  const serviceEl = document.getElementById('r-service');
-  const textEl = document.getElementById('r-text');
-  if (!nameEl || !serviceEl || !textEl) return;
-  const name = nameEl.value.trim();
-  const service = serviceEl.value;
-  const text = textEl.value.trim();
+async function submitReview() {
+  const name = document.getElementById('r-name').value.trim();
+  const service = document.getElementById('r-service').value;
+  const text = document.getElementById('r-text').value.trim();
   if (!name || !service || !reviewRating || !text) {
     alert('Please fill in all fields and select a star rating.');
     return;
   }
-  siteReviews.push({ name, service, rating: reviewRating, text, date: new Date().toISOString() });
-  try { localStorage.setItem('xindies_reviews', JSON.stringify(siteReviews)); } catch(e) {}
-  updateReviewTile();
-  document.getElementById('reviewFormBody').innerHTML = `
-    <div style="text-align:center;padding:3rem 1rem;">
-      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" style="margin:0 auto 1.2rem;display:block;">
-        <circle cx="12" cy="12" r="10" stroke="#4a9e7a" stroke-width="1.5"/>
-        <path d="M8 12l3 3 5-5" stroke="#4a9e7a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <h4 style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--dark);margin-bottom:0.6rem;">Thank You!</h4>
-      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;">Your review has been submitted. We truly appreciate you taking the time to share your experience.</p>
-    </div>`;
-  setTimeout(closeReviewModals, 2800);
+  if (!REVIEWS_API) {
+    alert('Online reviews are almost ready! In the meantime, please email your review to ' + CONTACT_EMAIL + '.');
+    return;
+  }
+  const btn = document.getElementById('reviewSubmitBtn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  try {
+    const res = await fetch(REVIEWS_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids a CORS preflight
+      body: JSON.stringify({
+        name, service, rating: reviewRating, text,
+        website: document.getElementById('r-website').value,
+        elapsedMs: Date.now() - reviewFormOpenedAt
+      })
+    });
+    const d = await res.json();
+    if (!d.ok) {
+      btn.disabled = false; btn.textContent = 'Submit Review';
+      alert(d.error === 'links' ? 'Please remove any links from your review.' : 'Something went wrong. Please check your review and try again.');
+      return;
+    }
+  } catch (e) {
+    btn.disabled = false; btn.textContent = 'Submit Review';
+    alert('We couldn\'t send your review. Please try again, or email it to ' + CONTACT_EMAIL + '.');
+    return;
+  }
+  document.getElementById('reviewThanksText').textContent = reviewRating >= (reviewData.minStars || 3)
+    ? 'Your review has been submitted and will appear on our site shortly. We truly appreciate you taking the time to share your experience.'
+    : 'Thank you for your honest feedback. It goes straight to Xindies, and we\'ll reach out to make things right.';
+  document.getElementById('reviewFormFields').style.display = 'none';
+  document.getElementById('reviewThanks').style.display = '';
+  setTimeout(closeReviewModals, 3500);
+  setTimeout(loadReviews, 1500);
 }
 
 // Close overlays when clicking backdrop
@@ -2651,7 +3063,9 @@ document.getElementById('reviewsViewOverlay').addEventListener('click', function
   if (e.target === this) closeReviewModals();
 });
 
-updateReviewTile();
+syncSubSelects();
+loadPromos();
+loadReviews();
 </script>
 </body>
 </html>
