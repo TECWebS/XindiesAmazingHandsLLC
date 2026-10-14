@@ -1508,6 +1508,32 @@ body.js-ready .reveal-left.in { opacity: 1; transform: translateX(0); }
 body.has-promo { padding-top: var(--promo-h, 0px); }
 body.has-promo nav { top: var(--promo-h, 0px); }
 
+/* ── PROMO POPUP ── */
+.promo-pop { position: fixed; inset: 0; z-index: 99995; background: rgba(14,12,16,0.55); display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; transition: opacity .3s; }
+.promo-pop[hidden] { display: none; }
+.promo-pop.open { opacity: 1; }
+.promo-pop-box { position: relative; background: var(--cream); width: 100%; max-width: 440px; max-height: 92vh; overflow: auto; border-top: 6px solid var(--pp-accent, var(--gold)); box-shadow: 0 30px 80px rgba(0,0,0,0.3); transform: translateY(16px); transition: transform .35s; }
+.promo-pop.open .promo-pop-box { transform: translateY(0); }
+.promo-pop-head { background: var(--pp-bar, var(--dark)); color: #fff; padding: 2rem 1.8rem 1.6rem; text-align: center; }
+.promo-pop-emoji { font-size: 2.4rem; line-height: 1; margin-bottom: 0.6rem; }
+.promo-pop-kicker { font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--pp-accent, var(--gold)); margin-bottom: 0.5rem; }
+.promo-pop-head h3 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 1.75rem; line-height: 1.15; }
+.promo-pop-content { padding: 1.5rem 1.8rem 1.8rem; text-align: center; }
+.promo-pop-price { display: flex; align-items: baseline; justify-content: center; gap: 0.6rem; margin-bottom: 0.3rem; }
+.promo-pop-price .now { font-family: 'DM Serif Display', serif; font-size: 2.6rem; line-height: 1; color: var(--dark); }
+.promo-pop-price .was { text-decoration: line-through; color: var(--muted); }
+.promo-pop-content p { font-size: 0.9rem; line-height: 1.6; color: var(--muted); margin-bottom: 0.9rem; }
+.promo-pop-content ul { list-style: none; text-align: left; margin: 0 0 1rem; }
+.promo-pop-content li { font-size: 0.84rem; line-height: 1.5; padding: 0.3rem 0 0.3rem 1.4rem; position: relative; }
+.promo-pop-content li::before { content: '✓'; position: absolute; left: 0; color: var(--sage); }
+.promo-pop-spots { font-size: 0.74rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose-deep); margin-bottom: 1.1rem; }
+.promo-pop-cta { display: block; width: 100%; border: none; cursor: pointer; background: var(--blue); color: #fff; font: 500 0.75rem 'Poppins', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; padding: 1rem; }
+.promo-pop-cta:hover { background: var(--blue-deep); }
+.promo-pop-later { display: block; margin: 0.8rem auto 0; background: none; border: none; color: var(--muted); font: 400 0.78rem 'Poppins', sans-serif; text-decoration: underline; cursor: pointer; }
+.promo-pop-close { position: absolute; top: 0.6rem; right: 0.7rem; background: none; border: none; color: #fff; opacity: 0.8; font-size: 1.1rem; cursor: pointer; padding: 0.4rem; z-index: 1; }
+.promo-pop-close:hover { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .promo-pop, .promo-pop-box { transition: none; } }
+
 /* ── SEASONAL SPECIALS ── */
 #specials { padding: 7rem 0 5rem; background: var(--ivory); position: relative; }
 #specials[hidden] { display: none; }
@@ -1575,6 +1601,14 @@ body.has-promo nav { top: var(--promo-h, 0px); }
     <a href="#specials" class="promo-bar-cta" id="promoBarCta">See the Special</a>
   </div>
   <button type="button" class="promo-bar-close" aria-label="Dismiss offer" onclick="dismissPromo()">&#x2715;</button>
+</div>
+
+<!-- ════════════════ PROMO POPUP (filled from the promo calendar; shows once per promotion per visitor) ════════════════ -->
+<div class="promo-pop" id="promoPop" role="dialog" aria-modal="true" aria-labelledby="promoPopTitle" hidden>
+  <div class="promo-pop-box" id="promoPopBox">
+    <button type="button" class="promo-pop-close" aria-label="Close" onclick="closePromoPop()">&#x2715;</button>
+    <div id="promoPopBody"></div>
+  </div>
 </div>
 
 <!-- ════════════════ NAV ════════════════ -->
@@ -2689,7 +2723,7 @@ document.getElementById('legalModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { closeModal(); closeReviewModals(); }
+  if (e.key === 'Escape') { closeModal(); closeReviewModals(); closePromoPop(); }
 });
 
 // ════════════════ PROMOTIONS ════════════════
@@ -2865,6 +2899,71 @@ function renderPromoBar() {
   setPromoBarHeight();
 }
 
+// ── Popup: once per promotion per visitor, a few seconds after the page loads
+function popupSeen(id) { try { return localStorage.getItem('xah_pop_' + id) === '1'; } catch (e) { return false; } }
+function markPopupSeen(id) { try { localStorage.setItem('xah_pop_' + id, '1'); } catch (e) {} }
+
+function openPromoPop(sp) {
+  const pop = document.getElementById('promoPop');
+  const box = document.getElementById('promoPopBox');
+  box.style.setProperty('--pp-accent', sp.theme.accent);
+  box.style.setProperty('--pp-bar', sp.theme.bar);
+  let html;
+  if (sp.type === 'package') {
+    html = `<div class="promo-pop-head">
+        <div class="promo-pop-emoji" aria-hidden="true">${escHtml(sp.emoji)}</div>
+        <div class="promo-pop-kicker">Limited seasonal package · ${sp.percentOff}% off</div>
+        <h3 id="promoPopTitle">${escHtml(sp.name)}</h3>
+      </div>
+      <div class="promo-pop-content">
+        <div class="promo-pop-price"><span class="now">${fmtMoney(sp.price)}</span><span class="was">${fmtMoney(sp.basePrice)}</span></div>
+        <p>${escHtml(sp.tagline)}</p>
+        <ul>${sp.includes.slice(0, 3).map(i => `<li>${escHtml(i)}</li>`).join('')}${sp.cateringAddon ? `<li>Catering available as an add-on</li>` : ''}</ul>
+        <p>For gatherings <strong>${fmtDate(sp.eventStart)} – ${fmtDate(sp.eventEnd)}</strong> · Book by <strong>${fmtDateLong(sp.salesEnd)}</strong></p>
+        <div class="promo-pop-spots">Only ${sp.cap} spots · ${sp.spotsLeft} left</div>
+        <button type="button" class="promo-pop-cta" onclick="closePromoPop(); selectSpecial('${escHtml(sp.id)}')">Reserve My Spot</button>
+        <button type="button" class="promo-pop-later" onclick="closePromoPop()">Maybe later</button>
+      </div>`;
+  } else {
+    html = `<div class="promo-pop-head">
+        <div class="promo-pop-emoji" aria-hidden="true">${escHtml(sp.emoji)}</div>
+        <div class="promo-pop-kicker">Spring thank-you</div>
+        <h3 id="promoPopTitle">Share the Love, Get ${fmtMoney(sp.credit)}</h3>
+      </div>
+      <div class="promo-pop-content">
+        <p>${escHtml(sp.tagline)}</p>
+        <ul><li>Tell a friend about Xindies Amazing Hands</li><li>They add your name and email when they book</li><li>Once their booking is paid in full, you get a ${fmtMoney(sp.credit)} credit for catering or party services</li></ul>
+        <p>Referrals through <strong>${fmtDateLong(sp.salesEnd)}</strong></p>
+        <button type="button" class="promo-pop-cta" onclick="closePromoPop(); document.getElementById('specials').scrollIntoView({behavior:'smooth'})">How It Works</button>
+        <button type="button" class="promo-pop-later" onclick="closePromoPop()">Maybe later</button>
+      </div>`;
+  }
+  document.getElementById('promoPopBody').innerHTML = html;
+  pop.dataset.promo = sp.id;
+  pop.hidden = false;
+  requestAnimationFrame(() => pop.classList.add('open'));
+  markPopupSeen(sp.id);
+  setTimeout(() => { const c = pop.querySelector('.promo-pop-cta'); if (c) c.focus(); }, 50);
+}
+function closePromoPop() {
+  const pop = document.getElementById('promoPop');
+  if (pop.hidden) return;
+  pop.classList.remove('open');
+  setTimeout(() => { pop.hidden = true; }, 300);
+}
+document.getElementById('promoPop').addEventListener('click', function (e) { if (e.target === this) closePromoPop(); });
+
+function maybeShowPromoPop() {
+  const pkg = PROMOS.filter(p => p.type === 'package' && p.spotsLeft > 0).sort((a, b) => a.salesEnd.localeCompare(b.salesEnd))[0];
+  const sp = pkg || PROMOS.find(p => p.type === 'referral');
+  if (!sp) return;
+  if (popupSeen(sp.id) && !PROMO_PREVIEW) return; // previews always show it
+  setTimeout(() => {
+    const anyOpen = document.querySelector('.overlay.open, .modal-overlay.open') || document.getElementById('mobileNavOverlay').style.display === 'flex';
+    if (!anyOpen) openPromoPop(sp);
+  }, 3500);
+}
+
 async function loadPromos() {
   if (!BOOKING_API) return;
   try {
@@ -2876,6 +2975,7 @@ async function loadPromos() {
   addSpecialOptions();
   renderPromoBar();
   renderReferralHint();
+  maybeShowPromoPop();
 }
 window.addEventListener('resize', setPromoBarHeight);
 document.getElementById('specialCatering').addEventListener('change', () => {
