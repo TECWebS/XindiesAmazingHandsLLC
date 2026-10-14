@@ -1512,26 +1512,56 @@ body.has-promo nav { top: var(--promo-h, 0px); }
 .promo-pop { position: fixed; inset: 0; z-index: 99995; background: rgba(14,12,16,0.55); display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; transition: opacity .3s; }
 .promo-pop[hidden] { display: none; }
 .promo-pop.open { opacity: 1; }
-.promo-pop-box { position: relative; background: var(--cream); width: 100%; max-width: 440px; max-height: 92vh; overflow: auto; border-top: 6px solid var(--pp-accent, var(--gold)); box-shadow: 0 30px 80px rgba(0,0,0,0.3); transform: translateY(16px); transition: transform .35s; }
+.promo-pop-box { position: relative; background: var(--cream); width: 100%; max-width: 680px; max-height: calc(100vh - 2rem); overflow: auto; border-top: 6px solid var(--pp-accent, var(--gold)); box-shadow: 0 30px 80px rgba(0,0,0,0.3); transform: translateY(16px); transition: transform .35s; }
 .promo-pop.open .promo-pop-box { transform: translateY(0); }
-.promo-pop-head { background: var(--pp-bar, var(--dark)); color: #fff; padding: 2rem 1.8rem 1.6rem; text-align: center; }
-.promo-pop-emoji { font-size: 2.4rem; line-height: 1; margin-bottom: 0.6rem; }
-.promo-pop-kicker { font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--pp-accent, var(--gold)); margin-bottom: 0.5rem; }
-.promo-pop-head h3 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 1.75rem; line-height: 1.15; }
-.promo-pop-content { padding: 1.5rem 1.8rem 1.8rem; text-align: center; }
-.promo-pop-price { display: flex; align-items: baseline; justify-content: center; gap: 0.6rem; margin-bottom: 0.3rem; }
-.promo-pop-price .now { font-family: 'DM Serif Display', serif; font-size: 2.6rem; line-height: 1; color: var(--dark); }
+.promo-pop-head { background: var(--pp-bar, var(--dark)); color: #fff; padding: 1.4rem 3rem 1.3rem; text-align: center; }
+.promo-pop-kicker { font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--pp-accent, var(--gold)); margin-bottom: 0.35rem; }
+.promo-pop-kicker .em { font-size: 1.1rem; letter-spacing: 0; vertical-align: -2px; margin-right: 0.4rem; }
+.promo-pop-head h3 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 1.85rem; line-height: 1.12; }
+.promo-pop-content { padding: 1.3rem 2rem 1.4rem; }
+.promo-pop-top { display: flex; align-items: center; gap: 1.4rem; padding-bottom: 1rem; border-bottom: 1px solid var(--pale); }
+.promo-pop-price { display: flex; align-items: baseline; gap: 0.5rem; flex-shrink: 0; }
+.promo-pop-price .now { font-family: 'DM Serif Display', serif; font-size: 2.7rem; line-height: 1; color: var(--dark); }
 .promo-pop-price .was { text-decoration: line-through; color: var(--muted); }
-.promo-pop-content p { font-size: 0.9rem; line-height: 1.6; color: var(--muted); margin-bottom: 0.9rem; }
-.promo-pop-content ul { list-style: none; text-align: left; margin: 0 0 1rem; }
-.promo-pop-content li { font-size: 0.84rem; line-height: 1.5; padding: 0.3rem 0 0.3rem 1.4rem; position: relative; }
-.promo-pop-content li::before { content: '✓'; position: absolute; left: 0; color: var(--sage); }
-.promo-pop-spots { font-size: 0.74rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose-deep); margin-bottom: 1.1rem; }
-.promo-pop-cta { display: block; width: 100%; border: none; cursor: pointer; background: var(--blue); color: #fff; font: 500 0.75rem 'Poppins', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; padding: 1rem; }
+.promo-pop-top p { font-size: 0.88rem; line-height: 1.5; color: var(--muted); margin: 0; }
+.promo-pop-content ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1.4rem; margin: 0.9rem 0 0.4rem; }
+.promo-pop-content li { font-size: 0.84rem; line-height: 1.45; padding: 0.15rem 0 0.15rem 1.4rem; position: relative; }
+.promo-pop-content li::before { content: '✓'; position: absolute; left: 0; color: var(--sage); font-weight: 500; }
+.promo-pop-addon { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.9rem; }
+.promo-pop-addon strong { color: var(--dark); font-weight: 500; }
+.promo-pop-facts { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--pale); border-bottom: 1px solid var(--pale); margin-bottom: 1.1rem; }
+.promo-pop-facts div { padding: 0.75rem 0.4rem; text-align: center; }
+.promo-pop-facts div + div { border-left: 1px solid var(--pale); }
+.promo-pop-facts .lab { display: block; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.15rem; }
+.promo-pop-facts .val { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--dark); }
+.promo-pop-facts .val.spots { color: var(--rose-deep); }
+.promo-pop-text { font-size: 0.88rem; line-height: 1.55; color: var(--muted); text-align: center; margin-bottom: 0.9rem; }
+.promo-pop-content ol { list-style: none; counter-reset: s; margin: 0 0 1.1rem; }
+.promo-pop-content ol li { padding: 0.35rem 0 0.35rem 2rem; font-size: 0.86rem; }
+.promo-pop-content ol li::before { counter-increment: s; content: counter(s); width: 1.35rem; height: 1.35rem; border-radius: 50%; background: var(--pp-accent, var(--gold)); color: var(--dark); font-size: 0.72rem; display: flex; align-items: center; justify-content: center; top: 0.4rem; }
+.promo-pop-actions { display: flex; align-items: center; gap: 1.2rem; }
+.promo-pop-cta { flex: 1; border: none; cursor: pointer; background: var(--blue); color: #fff; font: 500 0.75rem 'Poppins', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; padding: 1rem; }
 .promo-pop-cta:hover { background: var(--blue-deep); }
-.promo-pop-later { display: block; margin: 0.8rem auto 0; background: none; border: none; color: var(--muted); font: 400 0.78rem 'Poppins', sans-serif; text-decoration: underline; cursor: pointer; }
+.promo-pop-later { background: none; border: none; color: var(--muted); font: 400 0.8rem 'Poppins', sans-serif; text-decoration: underline; cursor: pointer; white-space: nowrap; }
 .promo-pop-close { position: absolute; top: 0.6rem; right: 0.7rem; background: none; border: none; color: #fff; opacity: 0.8; font-size: 1.1rem; cursor: pointer; padding: 0.4rem; z-index: 1; }
 .promo-pop-close:hover { opacity: 1; }
+@media (max-width: 600px) {
+  .promo-pop { padding: 0.6rem; }
+  .promo-pop-head { padding: 1.1rem 2.4rem 1rem; }
+  .promo-pop-head h3 { font-size: 1.45rem; }
+  .promo-pop-kicker .pp-off { display: none; }
+  .promo-pop-content { padding: 1rem 1.1rem 1.1rem; }
+  .promo-pop-top { gap: 0.9rem; padding-bottom: 0.8rem; }
+  .promo-pop-price .now { font-size: 2.2rem; }
+  .promo-pop-top p { font-size: 0.8rem; }
+  .promo-pop-content ul { grid-template-columns: 1fr; gap: 0.1rem; margin-top: 0.7rem; }
+  .promo-pop-content li { font-size: 0.8rem; }
+  .promo-pop-addon { font-size: 0.78rem; margin-bottom: 0.7rem; }
+  .promo-pop-facts .val { font-size: 1rem; }
+  .promo-pop-facts .lab { font-size: 0.55rem; letter-spacing: 0.12em; }
+  .promo-pop-actions { flex-direction: column; gap: 0.5rem; }
+  .promo-pop-cta { width: 100%; }
+}
 @media (prefers-reduced-motion: reduce) { .promo-pop, .promo-pop-box { transition: none; } }
 
 /* ── SEASONAL SPECIALS ── */
@@ -2640,6 +2670,7 @@ async function handleBooking(e) {
       const sp = isSpecial ? getPromo(subOption) : null;
       const friendly = {
         promo_date: sp ? 'This package is for gatherings between ' + fmtDate(sp.eventStart) + ' and ' + fmtDate(sp.eventEnd) + '. Please pick a date in that range.' : '',
+        lead_time: sp ? 'Seasonal packages need at least ' + (sp.leadDays === 7 ? 'one week' : sp.leadDays + ' days') + ' to plan. Please choose a date on or after ' + fmtDate(sp.earliestDate) + '.' : '',
         sold_out: 'So sorry, this package just sold out. Please choose another service, or send us a message.',
         promo_closed: 'This seasonal package is no longer available. Please choose another service.',
         date: 'Please choose a date in the future.',
@@ -2738,6 +2769,14 @@ const fmtDate = s => new Date(s + 'T12:00:00').toLocaleDateString('en-US', { mon
 const fmtDateLong = iso => new Date(iso).toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'America/New_York' });
 function todayISO() { return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date()); }
 const getPromo = id => PROMOS.find(p => p.id === id);
+// "Nov 1 – 30" or "Dec 28 – Jan 4"
+function fmtRange(a, b) {
+  const da = new Date(a + 'T12:00:00'), db = new Date(b + 'T12:00:00');
+  return da.getMonth() === db.getMonth()
+    ? `${fmtDate(a)} – ${db.getDate()}`
+    : `${fmtDate(a)} – ${fmtDate(b)}`;
+}
+const leadText = sp => sp.leadDays === 7 ? '1 week ahead' : sp.leadDays ? sp.leadDays + ' days ahead' : 'Anytime';
 const escHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 function getEnteredPromoCode() {
@@ -2788,12 +2827,12 @@ function showSpecialOptions(id) {
   wrap.style.setProperty('--sp-accent', sp.theme.accent);
   document.getElementById('specialSummary').innerHTML =
     `${escHtml(sp.emoji)} <strong>${escHtml(sp.name)}</strong> · ${fmtMoney(sp.price)} <span style="text-decoration:line-through;opacity:.6">${fmtMoney(sp.basePrice)}</span> · ${escHtml(sp.guests)}<br>` +
-    `For gatherings ${fmtDate(sp.eventStart)} – ${fmtDate(sp.eventEnd)}. ${sp.spotsLeft} of ${sp.cap} spots left.`;
+    `For gatherings ${fmtRange(sp.eventStart, sp.eventEnd)}${sp.leadDays ? `, reserved at least ${sp.leadDays === 7 ? 'one week' : sp.leadDays + ' days'} ahead` : ''}. ${sp.spotsLeft} of ${sp.cap} spots left.`;
   const cw = document.getElementById('specialCateringWrap');
   cw.style.display = sp.cateringAddon ? '' : 'none';
   if (sp.cateringAddon) document.getElementById('specialCateringText').textContent = `+${fmtMoney(sp.cateringAddon.price)} ${sp.cateringAddon.name.replace(/^Catering add-on /, '')}. Regular catering price; you'll plan the menu together.`;
   const dateEl = document.querySelector('#bookingForm [name="entry.1686805789"]');
-  dateEl.min = sp.eventStart > todayISO() ? sp.eventStart : todayISO();
+  dateEl.min = sp.earliestDate || (sp.eventStart > todayISO() ? sp.eventStart : todayISO());
   dateEl.max = sp.eventEnd;
   updatePaymentOptions('Special:' + id, '');
 }
@@ -2821,7 +2860,7 @@ function renderSpecials() {
         <div class="special-meta">Small-party planning · ${escHtml(sp.guests)}</div>
         <ul>${sp.includes.map(i => `<li>${escHtml(i)}</li>`).join('')}</ul>
         ${sp.cateringAddon ? `<div class="special-addon-note"><strong>Want it catered?</strong> Add catering for ${fmtMoney(sp.cateringAddon.price)} (up to 30 guests), so one team handles the plan, the setup, and the food.</div>` : ''}
-        <div class="special-dates">For gatherings <strong>${fmtDate(sp.eventStart)} – ${fmtDate(sp.eventEnd)}</strong><br>Book by <strong>${fmtDateLong(sp.salesEnd)}</strong></div>
+        <div class="special-dates">For gatherings <strong>${fmtRange(sp.eventStart, sp.eventEnd)}</strong><br>Reserve at least <strong>${sp.leadDays === 7 ? 'one week' : sp.leadDays + ' days'}</strong> before your date</div>
         <div class="special-spots${sold ? ' soldout' : ''}">${sold ? 'Sold out for this season' : `Only ${sp.cap} spots · ${sp.spotsLeft} left`}</div>
         <button type="button" class="btn-solid" onclick="selectSpecial('${escHtml(sp.id)}')"${sold ? ' disabled' : ''}>${sold ? 'Sold Out' : 'Reserve This Package'}</button>
         <p class="special-fine">A signed agreement and a 40% non-refundable deposit secure your date. Nothing is charged until Xindies confirms your date.</p>
@@ -2911,31 +2950,38 @@ function openPromoPop(sp) {
   let html;
   if (sp.type === 'package') {
     html = `<div class="promo-pop-head">
-        <div class="promo-pop-emoji" aria-hidden="true">${escHtml(sp.emoji)}</div>
-        <div class="promo-pop-kicker">Limited seasonal package · ${sp.percentOff}% off</div>
+        <div class="promo-pop-kicker"><span class="em" aria-hidden="true">${escHtml(sp.emoji)}</span>Limited seasonal package<span class="pp-off"> · ${sp.percentOff}% off</span></div>
         <h3 id="promoPopTitle">${escHtml(sp.name)}</h3>
       </div>
       <div class="promo-pop-content">
-        <div class="promo-pop-price"><span class="now">${fmtMoney(sp.price)}</span><span class="was">${fmtMoney(sp.basePrice)}</span></div>
-        <p>${escHtml(sp.tagline)}</p>
-        <ul>${sp.includes.slice(0, 3).map(i => `<li>${escHtml(i)}</li>`).join('')}${sp.cateringAddon ? `<li>Catering available as an add-on</li>` : ''}</ul>
-        <p>For gatherings <strong>${fmtDate(sp.eventStart)} – ${fmtDate(sp.eventEnd)}</strong> · Book by <strong>${fmtDateLong(sp.salesEnd)}</strong></p>
-        <div class="promo-pop-spots">Only ${sp.cap} spots · ${sp.spotsLeft} left</div>
-        <button type="button" class="promo-pop-cta" onclick="closePromoPop(); selectSpecial('${escHtml(sp.id)}')">Reserve My Spot</button>
-        <button type="button" class="promo-pop-later" onclick="closePromoPop()">Maybe later</button>
+        <div class="promo-pop-top">
+          <div class="promo-pop-price"><span class="now">${fmtMoney(sp.price)}</span><span class="was">${fmtMoney(sp.basePrice)}</span></div>
+          <p>${escHtml(sp.tagline)}</p>
+        </div>
+        <ul>${(sp.highlights || sp.includes).map(i => `<li>${escHtml(i)}</li>`).join('')}</ul>
+        ${sp.cateringAddon ? `<div class="promo-pop-addon"><strong>+ Catering add-on</strong> available for up to 30 guests</div>` : ''}
+        <div class="promo-pop-facts">
+          <div><span class="lab">For gatherings</span><span class="val">${fmtRange(sp.eventStart, sp.eventEnd)}</span></div>
+          <div><span class="lab">Reserve</span><span class="val">${leadText(sp)}</span></div>
+          <div><span class="lab">Spots left</span><span class="val spots">${sp.spotsLeft} of ${sp.cap}</span></div>
+        </div>
+        <div class="promo-pop-actions">
+          <button type="button" class="promo-pop-cta" onclick="closePromoPop(); selectSpecial('${escHtml(sp.id)}')">Reserve My Spot</button>
+          <button type="button" class="promo-pop-later" onclick="closePromoPop()">Maybe later</button>
+        </div>
       </div>`;
   } else {
     html = `<div class="promo-pop-head">
-        <div class="promo-pop-emoji" aria-hidden="true">${escHtml(sp.emoji)}</div>
-        <div class="promo-pop-kicker">Spring thank-you</div>
+        <div class="promo-pop-kicker"><span class="em" aria-hidden="true">${escHtml(sp.emoji)}</span>Spring thank-you · through ${fmtDate(sp.salesEnd.slice(0, 10))}</div>
         <h3 id="promoPopTitle">Share the Love, Get ${fmtMoney(sp.credit)}</h3>
       </div>
       <div class="promo-pop-content">
-        <p>${escHtml(sp.tagline)}</p>
-        <ul><li>Tell a friend about Xindies Amazing Hands</li><li>They add your name and email when they book</li><li>Once their booking is paid in full, you get a ${fmtMoney(sp.credit)} credit for catering or party services</li></ul>
-        <p>Referrals through <strong>${fmtDateLong(sp.salesEnd)}</strong></p>
-        <button type="button" class="promo-pop-cta" onclick="closePromoPop(); document.getElementById('specials').scrollIntoView({behavior:'smooth'})">How It Works</button>
-        <button type="button" class="promo-pop-later" onclick="closePromoPop()">Maybe later</button>
+        <p class="promo-pop-text">${escHtml(sp.tagline)}</p>
+        <ol><li>Tell a friend about Xindies Amazing Hands.</li><li>When they book, they add your name and email.</li><li>Once their booking is paid in full, you get a ${fmtMoney(sp.credit)} credit for catering or party services.</li></ol>
+        <div class="promo-pop-actions">
+          <button type="button" class="promo-pop-cta" onclick="closePromoPop(); document.getElementById('specials').scrollIntoView({behavior:'smooth'})">How It Works</button>
+          <button type="button" class="promo-pop-later" onclick="closePromoPop()">Maybe later</button>
+        </div>
       </div>`;
   }
   document.getElementById('promoPopBody').innerHTML = html;
@@ -3003,6 +3049,7 @@ document.getElementById('bookingForm').addEventListener('change', function (e) {
 // ════════════════ REVIEWS ════════════════
 // Reviews are stored in a Google Sheet via Google Apps Script (see reviews-apps-script.gs).
 // Paste the Web App URL (ends in /exec) below. Until then, the review form shows a fallback.
+  
 const REVIEWS_API = 'https://script.google.com/macros/s/AKfycbxkuZegyk7qYuoU6lsAEP3wFxgMMCudIzb-ak10LYls0CYBTaSJe4-ytaFyOb8md6F9/exec';
 const CONTACT_EMAIL = 'xindiesamazinghandsllc@gmail.com';
 
